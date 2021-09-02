@@ -1,4 +1,5 @@
 let Ray = function(pos){
+  // test cookie d shit
   this.pos = pos;
   this.dir = {x:0,y:0};
 
