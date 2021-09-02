@@ -5,6 +5,7 @@ let Controller = function(){
   this.right = false;
   this.action1 = false;
   this.action2 = false;
+  //adding client test
 
   window.addEventListener('keydown', function(e){
     switch(e.code){
