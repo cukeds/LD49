@@ -122,7 +122,6 @@ const RAY = {
 
       //startingPoint
       let startPoint = {x: obj.pos.x + xComponent, y: obj.pos.y + yComponent};
-      game.artist.drawLine(startPoint.x, startPoint.y, 400,400,'blue');
       for(let i = 0; i < 4; i++){
         let a = null;
         if(i == 0){

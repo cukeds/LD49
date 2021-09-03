@@ -28,13 +28,6 @@ let game = {
     }
 
     this.load();
-    // this.actors.unshift(new Actor(
-    //   {x:game.width/2,y:game.height/2},
-    //   {width: game.width, height: game.height},
-    //   null,
-    //   this.artist.randColor()
-    // ));
-
   },
 
   load: function(){
@@ -55,22 +48,10 @@ let game = {
 
     this.player.draw();
 
-    let ray = new Ray(game.player.pos);
     this.actors.forEach(actor=>{
       actor.angle += Math.PI/100;
       actor.draw();
     });
-
-    // this.actors.forEach(actor =>{
-    // 
-    //   let pt = ray.cast(actor,game.mouse.pos);
-    //   if(pt != null){
-    //     game.artist.drawLine(game.player.pos.x,game.player.pos.y,pt.x,pt.y, '#000');
-    //   }
-    // })
-    this.artist.drawRect(400,320,10,10,'#00F')
-
-
 
     this.update();
   }
