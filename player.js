@@ -17,6 +17,11 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     if(game.controller.right){
       this.pos.x+= this.speed;
     }
+    game.particles.push(new Particle(
+      this.pos,
+      1.5,
+      {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
+      '#00F'))
   }
 
   this.draw = function(){

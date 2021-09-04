@@ -10,6 +10,8 @@ let game = {
   controller: null,
   delta: 0,
   timestamp: 0,
+  particles: [],
+  id: 1,
 
   setup: function(){
     this.artist = new Artist(this.width,this.height);
@@ -41,6 +43,17 @@ let game = {
     this.timestamp = tstamp;
     this.actors.forEach(actor=>actor.update(this.delta));
     this.player.update(this.delta);
+    this.particles.forEach(particle => {
+      particle.update(this.delta);
+    });
+    this.particles.forEach(particle =>{
+      if(particle.dead){
+        this.particles.splice(
+          this.particles.find(p=>{
+          return particle.id == p.id;
+        }),1);
+      }
+    })
     this.draw();
   },
 
@@ -51,6 +64,7 @@ let game = {
     this.artist.writeText(this.delta,20,20,20,'red');
 
     this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 30, this.artist.randColor());
+    this.particles.forEach(p=>p.draw());
 
     this.player.draw();
 
@@ -60,6 +74,11 @@ let game = {
     });
 
     window.requestAnimationFrame(this.update.bind(this));
+  },
+
+  getId: function(){
+    this.id++;
+    return this.id;
   }
 }
 
