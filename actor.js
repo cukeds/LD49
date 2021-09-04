@@ -9,7 +9,7 @@ let Actor = function(pos, size, image, color){
   this.color = color;
   this.ray = new Ray(this.pos);
 
-  this.update = function(){
+  this.update = function(delta){
 
   }
 

@@ -8,6 +8,8 @@ let game = {
   actors: [],
   mouse: null,
   controller: null,
+  delta: 0,
+  timestamp: 0,
 
   setup: function(){
     this.artist = new Artist(this.width,this.height);
@@ -31,18 +33,22 @@ let game = {
   },
 
   load: function(){
-    this.update();
+    window.requestAnimationFrame(this.update.bind(this));
   },
 
-  update: function(){
-    this.actors.forEach(actor=>actor.update());
-    this.player.update();
-    window.requestAnimationFrame(this.draw.bind(this));
+  update: function(tstamp){
+    this.delta = tstamp - this.timestamp;
+    this.timestamp = tstamp;
+    this.actors.forEach(actor=>actor.update(this.delta));
+    this.player.update(this.delta);
+    this.draw();
   },
 
   draw: function(){
     this.artist.drawRect(0,0,this.width,this.height,'#aaa');
     this.artist.drawLine(10,10,100,100,"#FFF");
+
+    this.artist.writeText(this.delta,20,20,20,'red');
 
     this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 30, this.artist.randColor());
 
@@ -53,7 +59,7 @@ let game = {
       actor.draw();
     });
 
-    this.update();
+    window.requestAnimationFrame(this.update.bind(this));
   }
 }
 

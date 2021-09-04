@@ -4,7 +4,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   this.speed = 2;
   this.test = null;
 
-  this.update = function(){
+  this.update = function(delta){
     if(game.controller.up){
       this.pos.y-= this.speed;
     }
