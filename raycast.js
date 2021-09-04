@@ -173,7 +173,32 @@ const RAY = {
   //Takes an origin, a target array,rectObj, or line, and a direction to point in.
   cast: function(start,target,dir){
       if(target.length != undefined){
-        //TODO this is an array of castable things, so do each onept
+        //TODO this is an array of castable things, so do each object
+        let points = [];
+
+        target.forEach(t => {
+          let hit = this.cast(t,point)
+          if(hit != null){
+            points.push(hit);
+          }
+        })
+
+        if(points.length == 0){
+          return null;
+        }else if(points.length == 1){
+          return points[0];
+        }else{
+          let record = Infinity;
+          let shortestIntersect = null;
+          points.forEach(pt=>{
+            let dist = distance(this.pos,pt);
+            if(dist < record){
+              shortestIntersect = pt;
+              record = dist;
+            }
+          })
+          return shortestIntersect;
+        }
       }
       if(target.angle != undefined){
         //This is an object, so do an object cast instead
