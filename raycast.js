@@ -38,6 +38,21 @@ let Ray = function(pos){
       }
     }
     if(target.angle != undefined){
+      //check if we are even in the right quadrant, if not return null
+      //This should speed things up by about 4 depending on where the player is
+
+      //Get x positive or negative from this direction
+      let tX = target.pos.x - this.pos.x;
+      let tY = target.pos.y - this.pos.y;
+      //if tX is positive, target is to the left, otherwise to the right
+      if( (this.pos.x + target.width < point.x && tX < 0) ||
+          (this.pos.x - target.width > point.x && tX > 0)){
+        return null;
+      }
+      if( (this.pos.y + target.height < point.y && tY < 0) ||
+          (this.pos.y - target.height > point.y && tY > 0)){
+        return null;
+      }
       //This is an object, so do an object cast instead
       let sides = RAY.rectToLines(target);
       // console.log(sides);
