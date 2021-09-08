@@ -47,17 +47,6 @@ let game = {
       particle.update(this.delta);
     });
 
-    // Old clumsy code
-    // this.particles.forEach(particle =>{
-    //   if(particle.dead){
-    //     this.particles.splice(
-    //       this.particles.find(p=>{
-    //       return particle.id == p.id;
-    //     }),1);
-    //   }
-    // })
-
-    //new better code for removing particles
     this.particles = this.particles.filter(p => !p.dead);
 
     this.draw();
@@ -104,8 +93,14 @@ function distance(p1,p2){
   return Math.hypot(p1.x - p2.x,p1.y - p2.y);
 }
 
+function rotateFunction(point, dir, mathFunc){
+  let cos = Math.cos(dir);
+  let sin = Math.sin(dir);
+  let temp = mathFunc(dir);
+  let x = point.x + temp.x * (cos) + temp.y * (-sin);
+  let y = point.y + temp.x * (sin) + temp.y * (cos);
+  return {x:x,y:y};
+}
+
 document.oncontextmenu =new Function("return false;")
 document.onselectstart =new Function("return false;")
-
-
-//TODO make a rotation matrix function that takes a function and rotates it
