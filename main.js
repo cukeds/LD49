@@ -96,7 +96,7 @@ function distance(p1,p2){
   return Math.hypot(p1.x - p2.x,p1.y - p2.y);
 }
 
-function rotateFunction(point, dir, mathFunc){
+function rotMatrix(point, dir, mathFunc){
   let cos = Math.cos(dir);
   let sin = Math.sin(dir);
   let processed = mathFunc();
