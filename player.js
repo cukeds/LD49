@@ -9,16 +9,16 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
 
   this.update = function(delta){
     if(game.controller.up){
-      this.speed.y -= this.acceleration;
+      this.speed.y -= this.acceleration * delta/16;
     }
     if(game.controller.down){
-      this.speed.y += this.acceleration;
+      this.speed.y += this.acceleration * delta/16;
     }
     if(game.controller.left){
-      this.speed.x -= this.acceleration;
+      this.speed.x -= this.acceleration * delta/16;
     }
     if(game.controller.right){
-      this.speed.x += this.acceleration;
+      this.speed.x += this.acceleration * delta/16;
     }
 
     if(game.mouse.click){
@@ -29,9 +29,25 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
         '#00F',
         PUPS.sin);
       p.setup = PUPS.sin;
+      let p1 = new Particle(
+        this.pos,
+        1.5,
+        {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
+        '#00F',
+        PUPS.sin);
+      p1.setup = PUPS.sin;
+      let p2 = new Particle(
+        this.pos,
+        1.5,
+        {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
+        '#00F',
+        PUPS.sin);
+      p2.setup = PUPS.sin;
       let angle = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
       p.setup(angle);
-      game.particles.push(p)
+      p1.setup(angle + Math.PI/8);
+      p2.setup(angle - Math.PI/8);
+      game.particles.push(p,p1,p2);
     }
 
     this.speed.x /=1.02;

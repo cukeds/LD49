@@ -54,8 +54,8 @@ PUPS = {
       // this.pos.y += temp.x * (sin) + temp.y * (cos);
 
       this.pos = rotateFunction(this.pos, dir, function(){
-        let x = delta/5 * Math.cos(this.angle) + 5;
-        let y = delta/5 * Math.sin(this.angle);
+        let x = delta/5 * Math.cos(this.angle) + Math.random()*5 - 2.5;
+        let y = delta/5 * Math.sin(this.angle)* Math.random();
         console.log({x: x, y: y});
         return {x: x, y: y};
       }.bind(this));

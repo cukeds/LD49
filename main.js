@@ -70,13 +70,13 @@ let game = {
     this.artist.writeText(this.delta,20,20,20,'red');
 
     this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 30, this.artist.randColor());
-    this.particles.forEach(p=>p.draw());
-    // for(let i = 0; i < this.particles.length; i++){
-    //   if(i != this.particles.length - 1){
-    //     let p = this.particles;
-    //     game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,'red');
-    //   }
-    // }
+    //this.particles.forEach(p=>p.draw());
+    for(let i = 0; i < this.particles.length; i++){
+      if(i != this.particles.length - 1){
+        let p = this.particles;
+        game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,'red');
+      }
+    }
 
     this.player.draw();
 
