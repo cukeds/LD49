@@ -9,7 +9,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   this.shootCooldownReset = 9;
   this.shootCooldown = 0;
   this.shots = 5;
-  this.maxShots = 5;
+  this.maxShots = 0;
 
   this.update = function(delta){
     if(game.controller.up){
@@ -31,16 +31,19 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
       }else{
         this.shots--;
       }
-      let p = new Particle(
-        this.pos,
-        4,
-        {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
-        '#00F',
-        PUPS.sin);
-      p.setup = PUPS.sin;
-      let angle = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
-      p.setup(angle);
-      game.particles.push(p);
+      let dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
+
+      for(let i = 0; i < 8; i++){
+        let p = new Particle(
+          this.pos,
+          4,
+          {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
+          '#00F',
+          'shotgun',[dir,Number(document.getElementById('debug0').value)]);//15]);
+        game.particles.push(p);
+      }
+
+
     }
     if(this.shootCooldown > 0){
       this.shootCooldown -= delta/16;
