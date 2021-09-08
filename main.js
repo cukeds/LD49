@@ -12,6 +12,7 @@ let game = {
   timestamp: 0,
   particles: [],
   id: 1,
+  drawParticleLines: false,
 
   setup: function(){
     this.artist = new Artist(this.width,this.height);
@@ -59,11 +60,13 @@ let game = {
     this.artist.writeText(this.delta,20,20,20,'red');
 
     this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 30, this.artist.randColor());
-    //this.particles.forEach(p=>p.draw());
-    for(let i = 0; i < this.particles.length; i++){
-      if(i != this.particles.length - 1){
-        let p = this.particles;
-        game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,'red');
+    this.particles.forEach(p=>p.draw());
+    if(this.drawParticleLines){
+      for(let i = 0; i < this.particles.length; i++){
+        if(i != this.particles.length - 1){
+          let p = this.particles;
+          game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,'red');
+        }
       }
     }
 
@@ -96,9 +99,9 @@ function distance(p1,p2){
 function rotateFunction(point, dir, mathFunc){
   let cos = Math.cos(dir);
   let sin = Math.sin(dir);
-  let temp = mathFunc(dir);
-  let x = point.x + temp.x * (cos) + temp.y * (-sin);
-  let y = point.y + temp.x * (sin) + temp.y * (cos);
+  let processed = mathFunc();
+  let x = point.x + (processed.x * (cos) + processed.y * (-sin));
+  let y = point.y + (processed.x * (sin) + processed.y * (cos));
   return {x:x,y:y};
 }
 

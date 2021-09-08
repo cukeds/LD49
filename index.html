@@ -8,6 +8,14 @@
     <canvas id="television">
 
     </canvas>
+    <div>
+      <label id="debug0label">Amplitude</label>
+      <input id="debug0" type="range" min=1 max=200 step=0.1 value=100>
+      <label id="debug1label">Frequency</label>
+      <input id="debug1" type="range" min=1 max=20 step=0.1 value=10>
+      <label id="debug2label">Angle</label>
+      <input id="debug2" type="range" min=0 max=6.28 step=0.01>
+    </div>
 
     <script src="artist.js" charset="utf-8"></script>
     <script src="raycast.js" charset="utf-8"></script>
@@ -16,6 +24,7 @@
     <script src="controller.js" charset="utf-8"></script>
     <script src="player.js" charset="utf-8"></script>
     <script src="particle.js" charset="utf-8"></script>
+    <script src="debug.js" charset="utf-8"></script>
     <script src="main.js" charset="utf-8"></script>
   </body>
 </html>

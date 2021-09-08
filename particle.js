@@ -1,24 +1,30 @@
-let Particle = function(pos,size,speed,color,updateCallback){
+let Particle = function(pos,size,speed,color,setupName){
   this.id = game.getId();
   this.pos = {};
   this.speed = {};
+  this.startPos = {};
+  this.startPos.x = pos.x;
+  this.startPos.y = pos.y;
   this.pos.x = pos.x;
   this.pos.y = pos.y;
   this.radius = size;
   this.speed.x = speed.x;
   this.speed.y = speed.y;
   this.color = color;
-  this.life = 1000;
+  this.life = 0;
+  this.maxLife = 1000;
   this.dead = false;
 
-  if(updateCallback != undefined){
-    this.update = updateCallback;
+
+  if(setupName != undefined){
+    this.setup = PUPS[setupName];
+    this.setup();
   }else{
     this.update = function(delta){
-      if(this.life < 0 && !this.dead){
+      if(this.life >= this.maxLife && !this.dead){
         this.dead = true;
       }
-      this.life -= delta;
+      this.life += delta;
       this.pos.x += this.speed.x * delta;
       this.pos.y += this.speed.y * delta;
       this.speed.x /= 1.01;
@@ -36,41 +42,51 @@ let Particle = function(pos,size,speed,color,updateCallback){
 //Particle Update Patterns
 PUPS = {
   //these are setup functions and will assign the proper update function upon running
-  sin: function(dir){
+  line: function(dir){
     this.dir = dir;
-    //console.log(dir);
-    this.angle = 0;
     this.update = function(delta){
-      if(this.life < 0 && !this.dead){
+      if(this.life >= this.maxLife && !this.dead){
         this.dead = true;
       }
-      this.life -= delta;
+      this.life += delta;
 
-      this.angle += delta /16// + Math.random();
-      // let cos = Math.cos(dir);
-      // let sin = Math.sin(dir);
-      // temp = {x: delta/5 * Math.cos(this.angle) + 5, y: delta/5 * Math.cos(this.angle)}
-      // this.pos.x += temp.x * (cos) + temp.y * (-sin);
-      // this.pos.y += temp.x * (sin) + temp.y * (cos);
+      this.pos = rotateFunction(this.startPos,this.dir,function(){
+        return {x: this.life/2,y: 0};
+      }.bind(this))
+      // this.pos.x = this.life + 200;
+      // this.pos.y = 200
+    };
+  },
+  sin: function(dir){
+    this.dir = dir;
+    this.update = function(delta){
+      if(this.life >= this.maxLife && !this.dead){
+        this.dead = true;
+      }
+      this.life += delta;
 
-      this.pos = rotateFunction(this.pos, dir, function(){
-        let x = delta/5 * Math.cos(this.angle) + Math.random()*5 - 2.5;
-        let y = delta/5 * Math.sin(this.angle)* Math.random();
+      let amplitude = 15;
+      let frequency = 3.5*delta/16;
+
+      // let amplitude = Number(document.getElementById('debug0').value);
+      // let frequency = Number(document.getElementById('debug1').value);
+      let sin = function(){
+        let x = this.life/2;
+        let y = amplitude * Math.sin(this.life/frequency/16);
         return {x: x, y: y};
-      }.bind(this));
+      }.bind(this);
+
+      this.pos = rotateFunction(this.startPos, this.dir, sin);
+
+      // example code to show it is indeed doing a sin wave to the right
+      // this.pos.x = this.life/2 +200;
+      // this.pos.y = amplitude * Math.sin(this.life/frequency/16) +200;
 
       this.speed.x /= 1.01;
       this.speed.y /= 1.01;
     }
+  },
+  shotgun: function(dir){
+
   }
-}
-
-
-function rotateFunction(point, dir, mathFunc){
-  let cos = Math.cos(dir);
-  let sin = Math.sin(dir);
-  let temp = mathFunc(dir);
-  let x = point.x + temp.x * (cos) + temp.y * (-sin);
-  let y = point.y + temp.x * (sin) + temp.y * (cos);
-  return {x:x,y:y};
 }

@@ -6,6 +6,10 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   this.speed.x = 0;
   this.speed.y = 0;
   this.test = null;
+  this.shootCooldownReset = 9;
+  this.shootCooldown = 0;
+  this.shots = 5;
+  this.maxShots = 5;
 
   this.update = function(delta){
     if(game.controller.up){
@@ -22,7 +26,11 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     }
 
     if(game.mouse.click && this.shootCooldown <= 0){
-      this.shootCooldown = this.shootCooldownReset;
+      if(this.shots <= 0){
+        this.shootCooldown = this.shootCooldownReset;
+      }else{
+        this.shots--;
+      }
       let p = new Particle(
         this.pos,
         4,
@@ -36,6 +44,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     }
     if(this.shootCooldown > 0){
       this.shootCooldown -= delta/16;
+      this.shots = this.maxShots;
     }
 
     this.speed.x /=1.02;
