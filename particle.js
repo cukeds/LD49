@@ -47,7 +47,7 @@ PUPS = {
 
       this.angle += delta /160// + Math.random();
 
-      
+      //TODO rotation of particle about a sin wave
 
       this.pos.x += xComponent;
       this.pos.y += yComponent;
