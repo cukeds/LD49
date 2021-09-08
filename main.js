@@ -46,14 +46,20 @@ let game = {
     this.particles.forEach(particle => {
       particle.update(this.delta);
     });
-    this.particles.forEach(particle =>{
-      if(particle.dead){
-        this.particles.splice(
-          this.particles.find(p=>{
-          return particle.id == p.id;
-        }),1);
-      }
-    })
+
+    // Old clumsy code
+    // this.particles.forEach(particle =>{
+    //   if(particle.dead){
+    //     this.particles.splice(
+    //       this.particles.find(p=>{
+    //       return particle.id == p.id;
+    //     }),1);
+    //   }
+    // })
+    
+    //new better code for removing particles
+    this.particles = this.particles.filter(p => !p.dead);
+
     this.draw();
   },
 
