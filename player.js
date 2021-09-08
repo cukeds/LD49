@@ -30,7 +30,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
         PUPS.sin);
       p.setup = PUPS.sin;
       let angle = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
-      p.setup(angle);
+      p.setup(0);
       game.particles.push(p)
     }
 

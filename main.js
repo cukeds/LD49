@@ -106,3 +106,6 @@ function distance(p1,p2){
 
 document.oncontextmenu =new Function("return false;")
 document.onselectstart =new Function("return false;")
+
+
+//TODO make a rotation matrix function that takes a function and rotates it

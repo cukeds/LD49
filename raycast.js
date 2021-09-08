@@ -10,7 +10,6 @@ let Ray = function(pos){
 
   this.cast = function(target,point){
     if(target.length != undefined){
-      //TODO this is an array of castable things, so do each onept
       let points = [];
 
       target.forEach(t => {
@@ -188,7 +187,6 @@ const RAY = {
   //Takes an origin, a target array,rectObj, or line, and a direction to point in.
   cast: function(start,target,dir){
       if(target.length != undefined){
-        //TODO this is an array of castable things, so do each object
         let points = [];
 
         target.forEach(t => {
