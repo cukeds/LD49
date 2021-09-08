@@ -50,7 +50,7 @@ PUPS = {
       }
       this.life += delta;
 
-      this.pos = rotateFunction(this.startPos,this.dir,function(){
+      this.pos = rotMatrix(this.startPos,this.dir,function(){
         return {x: this.life/2,y: 0};
       }.bind(this))
       // this.pos.x = this.life + 200;
@@ -76,7 +76,7 @@ PUPS = {
         return {x: x, y: y};
       }.bind(this);
 
-      this.pos = rotateFunction(this.startPos, this.dir, sin);
+      this.pos = rotMatrix(this.startPos, this.dir, sin);
 
       // example code to show it is indeed doing a sin wave to the right
       // this.pos.x = this.life/2 +200;
