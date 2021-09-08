@@ -86,7 +86,30 @@ PUPS = {
       this.speed.y /= 1.01;
     }
   },
-  shotgun: function(dir){
+  shotgun: function(dir,spread){
+    spread = spread*Math.PI/180;
+    this.dir = dir + Math.random()*spread - spread/2;
+    this.speedAdj = Math.random()*10-5;
+    this.update = function(delta){
+      if(this.life >= this.maxLife && !this.dead){
+        this.dead = true;
+      }
+      this.life += delta;
 
+      // let amplitude = Number(document.getElementById('debug0').value);
+      // let frequency = Number(document.getElementById('debug1').value);
+      let line = function(){
+        return {x: this.life/2 + this.speedAdj,y: 0};
+      }.bind(this);
+
+      this.pos = rotMatrix(this.startPos, this.dir, line);
+
+      // example code to show it is indeed doing a sin wave to the right
+      // this.pos.x = this.life/2 +200;
+      // this.pos.y = amplitude * Math.sin(this.life/frequency/16) +200;
+
+      this.speed.x /= 1.01;
+      this.speed.y /= 1.01;
+    }
   }
 }
