@@ -1,4 +1,4 @@
-let Particle = function(pos,size,speed,color,collection,updateCallback){
+let Particle = function(pos,size,speed,color,updateCallback){
   this.id = game.getId();
   this.pos = {};
   this.speed = {};
@@ -8,9 +8,8 @@ let Particle = function(pos,size,speed,color,collection,updateCallback){
   this.speed.x = speed.x;
   this.speed.y = speed.y;
   this.color = color;
-  this.life = 160;
+  this.life = 1000;
   this.dead = false;
-  this.collection = collection;
 
   if(updateCallback != undefined){
     this.update = updateCallback;
@@ -30,6 +29,30 @@ let Particle = function(pos,size,speed,color,collection,updateCallback){
   this.draw = function(){
     if(!this.dead){
       game.artist.drawCircle(this.pos.x,this.pos.y,this.radius,this.color);
+    }
+  }
+}
+
+//Particle Update Patterns
+PUPS = {
+  //these are setup functions and will assign the proper update function upon running
+  sin: function(dir){
+    this.dir = dir;
+    this.angle = 0;
+    this.update = function(delta){
+      if(this.life < 0 && !this.dead){
+        this.dead = true;
+      }
+      this.life -= delta;
+
+      this.angle += delta /160// + Math.random();
+
+      
+
+      this.pos.x += xComponent;
+      this.pos.y += yComponent;
+      this.speed.x /= 1.01;
+      this.speed.y /= 1.01;
     }
   }
 }

@@ -1,27 +1,50 @@
 let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color = "#b20"){
   Actor.apply(this,[pos,size,image,color]);
-
-  this.speed = 2;
+  this.acceleration = .2;
+  this.maxSpeed = 5;
+  this.speed = {};
+  this.speed.x = 0;
+  this.speed.y = 0;
   this.test = null;
 
   this.update = function(delta){
     if(game.controller.up){
-      this.pos.y-= this.speed;
+      this.speed.y -= this.acceleration;
     }
     if(game.controller.down){
-      this.pos.y+= this.speed;
+      this.speed.y += this.acceleration;
     }
     if(game.controller.left){
-      this.pos.x-= this.speed;
+      this.speed.x -= this.acceleration;
     }
     if(game.controller.right){
-      this.pos.x+= this.speed;
+      this.speed.x += this.acceleration;
     }
-    game.particles.push(new Particle(
-      this.pos,
-      1.5,
-      {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
-      '#00F'))
+
+    if(game.mouse.click){
+      let p = new Particle(
+        this.pos,
+        1.5,
+        {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
+        '#00F',
+        PUPS.sin);
+      p.setup = PUPS.sin;
+      let angle = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
+      p.setup(angle);
+      game.particles.push(p)
+    }
+
+    this.speed.x /=1.02;
+    this.speed.y /=1.02;
+
+    //check if they're breaking the speed limit
+    this.speed.x =Math.min(this.maxSpeed,Math.max(-this.maxSpeed,this.speed.x));
+    this.speed.y =Math.min(this.maxSpeed,Math.max(-this.maxSpeed,this.speed.y));
+
+    this.pos.x += this.speed.x;
+    this.pos.y += this.speed.y;
+
+
   }
 
   this.draw = function(){
