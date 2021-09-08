@@ -1,4 +1,4 @@
-let Particle = function(pos,size,speed,color,setupName){
+let Particle = function(pos,size,speed,color,setupName,setupArgs){
   this.id = game.getId();
   this.pos = {};
   this.speed = {};
@@ -18,7 +18,7 @@ let Particle = function(pos,size,speed,color,setupName){
 
   if(setupName != undefined){
     this.setup = PUPS[setupName];
-    this.setup();
+    this.setup(...setupArgs);
   }else{
     this.update = function(delta){
       if(this.life >= this.maxLife && !this.dead){
