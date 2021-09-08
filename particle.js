@@ -38,6 +38,7 @@ PUPS = {
   //these are setup functions and will assign the proper update function upon running
   sin: function(dir){
     this.dir = dir;
+    console.log(dir);
     this.angle = 0;
     this.update = function(delta){
       if(this.life < 0 && !this.dead){
@@ -45,10 +46,12 @@ PUPS = {
       }
       this.life -= delta;
 
-      this.angle += delta /160// + Math.random();
-
-      this.pos.x += delta/16 * Math.cos(this.angle) + 5;
-      this.pos.y += delta/16 * Math.cos(this.angle);
+      this.angle += delta /16// + Math.random();
+      let cos = Math.cos(dir);
+      let sin = Math.sin(dir);
+      temp = {x: delta/5 * Math.cos(this.angle) + 5, y: delta/5 * Math.cos(this.angle)}
+      this.pos.x += temp.x * (cos) + temp.y * (-sin);
+      this.pos.y += temp.x * (sin) + temp.y * (cos);
       this.speed.x /= 1.01;
       this.speed.y /= 1.01;
     }
