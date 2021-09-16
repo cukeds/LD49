@@ -6,6 +6,10 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   this.speed.x = 0;
   this.speed.y = 0;
   this.test = null;
+  this.shootCooldownReset = 9;
+  this.shootCooldown = 0;
+  this.shots = 5;
+  this.maxShots = 0;
 
   this.update = function(delta){
     if(game.controller.up){
@@ -21,33 +25,29 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
       this.speed.x += this.acceleration * delta/16;
     }
 
-    if(game.mouse.click){
-      let p = new Particle(
-        this.pos,
-        1.5,
-        {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
-        '#00F',
-        PUPS.sin);
-      p.setup = PUPS.sin;
-      let p1 = new Particle(
-        this.pos,
-        1.5,
-        {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
-        '#00F',
-        PUPS.sin);
-      p1.setup = PUPS.sin;
-      let p2 = new Particle(
-        this.pos,
-        1.5,
-        {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
-        '#00F',
-        PUPS.sin);
-      p2.setup = PUPS.sin;
-      let angle = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
-      p.setup(angle);
-      p1.setup(angle + Math.PI/8);
-      p2.setup(angle - Math.PI/8);
-      game.particles.push(p,p1,p2);
+    if(game.mouse.click && this.shootCooldown <= 0){
+      if(this.shots <= 0){
+        this.shootCooldown = this.shootCooldownReset;
+      }else{
+        this.shots--;
+      }
+      let dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
+
+      for(let i = 0; i < 8; i++){
+        let p = new Particle(
+          this.pos,
+          4,
+          {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
+          '#00F',
+          'shotgun',[dir,Number(document.getElementById('debug0').value)]);//15]);
+        game.particles.push(p);
+      }
+
+
+    }
+    if(this.shootCooldown > 0){
+      this.shootCooldown -= delta/16;
+      this.shots = this.maxShots;
     }
 
     this.speed.x /=1.02;
