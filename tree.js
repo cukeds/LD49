@@ -1,85 +1,98 @@
 
-let tree = function(){
-
-    let gen = new RNG('seed');
-
+let Map = function(){
+    this.gen = new RNG('seed');
 
     this.roomSeeds = [];
 
+    //produce a list of seeds
     this.getRoomSeeds = function(nr){
-      for(let i = 5; i < nr + 5; i++){
-        this.roomSeeds.push(String.fromCharCode(gen.randInt(i) + 65) + String.fromCharCode(gen.randInt(i) + 75) + String.fromCharCode(gen.randInt(i) + 65) + String.fromCharCode(gen.randInt(i) + 70));
+      for(let i = 0; i < nr; i++){
+        let str = '';
+        for(let j = 0; j < 16; j++){
+          str += String.fromCharCode(this.gen.randInt(26) + 65);
+        }
+        this.roomSeeds.push(str);
       }
     }
 
-    let root = new Node({
-      left: null,
-      right: null,
-      up: null,
-      down: null
-    });
-
-
     // TODO (I'm not sure what I'm doing)
-    this.createTree = function(nr, start){
-      // Current = root
-      let current = start;
+    this.createMap = function(nr){
+      // Create Initial Room
+      let hostRoom = new Room();
 
-      for(let i = 0; i < nr; i++){
-
-        // Gets the room seed of the current room
-        let room = this.roomSeeds[i];
-
-        // Gets not used directions on previous node
-        let dirs = [];
-        for(let dir in root.directions){
-          if(current.directions[dir] == null){
-            dirs.push(dir);
+      //Making the remainder of rooms
+      this.roomSeeds.forEach(rSeed => {
+        hostRoom.seed = rSeed;
+        //get Unused directions from host
+        let unusedDirs = [];
+        let keys = Object.keys(host.directions);
+        keys.forEach(key => {
+          if(hostRoom.directions[key] == null){
+            unusedDirs.push(key);
           }
-        }
+        });
 
-        let roomRng = new RNG(room);
+        //Pick a random direction from available
+        let chosenDir = unusedDirs[this.gen.randInt(4)];
+        let newRoomSeed = this.roomSeeds.pop();
+        //Attach new room to host room
+        let newRoom = new Room();
+        //update the host node
+      })
 
-        // current.attach[dirs[roomRng.randInt(4)], new Node()]; doesn't work??
-        current.directions[dirs[roomRng.randInt(4)]] = new Node();
-
-
-        // I don't really do anything to keep adding rooms into rooms yet, I'm just happy I can set nodes up
-        dirs.splice(roomRng.randInt(4), 1);
-        if(roomRng.randInt(4) == 0){
-          continue
-        }
-      }
+      // for(let i = 0; i < nr; i++){
+      //   // Gets the room seed of the current room
+      //   let room = this.roomSeeds[i];
+      //
+      //   // Gets not used directions on previous node
+      //   let dirs = [];
+      //   for(let dir in root.directions){
+      //     if(current.directions[dir] == null){
+      //       dirs.push(dir);
+      //     }
+      //   }
+      //
+      //   let roomRng = new RNG(room);
+      //
+      //   // current.attach[dirs[roomRng.randInt(4)], new Room()]; doesn't work??
+      //   current.directions[dirs[roomRng.randInt(4)]] = new Room();
+      //
+      //   // I don't really do anything to keep adding rooms into rooms yet, I'm just happy I can set nodes up
+      //   dirs.splice(roomRng.randInt(4), 1);
+      //   if(roomRng.randInt(4) == 0){
+      //     continue
+      //   }
+      // }
     }
 
     this.getRoomSeeds(10);
-    this.createTree(10, root);
+    this.createMap(10, root);
     console.log(root);
 
 }
 
-let Node = function(){
 
-    this.directions = {
-      left: null,
-      right: null,
-      up: null,
-      down: null
-    }
+let Room = function(){
+  this.seed = null;
+  this.loc = {x:null,y:null};
+  this.directions = {
+    left: null,
+    right: null,
+    up: null,
+    down: null
+  };
 
-    this.setDirections = function(directions){
-      this.directions = directions;
-    };
+  this.setDirections = function(directions){
+    this.directions = directions;
+  };
 
-    this.getDirections = function(){
-      return this.directions;
-    };
+  this.getDirections = function(){
+    return this.directions;
+  };
 
-    this.attach = function(direction, node){
-      this.directions[direction] = node;
-    }
-
-
+  this.attach = function(direction, room){
+    this.directions[direction] = room;
+  }
 }
 
 let x = new tree();

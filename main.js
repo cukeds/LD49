@@ -11,10 +11,12 @@ let game = {
   delta: 0,
   timestamp: 0,
   particles: [],
+  srng: null,
   id: 1,
   drawParticleLines: false,
 
   setup: function(){
+    this.srng = new RNG('TestCase'); //TODO get player input for new seed
     this.artist = new Artist(this.width,this.height);
     this.artist.drawRect(0,0,this.width,this.height,'#aaa');
     this.mouse = new MouseController();
