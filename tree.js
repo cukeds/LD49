@@ -170,18 +170,6 @@ let Room = function(){
 
     return true;
   }
-
-  // Test function to get children nodes in array
-  this.children = function(){
-    let test = [];
-    for(let key in this.directions){
-      if(this.directions[key] != null){
-        test.push(this.directions[key]);
-      }
-    }
-    return test;
-  }
-
 }
 
 
