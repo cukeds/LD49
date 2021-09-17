@@ -13,6 +13,7 @@ let game = {
   particles: [],
   srng: null,
   id: 1,
+  map: null,
   drawParticleLines: false,
 
   setup: function(){
@@ -22,6 +23,7 @@ let game = {
     this.mouse = new MouseController();
     this.controller = new Controller();
     this.player = new Player();
+    this.map = new Map(18);
 
     for(let i = 0; i < 2; i++){
       this.actors.push(new Actor(
@@ -73,6 +75,10 @@ let game = {
     }
 
     this.player.draw();
+
+    this.map.rooms.forEach(r=>{
+      r.draw();
+    })
 
     this.actors.forEach(actor=>{
       actor.angle += Math.PI/100;
