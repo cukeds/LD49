@@ -1,7 +1,7 @@
 
-let Map = function(){
+let Map = function(nr){
     this.gen = new RNG('seed');
-
+    this.nr = nr;
     this.roomSeeds = [];
 
     //produce a list of seeds
@@ -15,17 +15,18 @@ let Map = function(){
       }
     }
 
+    let start = new Room();
     // TODO (I'm not sure what I'm doing)
-    this.createMap = function(nr){
+    this.createMap = function(){
       // Create Initial Room
-      let hostRoom = new Room();
-
+      let hostRoom = start;
+      hostRoom.seed = this.roomSeeds.pop();
+      rs = this.nr;
       //Making the remainder of rooms
-      this.roomSeeds.forEach(rSeed => {
-        hostRoom.seed = rSeed;
+      while(rs > 0){
         //get Unused directions from host
         let unusedDirs = [];
-        let keys = Object.keys(host.directions);
+        let keys = Object.keys(hostRoom.directions);
         keys.forEach(key => {
           if(hostRoom.directions[key] == null){
             unusedDirs.push(key);
@@ -34,19 +35,61 @@ let Map = function(){
 
         //Pick a random direction from available
         let chosenDir = unusedDirs[this.gen.randInt(4)];
-        let newRoomSeed = this.roomSeeds.pop();
+        let newDir;
         //Attach new room to host room
         let newRoom = new Room();
-        //update the host node
-      })
 
-      // for(let i = 0; i < nr; i++){
+        switch(chosenDir){
+          case 'left':
+            newDir = 'right';
+            break;
+          case 'right':
+            newDir = 'left';
+            break;
+          case 'up':
+            newDir = 'down';
+            break;
+          case 'down':
+            newDir = 'up';
+            break;
+          default:
+            newDir = 404;
+            break
+        }
+        if(newDir != 404){
+          let newRoomSeed = this.roomSeeds.pop();
+          if(newRoomSeed != undefined){
+            newRoom.directions[newDir] = hostRoom;
+            newRoom.seed = newRoomSeed;
+            hostRoom.directions[chosenDir] = newRoom;
+          }
+          rs--;
+        }
+
+          // DOESN'T WORK
+        // newRoom.attach(newDir, hostRoom);
+        // hostRoom.attach(chosenDir, newRoom);
+        //update the host node
+        if(this.gen.randInt(4) > 0){
+          let keys = Object.keys(hostRoom.directions);
+          let nextRooms = [];
+          keys.forEach(key => {
+            if(hostRoom.directions[key] != null){
+              nextRooms.push(key);
+            }
+          });
+          hostRoom = hostRoom.directions[nextRooms[this.gen.randInt(nextRooms.length)]];
+        }
+
+      }
+
+      // for(let i = 0; i < this.nr; i++){
       //   // Gets the room seed of the current room
       //   let room = this.roomSeeds[i];
       //
       //   // Gets not used directions on previous node
       //   let dirs = [];
-      //   for(let dir in root.directions){
+      //   for(let dir in hostRoom.directions){
       //     if(current.directions[dir] == null){
       //       dirs.push(dir);
       //     }
@@ -63,11 +106,11 @@ let Map = function(){
       //     continue
       //   }
       // }
+      return start;
     }
 
-    this.getRoomSeeds(10);
-    this.createMap(10, root);
-    console.log(root);
+    this.getRoomSeeds(nr);
+    return this.createMap(nr);
 
 }
 
@@ -77,22 +120,60 @@ let Room = function(){
   this.loc = {x:null,y:null};
   this.directions = {
     left: null,
-    right: null,
     up: null,
-    down: null
+    down: null,
+    right: null
   };
 
-  this.setDirections = function(directions){
-    this.directions = directions;
-  };
-
-  this.getDirections = function(){
-    return this.directions;
-  };
+  // this.setDirections = function(directions){
+  //   this.directions = directions;
+  // };
+  //
+  // this.getDirections = function(){
+  //   return this.directions;
+  // };
 
   this.attach = function(direction, room){
     this.directions[direction] = room;
   }
+
+
+  // Test function to get children nodes in array
+  this.children = function(){
+    let test = [];
+    for(let key in this.directions){
+      if(this.directions[key] != null){
+        test.push(this.directions[key]);
+      }
+    }
+    return test;
+  }
+  // End of said function
+
 }
 
-let x = new tree();
+
+let bfs = function(start){
+  queue = [start];
+  result = [];
+  visited = {};
+
+  visited[start.seed] = true;
+  let currentVertex;
+  while(queue.length){
+    currentVertex = queue.shift();
+    result.push(currentVertex);
+    currentVertex.children().forEach(child => {
+      if(!visited[child.seed]){
+        visited[child.seed] = true;
+        queue.push(child);
+      }
+    })
+  }
+  return result;
+
+}
+
+
+let x = new Map(15);
+console.log(bfs(x));
