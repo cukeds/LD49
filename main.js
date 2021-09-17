@@ -14,10 +14,11 @@ let game = {
   srng: null,
   id: 1,
   map: null,
-  drawParticleLines: true,
+  gridDiv: null, // Division of the grid. Set up on line 30
+  drawParticleLines: false,
   seed: "Juan5",
   curRoom: null,
-  maxEnemies: 10,
+  maxEnemies: 32,
 
   setup: function(){
     this.srng = new RNG('TestCase'); //TODO get player input for new seed
@@ -26,7 +27,9 @@ let game = {
     this.mouse = new MouseController();
     this.controller = new Controller();
     this.player = new Player();
-    this.map = new Map(18);
+    this.gridDiv = 32;  // 32 x 32 gridUnits grid
+    this.map = new Map(10);
+    this.curRoom = this.map.rooms[4];  // Sets current room to something
 
     for(let i = 0; i < 2; i++){
       this.actors.push(new Actor(
@@ -51,10 +54,10 @@ let game = {
     this.timestamp = tstamp;
     // this.actors.forEach(actor=>actor.update(this.delta));
     this.player.update(this.delta);
+    this.curRoom.update(this.delta);
     this.particles.forEach(particle => {
       particle.update(this.delta);
     });
-    //this.curRoom.update(this.delta);
     this.particles = this.particles.filter(p => !p.dead);
 
     this.draw();
@@ -67,6 +70,7 @@ let game = {
 
     this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 5, this.artist.randColor());
     this.artist.drawLine(this.player.pos.x,this.player.pos.y,game.mouse.pos.x,game.mouse.pos.y,this.artist.randColor())
+    this.curRoom.draw();
     this.particles.forEach(p=>p.draw());
     if(this.drawParticleLines){
       for(let i = 0; i < this.particles.length; i++){
@@ -76,7 +80,6 @@ let game = {
         }
       }
     }
-
     this.player.draw();
 
     // this.map.rooms.forEach(r=>{
