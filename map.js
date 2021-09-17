@@ -1,6 +1,6 @@
 
 let Map = function(numRooms){
-    this.gen = new RNG('coseed');
+    this.gen = new RNG(game.seed);
     this.numRooms = numRooms;
     this.rooms = [];
     this.roomSeeds = [];
@@ -83,8 +83,13 @@ let Map = function(numRooms){
 
 
 let Room = function(){
+  this.gen = null;
   this.seed = null;
   this.loc = {x:null,y:null};
+  this.background = null; //image
+  this.hasBeenSetup = false;
+  this.actors = [];
+  this.enemies = [];
 
   this.directions = {
     left: null,
@@ -93,7 +98,31 @@ let Room = function(){
     right: null
   };
 
+  this.setup = function(){
+    this.gen = new RNG(this.seed);
+    let numEnemies = this.gen.randInt(game.maxEnemies);
+    for(let i = 0; i < numEnemies; i++){
+      this.enemies.push(new Actor(
+          {x: randInt(this.width), y: randInt(this.height)},
+          {width:25,height:25},
+          null,
+          '#0D6'
+        )
+      );
+    }
+  }
+
+  this.playerEnters = function(){
+
+  }
+
+  this.update = function(){
+    this.actors.forEach(a => a.update());
+  }
+
   this.draw = function(){
+    this.actors.forEach(a => a.draw());
+
     game.artist.drawRect(this.loc.x * 50 + 500, this.loc.y * 50 + 400, 45,45,'blue');
   }
 
