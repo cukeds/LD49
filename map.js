@@ -79,6 +79,9 @@ let Map = function(numRooms){
 
     this.getRoomSeeds(numRooms);
     this.map = this.createMap(new Room());
+    this.rooms.forEach(r=>{
+      r.setup();
+    })
 }
 
 
@@ -90,6 +93,10 @@ let Room = function(){
   this.hasBeenSetup = false;
   this.actors = [];
   this.enemies = [];
+  this.roomSize = {x: game.width, y: game.height};
+  this.grid = new Grid();
+
+
 
   this.directions = {
     left: null,
@@ -99,17 +106,36 @@ let Room = function(){
   };
 
   this.setup = function(){
+    // ensures only one setup
+    if(this.hasBeenSetup){
+      return;
+    }
+
+    this.grid.x = this.roomSize.x / game.gridDiv;
+    this.grid.y = this.roomSize.y / game.gridDiv;
+    this.grid.setup();
+
+
     this.gen = new RNG(this.seed);
     let numEnemies = this.gen.randInt(game.maxEnemies);
+
+    // Pushes enemies into array, with an {x, y} position that's unused on grid
+      // Easier visualization to check if grid was working
+    let color = ['red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green'];
+      //
     for(let i = 0; i < numEnemies; i++){
+      let pos = this.grid.getPos(this.roomSize, this.gen); // Gets {x, y}
+
       this.enemies.push(new Actor(
-          {x: randInt(this.width), y: randInt(this.height)},
-          {width:25,height:25},
+          {x: pos.x, y: pos.y},
+          {width:32,height:32},
           null,
-          '#0D6'
+          color.shift() // should be changed
         )
       );
     }
+
+    this.hasBeenSetup = true;
   }
 
   this.playerEnters = function(){
@@ -117,13 +143,13 @@ let Room = function(){
   }
 
   this.update = function(){
-    this.actors.forEach(a => a.update());
+    this.enemies.forEach(e => e.update(game.delta));
   }
 
   this.draw = function(){
-    this.actors.forEach(a => a.draw());
+    this.enemies.forEach(e => e.draw(game.delta));
 
-    game.artist.drawRect(this.loc.x * 50 + 500, this.loc.y * 50 + 400, 45,45,'blue');
+    // game.artist.drawRect(this.loc.x * 50 + 500, this.loc.y * 50 + 400, 45,45,'blue');
   }
 
   this.attach = function(direction, newRoom, map){
@@ -166,7 +192,7 @@ let Room = function(){
       let ySame = r.loc.y == newRoom.loc.y;
       return (xOffOne && ySame) || (yOffOne && xSame);
     })
-    console.log(newRoom.loc);
+    // console.log(newRoom.loc);
     if(adjRooms.length > 4){
       console.log("YOU FUCKED UP ATTACHING THINGS");
     }
