@@ -67,19 +67,19 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     game.artist.drawRectObj(this);
 
     //Specific Style Raycast
-    game.actors.forEach(actor => {
-      let lines = RAY.rectToLines(actor);
-      lines.forEach(line => {
-        let pts = [];
-        pts.push(line.a);
-        pts.forEach(pt=>{
-          let p = this.ray.cast(game.actors,{x:pt.x,y:pt.y});
-          if(p != null){
-            game.artist.drawLine(this.pos.x, this.pos.y, p.x, p.y, '#000');
-          }
-        })
-      })
-    });
+    // game.actors.forEach(actor => {
+    //   let lines = RAY.rectToLines(actor);
+    //   lines.forEach(line => {
+    //     let pts = [];
+    //     pts.push(line.a);
+    //     pts.forEach(pt=>{
+    //       let p = this.ray.cast(game.actors,{x:pt.x,y:pt.y});
+    //       if(p != null){
+    //         game.artist.drawLine(this.pos.x, this.pos.y, p.x, p.y, '#000');
+    //       }
+    //     })
+    //   })
+    // });
 
     // //Lamp Style Raycast
     // for(let i = 0; i < 360; i+=3.6){

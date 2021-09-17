@@ -14,7 +14,10 @@ let game = {
   srng: null,
   id: 1,
   map: null,
-  drawParticleLines: false,
+  drawParticleLines: true,
+  seed: "Juan5",
+  curRoom: null,
+  maxEnemies: 10,
 
   setup: function(){
     this.srng = new RNG('TestCase'); //TODO get player input for new seed
@@ -46,12 +49,12 @@ let game = {
   update: function(tstamp){
     this.delta = tstamp - this.timestamp;
     this.timestamp = tstamp;
-    this.actors.forEach(actor=>actor.update(this.delta));
+    // this.actors.forEach(actor=>actor.update(this.delta));
     this.player.update(this.delta);
     this.particles.forEach(particle => {
       particle.update(this.delta);
     });
-
+    //this.curRoom.update(this.delta);
     this.particles = this.particles.filter(p => !p.dead);
 
     this.draw();
@@ -59,31 +62,31 @@ let game = {
 
   draw: function(){
     this.artist.drawRect(0,0,this.width,this.height,'#aaa');
-    this.artist.drawLine(10,10,100,100,"#FFF");
 
     this.artist.writeText(this.delta,20,20,20,'red');
 
-    this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 30, this.artist.randColor());
+    this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 5, this.artist.randColor());
+    this.artist.drawLine(this.player.pos.x,this.player.pos.y,game.mouse.pos.x,game.mouse.pos.y,this.artist.randColor())
     this.particles.forEach(p=>p.draw());
     if(this.drawParticleLines){
       for(let i = 0; i < this.particles.length; i++){
         if(i != this.particles.length - 1){
           let p = this.particles;
-          game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,'red');
+          game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,this.artist.randColor());
         }
       }
     }
 
     this.player.draw();
 
-    this.map.rooms.forEach(r=>{
-      r.draw();
-    })
+    // this.map.rooms.forEach(r=>{
+    //   r.draw();
+    // })
 
-    this.actors.forEach(actor=>{
-      actor.angle += Math.PI/100;
-      actor.draw();
-    });
+    // this.actors.forEach(actor=>{
+    //   actor.angle += Math.PI/100;
+    //   actor.draw();
+    // });
 
     window.requestAnimationFrame(this.update.bind(this));
   },
