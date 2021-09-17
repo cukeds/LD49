@@ -1,6 +1,6 @@
 
 let Map = function(nr){
-    this.gen = new RNG('seed');
+    this.gen = new RNG('coseed');
     this.nr = nr;
     this.roomSeeds = [];
 
@@ -153,10 +153,11 @@ let Room = function(){
 }
 
 
+// Gets a list of the rooms in an arbitrary order, first always first
 let bfs = function(start){
-  queue = [start];
-  result = [];
-  visited = {};
+  let queue = [start];
+  let result = [];
+  let visited = {};
 
   visited[start.seed] = true;
   let currentVertex;
@@ -175,5 +176,76 @@ let bfs = function(start){
 }
 
 
-let x = new Map(15);
+// Shows the Map in console as an array for testing purposes
+// Also shows the path. Each arrow is a step back to the node before
+// the shown seed. Ex: start left AAA, down BBB, <- BBB. Arrow goes back to left
+// So far it works fine
+
+let mapPath = function(start){
+ console.log('start', start.seed);
+ let v = {};
+ let path = [];
+ v[start.seed] = true;
+
+ let temp = bfs(start).length;
+ for(let i = 0; i < temp * 2; i++){
+   path[i] = [];
+   for(let j = 0; j < temp * 2; j++){
+     path[i][j] = 0;
+   }
+ }
+ path[temp-4][temp -4] = 's';
+ pathing(start, v, path, [temp -4, temp-4]);
+
+ for(let i = 0; i < temp * 2; i++){
+   console.log(path[i]);
+ }
+}
+
+// Recursively check the map
+let pathing = function(node, visited, path, currentPos){
+    node.children().forEach(room => {
+      for(let key in node.directions){
+        if(node.directions[key] == room && !visited[room.seed]){
+          console.log(key, room.seed);
+          switch(key){
+            case "up":
+              currentPos[0] -= 1;
+              break;
+            case "down":
+              currentPos[0] += 1;
+              break;
+            case "right":
+              currentPos[1] += 1;
+              break;
+            case "left":
+              currentPos[1] -= 1;
+              break;
+          }
+          path[currentPos[0]][currentPos[1]] += 1;
+          visited[room.seed] = true;
+          pathing(room, visited, path, currentPos);
+          switch(key){
+            case "up":
+              currentPos[0] += 1;
+              break;
+            case "down":
+              currentPos[0] -= 1;
+              break;
+            case "right":
+              currentPos[1] -= 1;
+              break;
+            case "left":
+              currentPos[1] += 1;
+              break;
+          }
+        }
+      }
+    })
+    console.log('<- ' + node.seed);
+}
+
+// Creates the things
+let x = new Map(7);
 console.log(bfs(x));
+mapPath(x);
