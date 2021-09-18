@@ -128,9 +128,9 @@ let Room = function(){
 
       this.enemies.push(new Actor(
           {x: pos.x, y: pos.y},
-          {width:32,height:32},
+          {width:randInt(32),height:randInt(32)},
           null,
-          color.shift() // should be changed
+          'red' // should be changed
         )
       );
     }
