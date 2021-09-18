@@ -6,8 +6,9 @@ let Grid = function(){
   // Sets up the grid with the x, y provided by the Object. Gets no parameters
   this.setup = function(){
     for(let i = 0; i < this.x; i++){
+      this.grid[i] = [];
       for(let j = 0; j < this.y; j++){
-        this.grid.push({x: i, y: j, used: false});
+        this.grid[i][j] = false;
       }
     }
   }
@@ -15,16 +16,14 @@ let Grid = function(){
   // Returns True if position is unused, False if it's used
   // Puts true values on grid. TODO: (should probably be done in getPos)
   this.checkPos = function(pos){
-    this.grid.forEach(p => {
-      if(p.x == pos.x && p.y == pos.y){
-        if(p.used == true){
-          return false;
-        }
-        p.used = true;
-      }
-    })
-    return true;
-  }
+    if(this.grid[pos.x][pos.y] == false){
+      this.grid[pos.x][pos.y] = true;
+      return true;
+    }
+    return false;
+    }
+
+
 
   // Gets an unused position on the grid based on the object size
   // Maybe should be done on Room?
