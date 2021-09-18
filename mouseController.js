@@ -4,7 +4,12 @@ let MouseController = function(){
   this.rightClick = false;
 
   window.addEventListener('mousemove', function(e){
-    let rect = e.target.getBoundingClientRect();
+    let rect;
+    try{rect = e.target.getBoundingClientRect();
+    }
+    catch{
+      console.log('moved mouse of boundaries');
+    }
     if(e.target.id == 'television'){
       this.pos.x = e.clientX - rect.left;
       this.pos.y = e.clientY - rect.top;
@@ -12,7 +17,12 @@ let MouseController = function(){
   }.bind(this))
 
   window.addEventListener('mousedown', function(e){
-    let rect = e.target.getBoundingClientRect();
+    let rect;
+    try{rect = e.target.getBoundingClientRect();
+    }
+    catch{
+      console.log('clicked mouse of boundaries while clicking');
+    }
     if(e.target.id == 'television'){
       this.pos.x = e.clientX - rect.left;
       this.pos.y = e.clientY - rect.top;
@@ -26,7 +36,12 @@ let MouseController = function(){
   }.bind(this))
 
   window.addEventListener('mouseup', function(e){
-    let rect = e.target.getBoundingClientRect();
+    let rect;
+    try{rect = e.target.getBoundingClientRect();
+    }
+    catch{
+      console.log('unclicked mouse of boundaries');
+    }
     if(e.target.id == 'television'){
       this.pos.x = e.clientX - rect.left;
       this.pos.y = e.clientY - rect.top;
