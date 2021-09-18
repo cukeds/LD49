@@ -15,10 +15,10 @@ let game = {
   id: 1,
   map: null,
   gridDiv: null, // Division of the grid. Set up on line 30
-  drawParticleLines: false,
+  drawParticleLines: true,
   seed: "Juan5",
   curRoom: null,
-  maxEnemies: 32,
+  maxEnemies: 500,
 
   setup: function(){
     this.srng = new RNG('TestCase'); //TODO get player input for new seed
@@ -29,7 +29,7 @@ let game = {
     this.player = new Player();
     this.gridDiv = 32;  // 32 x 32 gridUnits grid
     this.map = new Map(10);
-    this.curRoom = this.map.rooms[4];  // Sets current room to something
+    this.curRoom = null;  // Sets current room to something
 
     for(let i = 0; i < 2; i++){
       this.actors.push(new Actor(
@@ -54,7 +54,7 @@ let game = {
     this.timestamp = tstamp;
     // this.actors.forEach(actor=>actor.update(this.delta));
     this.player.update(this.delta);
-    this.curRoom.update(this.delta);
+    // this.curRoom.update(this.delta);
     this.particles.forEach(particle => {
       particle.update(this.delta);
     });
@@ -68,15 +68,34 @@ let game = {
 
     this.artist.writeText(this.delta,20,20,20,'red');
 
-    this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 5, this.artist.randColor());
-    this.artist.drawLine(this.player.pos.x,this.player.pos.y,game.mouse.pos.x,game.mouse.pos.y,this.artist.randColor())
-    this.curRoom.draw();
+    this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 5, 'red');
+    this.artist.drawLine(this.player.pos.x,this.player.pos.y,game.mouse.pos.x,game.mouse.pos.y, 'red')
+    // this.curRoom.draw();
     this.particles.forEach(p=>p.draw());
     if(this.drawParticleLines){
       for(let i = 0; i < this.particles.length; i++){
         if(i != this.particles.length - 1){
           let p = this.particles;
-          game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,this.artist.randColor());
+
+// Zimple line-Application Program. ZAP for short
+          // let length = {}
+          // length.x = Math.floor((p[i + 1].pos.x - p[i].pos.x) / 40);
+          // length.y = Math.floor((p[i + 1].pos.y - p[i].pos.y) / 40);
+          // // temp = rotMatrix(temp)
+          // let previous = {x:(p[i].pos.x), y: (p[i].pos.y)}
+          // for(let j = 1; j < 40; j++){
+          //   let offSetX = randInt(9) - 4;
+          //   let offSetY = randInt(9) - 4;
+          //   game.artist.drawLine(previous.x, previous.y, previous.x + (length.x) + offSetX, previous.y + (length.y) + offSetY,'#29C');
+          //   previous.x = previous.x + (length.x) + offSetX;
+          //   previous.y = previous.y + (length.y) + offSetY;
+          // }
+          //game.artist.drawLine(previous.x, previous.y, p[i+1].pos.x, p[i+1].pos.y,'#28B');
+
+// end of cookie shit
+
+
+          // game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,this.artist.randColor());
         }
       }
     }
