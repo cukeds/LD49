@@ -16,14 +16,32 @@ let Map = function(numRooms){
       }
     }
 
-    //TODO
+    // TODO: Check
     this.getRandRoom = function(){
-
+      let randomRoomInd = this.gen.randInt(this.rooms.length);
+      return this.rooms[randomRoomInd];
     }
 
-    //TODO
+    // TODO: Check
     this.getRoom = function(roomID){
 
+      // Binary Search algorithm
+      let leftBoundary = 0;
+      let rightBoundary = this.rooms.length - 1;
+      while(leftBoundary <= rightBoundary){
+        let middle = Math.floor((leftBoundary + rightBoundary) / 2);
+        let middleID = this.rooms[middle].id;
+        if(middleID == roomID){
+          return this.rooms[middle];  // Room is found
+        }
+        if(middleID < roomID){
+          leftBoundary = middle + 1;  //  Room is right half
+        }
+        else{
+          rightBoundary = middle - 1;  // Room is left half
+        }
+      }
+      return null; // Room doesn't exist
     }
 
     this.createMap = function(start){

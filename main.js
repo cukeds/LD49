@@ -27,7 +27,7 @@ let game = {
     this.mouse = new MouseController();
     this.controller = new Controller();
     this.player = new Player();
-    this.gridDiv = 32;  // 32 x 32 gridUnits grid
+    this.gridDiv = 32;  // 32px gridUnits grid
     this.map = new Map(10);
     this.curRoom = null;  // Sets current room to something
 
