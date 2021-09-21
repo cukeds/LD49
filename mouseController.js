@@ -9,6 +9,7 @@ let MouseController = function(){
     }
     catch{
       console.log('moved mouse of boundaries');
+      return;
     }
     if(e.target.id == 'television'){
       this.pos.x = e.clientX - rect.left;
@@ -22,6 +23,7 @@ let MouseController = function(){
     }
     catch{
       console.log('clicked mouse of boundaries while clicking');
+      return;
     }
     if(e.target.id == 'television'){
       this.pos.x = e.clientX - rect.left;
@@ -41,6 +43,7 @@ let MouseController = function(){
     }
     catch{
       console.log('unclicked mouse of boundaries');
+      return;
     }
     if(e.target.id == 'television'){
       this.pos.x = e.clientX - rect.left;
