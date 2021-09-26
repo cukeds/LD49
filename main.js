@@ -3,7 +3,7 @@ let game = {
   height: 640,
   artist: null,
   sceneManager: null,
-  scene: null,
+  sceneCur: null,
   player: null,
   actors: [],
   mouse: null,
