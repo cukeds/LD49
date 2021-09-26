@@ -5,6 +5,7 @@ let Controller = function(){
   this.right = false;
   this.action1 = false;
   this.action2 = false;
+  this.pause = false;
   //adding client test
 
   window.addEventListener('keydown', function(e){
@@ -24,6 +25,9 @@ let Controller = function(){
       case "Space":
         break;
       case "Ctrl":
+        break;
+      case "KeyP":
+        this.pause = true;
         break;
     }
   }.bind(this))
@@ -45,6 +49,9 @@ let Controller = function(){
       case "Space":
         break;
       case "Ctrl":
+        break;
+      case "KeyP":
+        this.pause = false;
         break;
     }
   }.bind(this))
