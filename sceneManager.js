@@ -54,3 +54,11 @@ let Pause = function(tstamp){
     game.artist.writeText('PAUSED', game.width/2, game.height/2, 40, 'white');
   }
 }
+
+//TODO Room Scene
+
+//TODO Inventory Scene
+
+//TODO Start Scene
+
+//TODO etc;
