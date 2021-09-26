@@ -19,6 +19,7 @@ let game = {
   seed: "Juan5",
   curRoom: null,
   maxEnemies: 500,
+  ui: null,
 
   setup: function(){
     this.srng = new RNG('TestCase'); //TODO get player input for new seed
@@ -30,6 +31,7 @@ let game = {
     this.gridDiv = 32;  // 32px gridUnits grid
     this.map = new Map(10);
     this.curRoom = null;  // Sets current room to something
+    this.ui = new UI();
 
     for(let i = 0; i < 2; i++){
       this.actors.push(new Actor(
@@ -60,6 +62,7 @@ let game = {
     });
     this.particles = this.particles.filter(p => !p.dead);
 
+    this.ui.update();
     this.draw();
   },
 
@@ -99,6 +102,7 @@ let game = {
         }
       }
     }
+    this.ui.draw();
     this.player.draw();
 
     // this.map.rooms.forEach(r=>{
