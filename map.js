@@ -1,105 +1,103 @@
-
 let Map = function(numRooms){
-    this.gen = new RNG(game.seed);
-    this.numRooms = numRooms;
-    this.rooms = [];
-    this.roomSeeds = [];
+  this.gen = new RNG(game.seed);
+  this.numRooms = numRooms;
+  this.rooms = [];
+  this.roomSeeds = [];
 
-    //produce a list of seeds
-    this.getRoomSeeds = function(numRooms){
-      for(let i = 0; i < numRooms; i++){
-        let str = '';
-        for(let j = 0; j < 16; j++){
-          str += String.fromCharCode(this.gen.randInt(26) + 65);
-        }
-        this.roomSeeds.push(str);
+  //produce a list of seeds
+  this.getRoomSeeds = function(numRooms){
+    for(let i = 0; i < numRooms; i++){
+      let str = '';
+      for(let j = 0; j < 16; j++){
+        str += String.fromCharCode(this.gen.randInt(26) + 65);
+      }
+      this.roomSeeds.push(str);
+    }
+  }
+
+  // TODO: Check
+  this.getRandRoom = function(){
+    let randomRoomInd = this.gen.randInt(this.rooms.length);
+    return this.rooms[randomRoomInd];
+  }
+
+  // TODO: Check
+  this.getRoom = function(roomID){
+    // Binary Search algorithm
+    let leftBoundary = 0;
+    let rightBoundary = this.rooms.length - 1;
+    while(leftBoundary <= rightBoundary){
+      let middle = Math.floor((leftBoundary + rightBoundary) / 2);
+      let middleID = this.rooms[middle].id;
+      if(middleID == roomID){
+        return this.rooms[middle];  // Room is found
+      }
+      if(middleID < roomID){
+        leftBoundary = middle + 1;  //  Room is right half
+      }
+      else{
+        rightBoundary = middle - 1;  // Room is left half
       }
     }
+    return null; // Room doesn't exist
+  }
 
-    // TODO: Check
-    this.getRandRoom = function(){
-      let randomRoomInd = this.gen.randInt(this.rooms.length);
-      return this.rooms[randomRoomInd];
-    }
+  this.createMap = function(start){
+    // Create Initial Room
+    let hostRoom = start;
+    hostRoom.seed = this.roomSeeds.pop();
+    hostRoom.id = game.getId();
+    hostRoom.loc = {x:0,y:0};
+    this.rooms.push(hostRoom);
 
-    // TODO: Check
-    this.getRoom = function(roomID){
-
-      // Binary Search algorithm
-      let leftBoundary = 0;
-      let rightBoundary = this.rooms.length - 1;
-      while(leftBoundary <= rightBoundary){
-        let middle = Math.floor((leftBoundary + rightBoundary) / 2);
-        let middleID = this.rooms[middle].id;
-        if(middleID == roomID){
-          return this.rooms[middle];  // Room is found
+    let rs = this.numRooms;
+    //Making the remainder of rooms
+    while(rs > 0 && this.roomSeeds.length > 0){
+      //get Unused directions from host
+      let unusedDirs = [];
+      let keys = Object.keys(hostRoom.directions);
+      keys.forEach(key => {
+        if(hostRoom.directions[key] == null){
+          unusedDirs.push(key);
         }
-        if(middleID < roomID){
-          leftBoundary = middle + 1;  //  Room is right half
-        }
-        else{
-          rightBoundary = middle - 1;  // Room is left half
-        }
-      }
-      return null; // Room doesn't exist
-    }
-
-    this.createMap = function(start){
-      // Create Initial Room
-      let hostRoom = start;
-      hostRoom.seed = this.roomSeeds.pop();
-      hostRoom.id = game.getId();
-      hostRoom.loc = {x:0,y:0};
-      this.rooms.push(hostRoom);
-
-      rs = this.numRooms;
-      //Making the remainder of rooms
-      while(rs > 0 && this.roomSeeds.length > 0){
-        //get Unused directions from host
-        let unusedDirs = [];
-        let keys = Object.keys(hostRoom.directions);
-        keys.forEach(key => {
-          if(hostRoom.directions[key] == null){
-            unusedDirs.push(key);
-          }
-        });
-        if(unusedDirs.length == 0){
-          hostRoom = this.rooms[this.gen.randInt(this.rooms.length)];
-          continue;
-        }
-
-        //Pick a random direction from available
-        let randNum = this.gen.rand();
-        let chosenDir = null;
-        if(randNum < .8){
-          chosenDir = unusedDirs[0];
-        }else{
-          chosenDir = unusedDirs[this.gen.randInt(unusedDirs.length)];
-        }
-        //Attach new room to host room
-        let newRoom = new Room();
-
-        // Get opposite direction of chosen
-        if(chosenDir != null){
-          newRoom.seed = this.roomSeeds.pop();
-          newRoom.id = game.getId();
-          hostRoom.attach(chosenDir, newRoom,this);
-          this.rooms.push(newRoom);
-          rs--;
-        }
-
-        //Get new host room
+      });
+      if(unusedDirs.length == 0){
         hostRoom = this.rooms[this.gen.randInt(this.rooms.length)];
+        continue;
       }
 
-      return start;
+      //Pick a random direction from available
+      let randNum = this.gen.rand();
+      let chosenDir = null;
+      if(randNum < .8){
+        chosenDir = unusedDirs[0];
+      }else{
+        chosenDir = unusedDirs[this.gen.randInt(unusedDirs.length)];
+      }
+      //Attach new room to host room
+      let newRoom = new Room();
+
+      // Get opposite direction of chosen
+      if(chosenDir != null){
+        newRoom.seed = this.roomSeeds.pop();
+        newRoom.id = game.getId();
+        hostRoom.attach(chosenDir, newRoom,this);
+        this.rooms.push(newRoom);
+        rs--;
+      }
+
+      //Get new host room
+      hostRoom = this.rooms[this.gen.randInt(this.rooms.length)];
     }
 
-    this.getRoomSeeds(numRooms);
-    this.map = this.createMap(new Room());
-    this.rooms.forEach(r=>{
-      r.setup();
-    })
+    return start;
+  }
+
+  this.getRoomSeeds(numRooms);
+  this.map = this.createMap(new Room());
+  this.rooms.forEach(r=>{
+    r.setup();
+  })
 }
 
 
