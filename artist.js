@@ -1,4 +1,4 @@
-var Artist = function(screenWidth,screenHeight){
+let Artist = function(screenWidth,screenHeight){
   this.canvas = document.getElementById('television');
   this.brush = this.canvas.getContext('2d');
   this.brush.imageSmoothingEnabled = false;
@@ -6,6 +6,7 @@ var Artist = function(screenWidth,screenHeight){
   this.canvas.height = screenHeight;
   this.width = screenWidth;
   this.height = screenHeight;
+  this.sheets = [];
 
   this.writeText = function(text, x, y, size, color){
     this.brush.font = size + "px monospace";
@@ -37,21 +38,6 @@ var Artist = function(screenWidth,screenHeight){
     let maxWidth = this.brush.measureText(text);
   }
 
-  this.loadSprite = function(path, spriteWidth, spriteHeight, frames){
-    var sprite = new Image();
-    sprite.ready=false;
-    sprite.onload=function(){
-      sprite.ready=true;
-    }
-    sprite.src = path;
-    sprite.frames = frames;
-    sprite.fWidth = spriteWidth;
-    sprite.fHeight = spriteHeight;
-    sprite.cooldown = 6;
-    sprite.curFrame = randInt(frames);
-    return sprite;
-  }
-
   this.drawImageRot = function(image, x, y, width, height, rot){
     if(image.ready == true){
       this.brush.translate(x,y);
@@ -66,31 +52,29 @@ var Artist = function(screenWidth,screenHeight){
     return degs*Math.PI/180;
   }
 
-  this.drawSprite = function(sprite,x,y,width,height){
-    if(sprite.ready == true){
-      var xFramePos = (sprite.fWidth * sprite.curFrame) % sprite.width;
-      var yFramePos = Math.floor((sprite.curFrame * sprite.fWidth) / sprite.width)*sprite.fHeight;
-        this.brush.drawImage(sprite, xFramePos,yFramePos,sprite.fWidth, sprite.fHeight,x,y,width,height);
-        if(sprite.cooldown>0){
-          sprite.cooldown--;
-        }else{
-          sprite.curFrame = (sprite.curFrame + 1) % sprite.frames;
-          if(sprite.curFrame > sprite.frames){
-            sprite.curFrame=0;
-          }
-          sprite.cooldown = 6;
-        }
-      }
-  }
-
   this.loadImg = function(path){
-  	var image = new Image();
+  	let image = new Image();
   	image.ready = false;
   	image.onload = function(){
   		image.ready = true;
   	};
   	image.src = path;
   	return image;
+  }
+
+  this.loadSpriteSheet = function(name, path){
+    let image = new Image();
+    image.ready = false;
+    image.onload = function(){
+      image.ready = true;
+    };
+    image.src = path;
+    image.name = name;
+    if(this.sheets[name]){
+      console.log(`Spritesheet ${name} already exists! Adding it anyways but we done fucked up somewhere`);
+    }
+    this.sheets[name] = image;
+
   }
 
   this.drawImage = function(image,x,y,width,height){
@@ -101,7 +85,7 @@ var Artist = function(screenWidth,screenHeight){
 
   this.drawImageObj = function(obj){
     if(obj.image.ready == true){
-      this.brush.drawImage(obj.image, obj.x, obj.y, obj.width, obj.height);
+      this.brush.drawImage(obj.image, obj.pos.x, obj.pos.y, obj.width, obj.height);
     }
   }
 
@@ -127,12 +111,18 @@ var Artist = function(screenWidth,screenHeight){
     this.brush.closePath();
   }
 
-  // this.drawRectObj = function(obj){
-  //   this.brush.beginPath();
-  //   this.brush.fillStyle = obj.color;
-  //   this.brush.fillRect(obj.pos.x - obj.width/2, obj.pos.y - obj.height/2, obj.width, obj.height);
-  //   this.brush.closePath();
-  // }
+  this.drawSpriteFromSheet = function(sheet, box, pos, width, height){
+    let image = this.sheets[sheet];
+    if(this.sheets[sheet] == undefined){
+      console.log(`Trying to draw sprite sheet ${sheet} that hasn't loaded yet. Bailing on the draw`);
+      return;
+    }
+
+    this.brush.drawImage(image,
+      box.x,box.y,box.w,box.h,
+      pos.x - (width/2),pos.y - (height/2),width,height);
+  }
+
   this.drawRectObj = function(obj){
     this.brush.save();
     this.brush.translate(obj.pos.x , obj.pos.y );
@@ -162,27 +152,86 @@ var Artist = function(screenWidth,screenHeight){
   }
 
   this.randColor = function(){
-    var colorNum = ['0','1',"2","3","4","5","6","7","8","9","A","B","C","D","E","F"];
-    var color = "#";
-    for(var i = 0; i < 6 ; i++){
+    let colorNum = ['0','1',"2","3","4","5","6","7","8","9","A","B","C","D","E","F"];
+    let color = "#";
+    for(let i = 0; i < 6 ; i++){
   	  color = color + colorNum[Math.floor(Math.random()*16)];
     }
     return color;
   }
+
+  this.unpackSpriteSheet = function(name,
+      jsonPath = 'https://www.phlip45.com/LD49/json/'){
+    // Get JSON Data
+    let requestURL = `${jsonPath}${name}`;
+    let request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+
+    //Make a blank sprite
+    let sprite = new Sprite();
+
+    //inject JSON data into sprite as soon as we get it
+    request.onload = function(e){
+      sprite.setup(request.response);
+    }
+
+    //send back sprite
+    return sprite;
+  }
 }
 
-var Sprite = function(path, spriteWidth, spriteHeight,frames){
-  this.img = new Image();
-  this.ready=false;
+let Sprite = function(){
+  this.sheet = null;
+  this.ready = false;
+  this.tags = [];
+  this.frames = [];
+  this.curFrame = null;
+  this.curAnim = null;
+  this.width = 0;
+  this.height = 0;
 
-  this.src = path;
-  this.frames = frames;
-  this.fWidth = spriteWidth;
-  this.fHeight = spriteHeight;
-  this.cooldown = 6;
-  this.curFrame = 0;
+  this.setup = function(data){
+    //TODO Separate out frame data to some other array so that once a particular sprite sheet is used once, it no longer has to be loaded and instead you just point to a reference of the image and frame data.
+    this.sheet = data.meta.image.split('.')[0];
 
-  this.img.onload = function(){
-    sprite.ready=true;
+    this.width = data.frames[0].frame.w;
+    this.height = data.frames[0].frame.h;
+    for(let i = 0; i < data.frames.length; i++){
+      this.frames[i] = {
+        box: {
+          x: data.frames[i].frame.x,
+          y: data.frames[i].frame.y,
+          w: data.frames[i].frame.w,
+          h: data.frames[i].frame.h
+        },
+        duration: data.frames[i].duration
+      }
+    }
+    this.curFrame = 0;
+    data.meta.frameTags.forEach(tag=>{
+      this.tags[tag.name] = {
+        from: tag.from,
+        to: tag.to,
+        direction: tag.direction
+      }
+    })
+
+    this.dataReady = true;
   }
+
+  this.update = function(delta){
+
+  }
+
+  this.draw = function(pos, width = this.height, height = this.width){
+    game.artist.drawSpriteFromSheet(this.sheet, this.frames[this.curFrame].box, pos, width, height)
+  }
+
+  this.setAnim = function(tagName){
+
+  }
+
+
 }
