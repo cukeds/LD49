@@ -120,7 +120,7 @@ let Artist = function(screenWidth,screenHeight){
 
     this.brush.drawImage(image,
       box.x,box.y,box.w,box.h,
-      pos.x - (width/2),pos.y - (height/2),width,height);
+      Math.floor(pos.x - (width/2)),Math.floor(pos.y - (height/2)),width,height);
   }
 
   this.drawRectObj = function(obj){
@@ -189,8 +189,11 @@ let Sprite = function(){
   this.frames = [];
   this.curFrame = null;
   this.curAnim = null;
+  this.frameTime = 0;
   this.width = 0;
   this.height = 0;
+  this.pingpong = 1;
+  this.loop = true;
 
   this.setup = function(data){
     //TODO Separate out frame data to some other array so that once a particular sprite sheet is used once, it no longer has to be loaded and instead you just point to a reference of the image and frame data.
@@ -218,20 +221,69 @@ let Sprite = function(){
       }
     })
 
-    this.dataReady = true;
+    this.ready = true;
   }
 
   this.update = function(delta){
+    if(this.curAnim == null) return;
+    if(!delta){
+      throw("Trying to update sprite, but delta does not exist");
+      return;
+    }
 
+    //Add time to the current frame
+    this.frameTime += delta;
+    //Check if this frame is expired
+    if(this.frameTime > this.frames[this.curFrame].duration){
+        const anim = this.tags[this.curAnim];
+        switch(anim.direction){
+          case "forward":
+            if(this.curFrame == anim.to){
+              this.curFrame = anim.from;
+            }else{
+              this.curFrame++;
+            }
+            break;
+          case "backwards":
+            //hit the left side of the thing
+            if(this.curFrame == anim.from){
+              this.curFrame = anim.to;
+            }else{
+              this.curFrame--;
+            }
+            break;
+          case "pingpong":
+            if(this.pingpong > 0){
+              if(this.curFrame == anim.to){
+                this.curFrame = anim.to - 1;
+                this.pingpong = -this.pingpong;
+              }else{
+                this.curFrame++;
+              }
+            }else{
+              if(this.curFrame == anim.from){
+                this.curFrame = anim.from + 1;
+                this.pingpong = -this.pingpong;
+              }else{
+                this.curFrame--;
+              }
+            }
+            break;
+          default:
+            console.log(`Found animation direction ${anim.direction} which did not exist before`);
+        };
+        this.frameTime = 0;
+    }
   }
 
   this.draw = function(pos, width = this.height, height = this.width){
     game.artist.drawSpriteFromSheet(this.sheet, this.frames[this.curFrame].box, pos, width, height)
   }
 
-  this.setAnim = function(tagName){
-
+  this.setAnim = function(tagName, loop = true){
+    this.curAnim = tagName;
+    this.curFrame = this.tags[tagName].from;
+    this.frameTime = 0;
+    this.loop = loop;
   }
-
-
 }

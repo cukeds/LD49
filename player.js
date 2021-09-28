@@ -26,6 +26,12 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
       this.speed.x += this.acceleration * delta/16;
     }
 
+    if(game.mouse.click && this.sprite.curAnim != 'Anger'){
+      this.sprite.setAnim('Anger');
+    }else if(!game.mouse.click && this.sprite.curAnim != 'Idle'){
+      this.sprite.setAnim('Idle');
+    }
+
     if(game.mouse.click && this.shootCooldown <= 0){
       if(this.shots <= 0){
         this.shootCooldown = this.shootCooldownReset;
@@ -43,9 +49,10 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
           'sin',[dir])//,Number(document.getElementById('debug0').value)]);//15]);
         game.particles.push(p);
       }
-
-
     }
+
+
+
     if(this.shootCooldown > 0){
       this.shootCooldown -= delta/16;
       this.shots = this.maxShots;
@@ -61,6 +68,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     this.pos.x += this.speed.x;
     this.pos.y += this.speed.y;
 
+    this.sprite.update(delta);
 
   }
 

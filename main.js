@@ -54,7 +54,7 @@ let game = {
 
   load: function(){
     //images, sounds, etc.
-    let loadables = [this.artist.sheets];
+    let loadables = [this.artist.sheets,this.player.sprite];
     let numThings = 0;
     let thingsLoaded = 0;
     let allLoaded = true;
@@ -76,16 +76,6 @@ let game = {
         }else{
           thingsLoaded++;
         }
-      }
-    })
-    //JSON Data to load
-    loadables = [this.player.sprite];
-    loadables.forEach(l => {
-      numThings++;
-      if(l.dataReady){
-        thingsLoaded++;
-      }else{
-        allLoaded = false;
       }
     })
     if(allLoaded){
