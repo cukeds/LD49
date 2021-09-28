@@ -20,6 +20,7 @@ let game = {
   curRoom: null,
   maxEnemies: 500,
   ui: null,
+  sheetsToLoad: ['paperBall'],
 
   setup: function(){
     this.srng = new RNG('TestCase'); //TODO get player input for new seed
@@ -32,6 +33,10 @@ let game = {
     this.map = new Map(10);
     this.curRoom = null;  // Sets current room to something
     this.ui = new UI();
+
+    this.sheetsToLoad.forEach(sheet =>{
+      game.artist.loadSpriteSheet(sheet, `./assets/${sheet}.png`);
+    })
 
     for(let i = 0; i < 2; i++){
       this.actors.push(new Actor(
@@ -48,7 +53,49 @@ let game = {
   },
 
   load: function(){
-    window.requestAnimationFrame(this.update.bind(this));
+    //images, sounds, etc.
+    let loadables = [this.artist.sheets];
+    let numThings = 0;
+    let thingsLoaded = 0;
+    let allLoaded = true;
+    loadables.forEach(thing =>{
+      if(thing.length >= 0){
+        let keys = Object.keys(thing);
+        keys.forEach(k =>{
+          numThings++;
+          if(!thing[k].ready){
+            allLoaded = false;
+          }else{
+            thingsLoaded++;
+          }
+        })
+      }else{
+        numThings++;
+        if(!thing.ready){
+          allLoaded = false;
+        }else{
+          thingsLoaded++;
+        }
+      }
+    })
+    //JSON Data to load
+    loadables = [this.player.sprite];
+    loadables.forEach(l => {
+      numThings++;
+      if(l.dataReady){
+        thingsLoaded++;
+      }else{
+        allLoaded = false;
+      }
+    })
+    if(allLoaded){
+      window.requestAnimationFrame(this.update.bind(this));
+    }else{
+      game.artist.clearCanvas();
+      game.artist.writeText(`${thingsLoaded}/${numThings} loaded`,20,20,20,'black');
+      window.requestAnimationFrame(this.load.bind(this));
+
+    }
   },
 
   update: function(tstamp){

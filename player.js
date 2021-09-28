@@ -9,6 +9,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   this.shootCooldownReset = 5;
   this.shootCooldown = 0;
   this.shots = 5;
+  this.sprite = game.artist.unpackSpriteSheet('test');
   this.maxShots = 0;
 
   this.update = function(delta){
@@ -65,6 +66,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
 
   this.draw = function(){
     game.artist.drawRectObj(this);
+    this.sprite.draw(this.pos);
 
     //Specific Style Raycast
     // game.actors.forEach(actor => {
