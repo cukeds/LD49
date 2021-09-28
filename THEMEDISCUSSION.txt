@@ -15,13 +15,9 @@ Strength in numbers
 /****************************/
 On / Off
 /****************************/
-<<<<<<< Updated upstream
 ► Every night you dream about the real world, and changes you do in the dream
 world happen in the real world. The consequences of said actions you don't
 see until the next day.
-=======
-► Switches!
->>>>>>> Stashed changes
 ►
 ►
 
@@ -129,3 +125,140 @@ Unstable
 ► Each room the player enters has a time limit, and when they exit the room it crumbles and is destroyed.
 ►
 ►
+
+/****************************/
+Control the environment
+/****************************/
+► Trapt gameplay. Isaac but you only shoot traps that are in the room and have to lead enemies into them. Combos for hitting multiple traps in a row.
+=======
+/****************************/
+First day on the job
+/****************************/
+►
+►
+►
+
+/****************************/
+Strength in numbers
+/****************************/
+► Player is a tiny, tiny person. When you kill enemies a tiny person inside them pops out and joins you. Your health is just the number of tiny persons you have.
+►
+►
+
+/****************************/
+On / Off
+/****************************/
+► Every night you dream about the real world, and changes you do in the dream
+world happen in the real world. The consequences of said actions you don't
+see until the next day.
+►
+
+/****************************/
+Ghost town
+/****************************/
+► Abandoned Themed. Player enters and abandoned town and has to explore and fight ghosts in order to find the source of the disturbance. When they do they have to figure out how to banish it for good.
+► Western Themed. Player kills enemies which turn into ghosts. The ghosts tell a story or something.
+► Too Literal/stupid. The player is the ghost of a town and wanders a map attacking other cities.
+
+/****************************/
+Symbiotic relationships
+/****************************/
+► Your weapon is an alien form that's attached to your arm. Killing enemies
+with it gives the weapon power, and it keeps you alive.
+►
+►
+
+/****************************/
+It follows you
+/****************************/
+► You play as an owners pet. You took the form of a dog / cat / goose, but truly
+are a monster-like life-form. You follow your owner places, and gotta cause
+as much destruction as you can without the owner noticing.
+►
+►
+
+/****************************/
+Isolation
+/****************************/
+►
+►
+►
+
+/****************************/
+Automation
+/****************************/
+►
+►
+►
+
+/****************************/
+Teleportation
+/****************************/
+►
+►
+►
+
+/****************************/
+Momentum
+/****************************/
+►
+►
+►
+
+/****************************/
+Symmetry
+/****************************/
+►
+►
+►
+
+/****************************/
+3 rules
+/****************************/
+► Three main rules for interacting with things but they change with the seed. Would need to create about 9 rules for it to be interesting. Rules could be associated with colors or categories. for instance:
+  Combat Rules:
+    Only like colored guns can kill that colored enemy (IE Blue bullets kill blue dudes)
+    Only explosions actually kill enemies. Other damage will just knock them out for a few seconds.
+    Enemies Explode on Death
+  Item Rules:
+    Ammo is now keys. Keys don't exist no more.
+    Weapons are much more common, but you can no longer reload.
+
+  Enemy Rules:
+    Enemies only move when you move (Superhot)
+
+► Actually 3 Rules. Throw away all we worked for and create some sort of puzzle game that will probably have a decent score
+►
+
+/****************************/
+Dice
+/****************************/
+► Stats of weapons/skills etc are dice based, so 3d8 damage kinda thing.
+► Enemies are actual dice. You shoot Dice. Just integrate dice and gambling into as much stuff as possible.
+► Slice n' Dice. Melee focused, where enemies are vegetables and they get minced.
+
+/****************************/
+Parasite
+/****************************/
+►
+►
+►
+
+/****************************/
+Overflow
+/****************************/
+►
+►
+►
+
+/****************************/
+Unstable
+/****************************/
+► Each room the player enters has a time limit, and when they exit the room it crumbles and is destroyed.
+►
+►
+
+/****************************/
+Control the environment
+/****************************/
+► Trapt gameplay. Isaac but you only shoot traps that are in the room and have to lead enemies into them. Combos for hitting multiple traps in a row.
