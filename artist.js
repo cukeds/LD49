@@ -8,6 +8,9 @@ let Artist = function(screenWidth,screenHeight){
   this.height = screenHeight;
   this.sheets = [];
   this.sheetData = [];
+  this.curVideo = null;
+  this.vidTstamp = 0;
+
 
   this.writeText = function(text, x, y, size, color){
     this.brush.font = size + "px monospace";
@@ -88,6 +91,61 @@ let Artist = function(screenWidth,screenHeight){
     if(obj.image.ready == true){
       this.brush.drawImage(obj.image, obj.pos.x, obj.pos.y, obj.width, obj.height);
     }
+  }
+
+  this.loadVideo = function(path){
+    let video = document.createElement('video');
+    video.ready = false;
+    video.onload = function(){
+      video.ready = true;
+    }
+    // if(video.canPlayType(path).length > 0){
+    //   video.src = path;
+    // }
+    // else{
+    //   throw ("Browser doesn't support video type");
+    // }
+    video.src = path;
+    this.curVideo = video;
+  }
+
+  this.playVideo = function(duration = this.curVideo.duration, loop = false){
+    this.curVideo.loop = loop;
+
+
+    if(!this.curVideo.paused){
+      this.curVideo.play();
+      if(duration - this.vidTstamp > 0){
+        this.vidTstamp += game.delta/1600;
+      }
+    }
+
+    if(!this.curVideo.ended && (duration - this.vidTstamp) > 0){
+      this.brush.drawImage(this.curVideo, 0, 0);
+    }else{
+      this.curVideo.pause();
+    }
+
+    if(this.curVideo.ended){
+      this.vidTstamp = 0;
+    }
+  }
+
+  this.pauseVideo = function(){
+    if(!this.curVideo.paused){
+      this.curVideo.pause();
+    }
+    else{
+      this.curVideo.play();
+    }
+  }
+
+  this.setVideoVolume = function(volume){
+    this.curVideo.volume = volume;
+  }
+
+  this.setVideoTime = function(time){
+    this.curVideo.currentTime = time;
   }
 
   this.drawLine = function(x1,y1,x2,y2,color){
