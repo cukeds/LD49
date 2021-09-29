@@ -40,7 +40,7 @@ let Particle = function(pos,size,speed,color,setupName,setupArgs){
 }
 
 //Particle Update Patterns
-PUPS = {
+let PUPS = {
   //these are setup functions and will assign the proper update function upon running
   line: function(dir){
     this.dir = dir;
