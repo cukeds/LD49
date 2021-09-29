@@ -9,8 +9,12 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   this.shootCooldownReset = 5;
   this.shootCooldown = 0;
   this.shots = 5;
-  this.sprite = game.artist.unpackSpriteSheet('test');
+  this.sprite = null;
   this.maxShots = 0;
+
+  this.load = function(){
+    this.sprite = new Sprite('test');
+  }
 
   this.update = function(delta){
     if(game.controller.up){

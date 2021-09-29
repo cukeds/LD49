@@ -28,11 +28,13 @@ let game = {
     this.artist.drawRect(0,0,this.width,this.height,'#aaa');
     this.mouse = new MouseController();
     this.controller = new Controller();
+    game.artist.unpackSpriteSheet('test');
     this.player = new Player();
     this.gridDiv = 32;  // 32px gridUnits grid
     this.map = new Map(10);
     this.curRoom = null;  // Sets current room to something
     this.ui = new UI();
+
 
     this.sheetsToLoad.forEach(sheet =>{
       game.artist.loadSpriteSheet(sheet, `./assets/${sheet}.png`);
@@ -54,7 +56,7 @@ let game = {
 
   load: function(){
     //images, sounds, etc.
-    let loadables = [this.artist.sheets,this.player.sprite];
+    let loadables = [this.artist.sheets, this.artist.sheetData];
     let numThings = 0;
     let thingsLoaded = 0;
     let allLoaded = true;
@@ -79,10 +81,11 @@ let game = {
       }
     })
     if(allLoaded){
+      this.player.load();
       window.requestAnimationFrame(this.update.bind(this));
     }else{
-      game.artist.clearCanvas();
-      game.artist.writeText(`${thingsLoaded}/${numThings} loaded`,20,20,20,'black');
+      this.artist.clearCanvas();
+      this.artist.writeText(`${thingsLoaded}/${numThings} loaded`,20,20,20,'black');
       window.requestAnimationFrame(this.load.bind(this));
 
     }

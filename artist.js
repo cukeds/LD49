@@ -161,8 +161,16 @@ let Artist = function(screenWidth,screenHeight){
     return color;
   }
 
-  this.unpackSpriteSheet = function(name,
-      jsonPath = 'https://www.phlip45.com/LD49/json/'){
+  this.unpackSpriteSheet = function(name,jsonPath = 'https://www.phlip45.com/LD49/json/'){
+    console.log(this.sheetData[name]);
+    if(this.sheetData[name] != undefined){
+      throw(`Tried unpacking sheet ${name} but it already existed`);
+      return;
+    }
+    //Make a holding spot for the sheet to let loading things know it isn't ready
+    let tempSheet = {ready: false};
+    this.sheetData[name] = tempSheet;
+
     // Get JSON Data
     let requestURL = `${jsonPath}${name}`;
     let request = new XMLHttpRequest();
@@ -170,60 +178,50 @@ let Artist = function(screenWidth,screenHeight){
     request.responseType = 'json';
     request.send();
 
-    //Make a blank sprite
-    let sprite = new Sprite();
-
-    //inject JSON data into sprite as soon as we get it
+    //Parse JSON data into what is usable and save it to sheets
     request.onload = function(e){
-      sprite.setup(request.response);
-    }
+      let sheet = {};
+      let data = request.response;
 
-    //send back sprite
-    return sprite;
+      sheet.name = data.meta.image.split('.')[0];
+
+      sheet.width = data.frames[0].frame.w;
+      sheet.height = data.frames[0].frame.h;
+      sheet.frames = [];
+      for(let i = 0; i < data.frames.length; i++){
+        sheet.frames[i] = {
+          box: {
+            x: data.frames[i].frame.x,
+            y: data.frames[i].frame.y,
+            w: data.frames[i].frame.w,
+            h: data.frames[i].frame.h
+          },
+          duration: data.frames[i].duration
+        }
+      }
+      sheet.tags = [];
+      data.meta.frameTags.forEach(tag=>{
+        sheet.tags[tag.name] = {
+          from: tag.from,
+          to: tag.to,
+          direction: tag.direction
+        }
+      })
+
+      sheet.ready = true;
+      this.sheetData[name] = sheet;
+    }.bind(this);
   }
 }
-
-let Sprite = function(){
-  this.sheet = null;
-  this.ready = false;
-  this.tags = [];
-  this.frames = [];
-  this.curFrame = null;
-  this.curAnim = null;
+let Sprite = function(sheetName){
+  this.sheet = game.artist.sheetData[sheetName];
   this.frameTime = 0;
-  this.width = 0;
-  this.height = 0;
+  this.curFrame = 0;
+  this.curAnim = this.sheet.tags[0];
+  this.width = this.sheet.width;
+  this.height = this.sheet.height;
   this.pingpong = 1;
   this.loop = true;
-
-  this.setup = function(data){
-    //TODO Separate out frame data to some other array so that once a particular sprite sheet is used once, it no longer has to be loaded and instead you just point to a reference of the image and frame data.
-    this.sheet = data.meta.image.split('.')[0];
-
-    this.width = data.frames[0].frame.w;
-    this.height = data.frames[0].frame.h;
-    for(let i = 0; i < data.frames.length; i++){
-      this.frames[i] = {
-        box: {
-          x: data.frames[i].frame.x,
-          y: data.frames[i].frame.y,
-          w: data.frames[i].frame.w,
-          h: data.frames[i].frame.h
-        },
-        duration: data.frames[i].duration
-      }
-    }
-    this.curFrame = 0;
-    data.meta.frameTags.forEach(tag=>{
-      this.tags[tag.name] = {
-        from: tag.from,
-        to: tag.to,
-        direction: tag.direction
-      }
-    })
-
-    this.ready = true;
-  }
 
   this.update = function(delta){
     if(this.curAnim == null) return;
@@ -236,11 +234,11 @@ let Sprite = function(){
     this.frameTime += delta;
 
     //Check if this frame is expired
-    if(this.frameTime < this.frames[this.curFrame].duration){
+    if(this.frameTime < this.sheet.frames[this.curFrame].duration){
       return;
     }
 
-    const anim = this.tags[this.curAnim];
+    const anim = this.sheet.tags[this.curAnim];
     switch(anim.direction){
       case "forward":
         if(this.curFrame == anim.to){
@@ -282,12 +280,12 @@ let Sprite = function(){
   }
 
   this.draw = function(pos, width = this.height, height = this.width){
-    game.artist.drawSpriteFromSheet(this.sheet, this.frames[this.curFrame].box, pos, width, height)
+    game.artist.drawSpriteFromSheet(this.sheet.name, this.sheet.frames[this.curFrame].box, pos, width, height)
   }
 
   this.setAnim = function(tagName, loop = true){
     this.curAnim = tagName;
-    this.curFrame = this.tags[tagName].from;
+    this.curFrame = this.sheet.tags[tagName].from;
     this.frameTime = 0;
     this.loop = loop;
   }
