@@ -7,6 +7,7 @@ let Artist = function(screenWidth,screenHeight){
   this.width = screenWidth;
   this.height = screenHeight;
   this.sheets = [];
+  this.sheetData = [];
 
   this.writeText = function(text, x, y, size, color){
     this.brush.font = size + "px monospace";
@@ -233,47 +234,51 @@ let Sprite = function(){
 
     //Add time to the current frame
     this.frameTime += delta;
+
     //Check if this frame is expired
-    if(this.frameTime > this.frames[this.curFrame].duration){
-        const anim = this.tags[this.curAnim];
-        switch(anim.direction){
-          case "forward":
-            if(this.curFrame == anim.to){
-              this.curFrame = anim.from;
-            }else{
-              this.curFrame++;
-            }
-            break;
-          case "backwards":
-            //hit the left side of the thing
-            if(this.curFrame == anim.from){
-              this.curFrame = anim.to;
-            }else{
-              this.curFrame--;
-            }
-            break;
-          case "pingpong":
-            if(this.pingpong > 0){
-              if(this.curFrame == anim.to){
-                this.curFrame = anim.to - 1;
-                this.pingpong = -this.pingpong;
-              }else{
-                this.curFrame++;
-              }
-            }else{
-              if(this.curFrame == anim.from){
-                this.curFrame = anim.from + 1;
-                this.pingpong = -this.pingpong;
-              }else{
-                this.curFrame--;
-              }
-            }
-            break;
-          default:
-            console.log(`Found animation direction ${anim.direction} which did not exist before`);
-        };
-        this.frameTime = 0;
+    if(this.frameTime < this.frames[this.curFrame].duration){
+      return;
     }
+
+    const anim = this.tags[this.curAnim];
+    switch(anim.direction){
+      case "forward":
+        if(this.curFrame == anim.to){
+          this.curFrame = anim.from;
+        }else{
+          this.curFrame++;
+        }
+        break;
+      case "reverse":
+        //hit the left side of the thing
+        if(this.curFrame == anim.from){
+          this.curFrame = anim.to;
+        }else{
+          this.curFrame--;
+        }
+        break;
+      case "pingpong":
+        if(this.pingpong > 0){
+          if(this.curFrame == anim.to){
+            this.curFrame = anim.to - 1;
+            this.pingpong = -this.pingpong;
+          }else{
+            this.curFrame++;
+          }
+        }else{
+          if(this.curFrame == anim.from){
+            this.curFrame = anim.from + 1;
+            this.pingpong = -this.pingpong;
+          }else{
+            this.curFrame--;
+          }
+        }
+        break;
+      default:
+        console.log(`Found animation direction ${anim.direction} which did not exist before`);
+    };
+    this.frameTime = 0;
+
   }
 
   this.draw = function(pos, width = this.height, height = this.width){
