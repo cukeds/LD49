@@ -34,6 +34,7 @@ let game = {
     this.map = new Map(10);
     this.curRoom = null;  // Sets current room to something
     this.ui = new UI();
+    game.artist.loadVideo('video.mp4');
 
 
     this.sheetsToLoad.forEach(sheet =>{
@@ -89,6 +90,8 @@ let game = {
       window.requestAnimationFrame(this.load.bind(this));
 
     }
+
+
   },
 
   update: function(tstamp){
@@ -103,11 +106,19 @@ let game = {
     this.particles = this.particles.filter(p => !p.dead);
 
     this.ui.update();
+
+    if(this.mouse.rightClick){
+      this.artist.pauseVideo();
+    }
+
     this.draw();
   },
 
   draw: function(){
     this.artist.drawRect(0,0,this.width,this.height,'#aaa');
+
+    this.artist.playVideo(1);
+
 
     this.artist.writeText(this.delta,20,20,20,'red');
 
