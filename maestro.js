@@ -1,66 +1,74 @@
 let Maestro = function(){
-  this.sounds = [];
+  this.sfx = [];
   this.music = [];
   this.curMusic = null;
+  this.sfxVolume = .5;
+  this.musicVolume = .5;
 
-	this.loadSound = function(name){
+	this.loadSound = function(name, isMusic = false){
 		let sound = new Audio(`./sounds/${name}.mp3`);
     sound.name = name;
 		sound.ready = false;
-  		sound.oncanplaythrough = function(){
-  			sound.ready = true;
-  		};
-		return sound;
+		sound.oncanplaythrough = function(){
+			sound.ready = true;
+		};
+		if(isMusic){
+      this.music[name] = sound;
+    }else{
+      this.sfx[name] = sound;
+    }
 	}
 
-  this.getSound = function(name){
-    return this.sounds.find(snd => snd.name == name);
-  }
+  this.play = function(sndName, vol){
+    let sound = this.sfx[sndName];
 
-	this.play = function(sndName){
-    let sound = game.sounds[sndName];
-    sound.volume = game.sfxVolume / 100;
-    if(sound.volume <= 0){
+    if(sound == undefined){
+      console.log(`Tried to play sound ${sndName}, but it didn't exist as a sound effect.`);
       return;
     }
-    if(sound != undefined && sound.ready){
+
+    if(vol){
+      sound.volume = this.vol;
+    }else{
+      sound.volume = this.sfxVolume;
+    }
+
+    if(sound.ready){
       sound.currentTime = 0;
       sound.play();
     }
-	}
-
-  this.playVoice = function(sndName){
-    let sound = game.voices[sndName];
-    sound.volume = game.voiceVolume / 100;
-    if(sound.volume <= 0){
-      return;
-    }
-    if(sound != undefined && sound.ready){
-      sound.currentTime = 0;
-      sound.play();
-    }
-	}
-
-  this.stopVoice = function(sndName){
-    let sound = game.voices[sndName];
-    sound.pause();
   }
 
-  this.playMusic = function(sndName){
-    let sound = game.music[sndName];
+  this.musicPlay = function(sndName, restart, vol){
+    let sound = this.music[sndName];
+
+    if(sound == undefined){
+      console.log(`Tried playing music ${sndName}, but it was undefined`);
+      return;
+    }
+
     sound.loop = true;
-    if(this.music != null){
-      this.pause(this.music);
+
+    if(vol){
+      sound.volume = this.vol;
+    }else{
+      sound.volume = this.musicVolume;
     }
-    sound.volume = game.musicVolume / 100;
-    this.music = sound;
-    if(sound != undefined && sound.ready){
+
+    this.curMusic = sound;
+    if(restart){
       sound.currentTime = 0;
+    }
+    if(sound.ready){
       sound.play();
     }
   }
 
-  this.pause = function(snd){
-    snd.pause();
+  this.musicPause(){
+    this.curMusic.pause();
+  }
+
+  this.musicResume(){
+    this.curMusic.play();
   }
 }
