@@ -1,6 +1,6 @@
 let game = {
-  width: 800,
-  height: 640,
+  width: 1440,
+  height: 960,
   artist: null,
   sceneManager: null,
   sceneCur: null,
@@ -88,10 +88,7 @@ let game = {
       this.artist.clearCanvas();
       this.artist.writeText(`${thingsLoaded}/${numThings} loaded`,20,20,20,'black');
       window.requestAnimationFrame(this.load.bind(this));
-
     }
-
-
   },
 
   update: function(tstamp){
