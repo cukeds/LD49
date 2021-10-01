@@ -11,6 +11,7 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   this.shots = 5;
   this.sprite = null;
   this.maxShots = 0;
+  this.weapon = 0;
 
   this.load = function(){
     this.sprite = new Sprite('test');
