@@ -67,7 +67,18 @@ let StartScreen = function(){
 
   this.setup = function(){
     game.player = new Player();
-    let input = new CanvasInput({canvas: game.artist.canvas});
+    this.seedInput = new CanvasInput({
+      canvas: game.artist.canvas,
+      x: game.width/2-150,
+      y: game.height/3,
+      width: 300,
+      fontFamily: 'Audiowide',
+      fontSize: 45,
+      placeHolder: 'Enter Name'
+    });
+    this.seedInput.onsubmit( function(e,f){
+      game.seed = f._value;
+    });
     let pos = {
       x: 0,
       y: 0
@@ -75,6 +86,7 @@ let StartScreen = function(){
     let startButton = new Actor(pos,null,'startButton');
     startButton.pos.x = game.width/2;
     startButton.pos.y = 3*game.height/4;
+    startButton.inputGetter = this.seedInput;
 
     startButton.update = function(delta){
       this.sprite.update(delta);
@@ -86,7 +98,13 @@ let StartScreen = function(){
         if(game.mouse.click){
           game.mouse.click= false;
           this.sprite.setAnim('Clicked');
-          game.seed = prompt('Input Name:');
+          let seed = this.inputGetter.value();
+          if(seed == ''){
+            game.seed = 'Blank!'
+          }else{
+            game.seed = seed;
+          }
+          game.srng = new RNG(game.seed);
         }else{
           this.sprite.setAnim('Hover');
         }
@@ -104,6 +122,7 @@ let StartScreen = function(){
 
   this.draw = function(){
     this.drawables.forEach(d => d.draw());
+    this.seedInput.render();
   }
 
 }
