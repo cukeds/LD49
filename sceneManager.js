@@ -76,14 +76,12 @@ let StartScreen = function(){
       fontSize: 45,
       placeHolder: 'Enter Name'
     });
-    let pos = {
-      x: 0,
-      y: 0
-    }
-    let startButton = new Actor(pos,null,'startButton');
+
+    let startButton = new Actor({x:0,y:0},null,'startButton');
     startButton.pos.x = game.width/2;
     startButton.pos.y = 3*game.height/4;
     startButton.inputGetter = this.seedInput;
+
     startButton.startGame = function(){
       let seed = this.inputGetter.value();
       if(seed == ''){
@@ -92,6 +90,9 @@ let StartScreen = function(){
         game.seed = seed;
       }
       game.srng = new RNG(game.seed);
+      game.map = new Map(15);
+      game.sceneManager.pop()
+      game.sceneManager.addScene(game.map.rooms[0]);
     }
 
     startButton.update = function(delta){
