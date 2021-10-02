@@ -19,6 +19,7 @@ let game = {
   curRoom: null,
   maxEnemies: 500,
   sheetsToLoad: ['startButton'],
+  collisions: null,
 
   setup: function(){
     this.artist = new Artist(this.width,this.height);
@@ -27,6 +28,7 @@ let game = {
     this.controller = new Controller();
     this.gridDiv = 32;  // 32px gridUnits grid
     this.sceneManager = new SceneManager();
+    this.collisions = new Collision();
 
 
 
