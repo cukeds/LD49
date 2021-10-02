@@ -27,6 +27,7 @@ let Controller = function(){
         break;
       case "Ctrl":
         break;
+      case "Escape":
       case "KeyP":
         this.pause = true;
         break;
