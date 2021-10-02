@@ -13,6 +13,7 @@ let SceneManager = function(){
 
   this.addScene = function(scene){
     scene.id = game.getId();
+    scene.setup();
     this.scenes.push(scene);
   }
 
@@ -29,8 +30,8 @@ let SceneManager = function(){
     this.scenes.push(scene);
   }
 
-  this.update = function(){
-    this.scenes[this.scenes.length-1].update();
+  this.update = function(delta){
+    this.scenes[this.scenes.length-1].update(delta);
   }
 
   this.draw = function(){
@@ -60,5 +61,50 @@ let Pause = function(tstamp){
 //TODO Inventory Scene
 
 //TODO Start Scene
+let StartScreen = function(){
+  this.drawables = [];
+  this.updateables = [];
+
+  this.setup = function(){
+    game.player = new Player();
+    let pos = {
+      x: 0,
+      y: 0
+    }
+    let startButton = new Actor(pos,null,'startButton');
+    startButton.pos.x = game.width/2;
+    startButton.pos.y = 3*game.height/4;
+
+    startButton.update = function(delta){
+      this.sprite.update(delta);
+      //check if mouse over button
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          this.sprite.setAnim('Clicked');
+          game.seed = prompt('Input Name:');
+        }else{
+          this.sprite.setAnim('Hover');
+        }
+      }else{
+        this.sprite.setAnim('Idle');
+      }
+    }
+    this.drawables.push(startButton);
+    this.updateables.push(startButton);
+  }
+
+  this.update=function(delta){
+    this.updateables.forEach(u=>u.update(delta));
+  }
+
+  this.draw = function(){
+    this.drawables.forEach(d => d.draw());
+  }
+
+}
 
 //TODO etc;

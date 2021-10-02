@@ -11,7 +11,6 @@ let Artist = function(screenWidth,screenHeight){
   this.curVideo = null;
   this.vidTstamp = 0;
 
-
   this.writeText = function(text, x, y, size, color){
     this.brush.font = size + "px monospace";
     this.brush.fillStyle = color;
@@ -219,10 +218,10 @@ let Artist = function(screenWidth,screenHeight){
     return color;
   }
 
-  this.unpackSpriteSheet = function(name,jsonPath = 'https://www.phlip45.com/LD49/json/'){
+  this.unpackSpriteJSON = function(name,jsonPath = 'https://www.phlip45.com/LD49/json/'){
     console.log(this.sheetData[name]);
     if(this.sheetData[name] != undefined){
-      throw(`Tried unpacking sheet ${name} but it already existed`);
+      console.log(`Tried unpacking sheet ${name} but it already existed`);
       return;
     }
     //Make a holding spot for the sheet to let loading things know it isn't ready
@@ -271,11 +270,11 @@ let Artist = function(screenWidth,screenHeight){
     }.bind(this);
   }
 }
-let Sprite = function(sheetName){
+let Sprite = function(sheetName, parent){
   this.sheet = game.artist.sheetData[sheetName];
   this.frameTime = 0;
   this.curFrame = 0;
-  this.curAnim = this.sheet.tags[0];
+  this.curAnim =  Object.keys(this.sheet.tags)[0];
   this.width = this.sheet.width;
   this.height = this.sheet.height;
   this.pingpong = 1;
@@ -284,7 +283,7 @@ let Sprite = function(sheetName){
   this.update = function(delta){
     if(this.curAnim == null) return;
     if(!delta){
-      throw("Trying to update sprite, but delta does not exist");
+      console.log("Trying to update sprite, but delta does not exist");
       return;
     }
 
@@ -332,12 +331,12 @@ let Sprite = function(sheetName){
         break;
       default:
         console.log(`Found animation direction ${anim.direction} which did not exist before`);
-    };
+    }
     this.frameTime = 0;
 
   }
 
-  this.draw = function(pos, width = this.height, height = this.width){
+  this.draw = function(pos, width = this.width, height = this.height){
     game.artist.drawSpriteFromSheet(this.sheet.name, this.sheet.frames[this.curFrame].box, pos, width, height)
   }
 

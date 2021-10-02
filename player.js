@@ -1,20 +1,19 @@
 let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color = "#b20"){
-  Actor.apply(this,[pos,size,image,color]);
-  this.acceleration = .2;
-  this.maxSpeed = 5;
-  this.speed = {};
-  this.speed.x = 0;
-  this.speed.y = 0;
-  this.test = null;
-  this.shootCooldownReset = 5;
-  this.shootCooldown = 0;
-  this.shots = 5;
-  this.sprite = null;
-  this.maxShots = 0;
-  this.weapon = 0;
 
   this.load = function(){
-    this.sprite = new Sprite('test');
+    Actor.apply(this,[pos,size,image,color]);
+    this.acceleration = .2;
+    this.maxSpeed = 5;
+    this.speed = {};
+    this.speed.x = 0;
+    this.speed.y = 0;
+    this.test = null;
+    this.shootCooldownReset = 5;
+    this.shootCooldown = 0;
+    this.shots = 5;
+    this.maxShots = 0;
+    this.weapon = 0;
+    this.sprite = new Sprite('startButton');
   }
 
   this.update = function(delta){

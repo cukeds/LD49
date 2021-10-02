@@ -1,9 +1,8 @@
 let game = {
-  width: 1440,
-  height: 960,
+  width: 1280, //40 Grid
+  height: 800, //25 Grid
   artist: null,
   sceneManager: null,
-  sceneCur: null,
   player: null,
   actors: [],
   mouse: null,
@@ -19,8 +18,7 @@ let game = {
   seed: "Juan5",
   curRoom: null,
   maxEnemies: 500,
-  ui: null,
-  sheetsToLoad: ['paperBall'],
+  sheetsToLoad: ['startButton'],
 
   setup: function(){
     this.srng = new RNG('TestCase'); //TODO get player input for new seed
@@ -28,29 +26,30 @@ let game = {
     this.artist.drawRect(0,0,this.width,this.height,'#aaa');
     this.mouse = new MouseController();
     this.controller = new Controller();
-    game.artist.unpackSpriteSheet('test');
-    this.player = new Player();
     this.gridDiv = 32;  // 32px gridUnits grid
-    this.map = new Map(10);
-    this.curRoom = null;  // Sets current room to something
-    this.ui = new UI();
-    game.artist.loadVideo('video.mp4');
+    this.sceneManager = new SceneManager();
+
+
+    //Call Loadables
+    this.artist.loadVideo('video.mp4');
+
+    //make Starting Scene
 
 
     this.sheetsToLoad.forEach(sheet =>{
-      game.artist.loadSpriteSheet(sheet, `./assets/${sheet}.png`);
+      this.artist.loadSpriteSheet(sheet, `./assets/${sheet}.png`);
+      this.artist.unpackSpriteJSON(sheet);
     })
 
-    for(let i = 0; i < 2; i++){
-      this.actors.push(new Actor(
-          {x: randInt(this.width), y: randInt(this.height)},
-          {width:25,height:25},
-          null,
-          '#F00'
-        )
-      );
-
-    }
+    // for(let i = 0; i < 2; i++){
+    //   this.actors.push(new Actor(
+    //       {x: randInt(this.width), y: randInt(this.height)},
+    //       {width:25,height:25},
+    //       null,
+    //       '#F00'
+    //     )
+    //   );
+    // }
 
     this.load();
   },
@@ -82,7 +81,7 @@ let game = {
       }
     })
     if(allLoaded){
-      this.player.load();
+      this.sceneManager.addScene(new StartScreen());
       window.requestAnimationFrame(this.update.bind(this));
     }else{
       this.artist.clearCanvas();
@@ -94,19 +93,19 @@ let game = {
   update: function(tstamp){
     this.delta = tstamp - this.timestamp;
     this.timestamp = tstamp;
-    // this.actors.forEach(actor=>actor.update(this.delta));
-    this.player.update(this.delta);
-    // this.curRoom.update(this.delta);
-    this.particles.forEach(particle => {
-      particle.update(this.delta);
-    });
-    this.particles = this.particles.filter(p => !p.dead);
 
-    this.ui.update();
-
-    if(this.mouse.rightClick){
-      this.artist.pauseVideo();
-    }
+    this.sceneManager.update(this.delta);
+    // // this.actors.forEach(actor=>actor.update(this.delta));
+    // this.player.update(this.delta);
+    // // this.curRoom.update(this.delta);
+    // this.particles.forEach(particle => {
+    //   particle.update(this.delta);
+    // });
+    // this.particles = this.particles.filter(p => !p.dead);
+    //
+    // if(this.mouse.rightClick){
+    //   this.artist.pauseVideo();
+    // }
 
     this.draw();
   },
@@ -114,19 +113,21 @@ let game = {
   draw: function(){
     this.artist.drawRect(0,0,this.width,this.height,'#aaa');
 
-    this.artist.playVideo(1);
+    this.sceneManager.draw();
 
-
-    this.artist.writeText(this.delta,20,20,20,'red');
-
-    this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 5, 'red');
-    this.artist.drawLine(this.player.pos.x,this.player.pos.y,game.mouse.pos.x,game.mouse.pos.y, 'red')
-    // this.curRoom.draw();
-    this.particles.forEach(p=>p.draw());
-    if(this.drawParticleLines){
-      for(let i = 0; i < this.particles.length; i++){
-        if(i != this.particles.length - 1){
-          let p = this.particles;
+    // this.artist.playVideo(1);
+    //
+    //
+    // this.artist.writeText(this.delta,20,20,20,'red');
+    //
+    // this.artist.drawCircle(game.mouse.pos.x,game.mouse.pos.y, 5, 'red');
+    // this.artist.drawLine(this.player.pos.x,this.player.pos.y,game.mouse.pos.x,game.mouse.pos.y, 'red')
+    // // this.curRoom.draw();
+    // this.particles.forEach(p=>p.draw());
+    // if(this.drawParticleLines){
+    //   for(let i = 0; i < this.particles.length; i++){
+    //     if(i != this.particles.length - 1){
+    //       let p = this.particles;
 
 // Zimple line-Application Program. ZAP for short
           // let length = {}
@@ -147,11 +148,9 @@ let game = {
 
 
           // game.artist.drawLine(p[i].pos.x,p[i].pos.y, p[i+1].pos.x, p[i+1].pos.y,this.artist.randColor());
-        }
-      }
-    }
-    this.ui.draw();
-    this.player.draw();
+    //     }
+    //   }
+    // }
 
     // this.map.rooms.forEach(r=>{
     //   r.draw();

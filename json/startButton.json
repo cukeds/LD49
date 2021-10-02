@@ -1,0 +1,39 @@
+{ "frames": [
+   {
+    "filename": "startButton0.ase",
+    "frame": { "x": 0, "y": 0, "w": 160, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 64 },
+    "sourceSize": { "w": 160, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "startButton1.ase",
+    "frame": { "x": 160, "y": 0, "w": 160, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 64 },
+    "sourceSize": { "w": 160, "h": 64 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.29-x64",
+  "image": "startButton.png",
+  "format": "RGBA8888",
+  "size": { "w": 320, "h": 64 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Idle", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "Clicked", "from": 1, "to": 1, "direction": "forward" },
+   { "name": "Hover", "from": 1, "to": 1, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
