@@ -28,7 +28,6 @@ let MouseController = function(){
     if(e.target.id == 'television'){
       this.pos.x = e.clientX - rect.left;
       this.pos.y = e.clientY - rect.top;
-      console.log(e)
       if(e.button == 0){
         this.click = true;
       }else if(e.button == 2){
