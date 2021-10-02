@@ -151,12 +151,13 @@ let Room = function(){
   this.gen = null;
   this.seed = null;
   this.loc = {x:null,y:null};
-  this.background = null; //image
+  this.backdrop = null; //image
   this.hasBeenSetup = false;
   this.actors = [];
   this.enemies = [];
   this.roomSize = {x: game.width, y: game.height};
   this.grid = new Grid();
+
 
   this.directions = {
     left: null,
@@ -191,23 +192,18 @@ let Room = function(){
     this.hasBeenSetup = true;
   }
 
-  this.playerEnters = function(){
-    game.sceneManager.pop();
-    game.sceneManager.addScene(this);
-  }
-
   this.update = function(delta){
-    this.enemies.forEach(e => e.update(delta));
+    // this.enemies.forEach(e => e.update(delta));
     game.player.update(delta);
   }
 
   this.draw = function(){
     // Draw backdrop
-
+    game.artist.drawImage(0, 0, game.width, game.height, this.backdrop);
     //draw enemies
-
+      // this.enemies.forEach(e => e.draw());
     //draw player
-     this.enemies.forEach(e => e.draw());
+
      game.player.draw();
   }
 
