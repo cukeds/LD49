@@ -1,7 +1,7 @@
 let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color = "#b20"){
+  Actor.apply(this,[pos,size,image,color]);
 
   this.load = function(){
-    Actor.apply(this,[pos,size,image,color]);
     this.acceleration = .2;
     this.maxSpeed = 5;
     this.speed = {};
@@ -16,9 +16,11 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     this.sprite = new Sprite('startButton');
     this.width = this.sprite.width;
     this.height = this.sprite.height;
+    this.exit = null;
   }
 
   this.update = function(delta){
+    console.log('hello');
     if(game.controller.up){
       this.speed.y -= this.acceleration * delta/16;
     }
@@ -32,11 +34,13 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
       this.speed.x += this.acceleration * delta/16;
     }
 
-    if(game.mouse.click && this.sprite.curAnim != 'Anger'){
-      this.sprite.setAnim('Anger');
-    }else if(!game.mouse.click && this.sprite.curAnim != 'Idle'){
-      this.sprite.setAnim('Idle');
-    }
+    // Animation of Player when Firing
+
+    // if(game.mouse.click && this.sprite.curAnim != 'Anger'){
+    //   this.sprite.setAnim('Anger');
+    // }else if(!game.mouse.click && this.sprite.curAnim != 'Idle'){
+    //   this.sprite.setAnim('Idle');
+    // }
 
     if(game.mouse.click && this.shootCooldown <= 0){
       if(this.shots <= 0){
@@ -58,6 +62,29 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     }
 
 
+    // this.exit keeps track of the players exit
+    switch(this.exit){
+      case 'left':
+        game.sceneManager.addScene(game.sceneManager.pop().directions.left);
+        this.pos.x += game.width;
+        this.exit = null;
+        break;
+      case 'right':
+        this.pos.x -= game.width;
+        game.sceneManager.addScene(game.sceneManager.pop().directions.right);
+        this.exit = null;
+        break;
+      case 'up':
+        this.pos.y += game.height;
+        game.sceneManager.addScene(game.sceneManager.pop().directions.up);
+        this.exit = null;
+        break;
+      case 'down':
+        this.pos.y -= game.height;
+        game.sceneManager.addScene(game.sceneManager.pop().directions.down);
+        this.exit = null;
+        break;
+    }
 
     if(this.shootCooldown > 0){
       this.shootCooldown -= delta/16;
