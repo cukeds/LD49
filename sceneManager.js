@@ -76,9 +76,6 @@ let StartScreen = function(){
       fontSize: 45,
       placeHolder: 'Enter Name'
     });
-    this.seedInput.onsubmit( function(e,f){
-      game.seed = f._value;
-    });
     let pos = {
       x: 0,
       y: 0
@@ -87,6 +84,15 @@ let StartScreen = function(){
     startButton.pos.x = game.width/2;
     startButton.pos.y = 3*game.height/4;
     startButton.inputGetter = this.seedInput;
+    startButton.startGame = function(){
+      let seed = this.inputGetter.value();
+      if(seed == ''){
+        game.seed = 'Blank!'
+      }else{
+        game.seed = seed;
+      }
+      game.srng = new RNG(game.seed);
+    }
 
     startButton.update = function(delta){
       this.sprite.update(delta);
@@ -98,13 +104,7 @@ let StartScreen = function(){
         if(game.mouse.click){
           game.mouse.click= false;
           this.sprite.setAnim('Clicked');
-          let seed = this.inputGetter.value();
-          if(seed == ''){
-            game.seed = 'Blank!'
-          }else{
-            game.seed = seed;
-          }
-          game.srng = new RNG(game.seed);
+          this.startGame();
         }else{
           this.sprite.setAnim('Hover');
         }
@@ -124,6 +124,8 @@ let StartScreen = function(){
     this.drawables.forEach(d => d.draw());
     this.seedInput.render();
   }
+
+
 
 }
 

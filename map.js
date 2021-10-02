@@ -112,8 +112,6 @@ let Room = function(){
   this.roomSize = {x: game.width, y: game.height};
   this.grid = new Grid();
 
-
-
   this.directions = {
     left: null,
     up: null,
