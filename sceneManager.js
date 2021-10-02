@@ -12,9 +12,12 @@ let SceneManager = function(){
   this.scenes = [];
 
   this.addScene = function(scene){
-    scene.id = game.getId();
+    if(!scene.id){
+      scene.id = game.getId();
+    }
     scene.setup();
     this.scenes.push(scene);
+    return scene;
   }
 
   this.removeScene = function(scene){

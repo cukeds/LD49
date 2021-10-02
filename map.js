@@ -195,12 +195,17 @@ let Room = function(){
 
   }
 
-  this.update = function(){
-    this.enemies.forEach(e => e.update(game.delta));
+  this.update = function(delta){
+    this.enemies.forEach(e => e.update(delta));
   }
 
   this.draw = function(){
-    // this.enemies.forEach(e => e.draw(game.delta));
+    // Draw backdrop
+
+    //draw enemies
+
+    //draw player
+     this.enemies.forEach(e => e.draw());
     game.artist.drawRect(this.loc.x * 50 + 500, this.loc.y * 50 + 400, 45,45,'blue');
   }
 
