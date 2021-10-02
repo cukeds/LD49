@@ -1,10 +1,10 @@
-let Actor = function(pos, size, spriteName){
+let Actor = function(pos, spriteName, tag){
   this.pos = {};
   this.pos.x = pos.x;
   this.pos.y = pos.y;
   this.spriteName = spriteName;
   if(spriteName){
-    this.sprite = new Sprite(spriteName);
+    this.sprite = new Sprite(spriteName, tag);
     this.width = this.sprite.width;
     this.height = this.sprite.height;
   }

@@ -188,29 +188,35 @@ let Room = function(){
              }
              this.actors.push(new Obstacle(pos, 'testObstacles','Wall'));
         }
+        let pos2 = {
+          x: i * 32 + 16,
+          y: j * 32 + 16
+        }
+        if(randInt(100) > 98.9 && i > 3 && j > 3) this.actors.push(new Obstacle(pos2, 'testObstacles','Wall'));
+        if(randInt(100) > 98.9 && i > 3 && j > 3) this.enemies.push(new Enemy(pos2, 'shooty'));
       }
     }
 
 
     this.gen = new RNG(this.seed);
-    let numEnemies = this.gen.randInt(game.maxEnemies);
+    // let numEnemies = this.gen.randInt(game.maxEnemies);
 
     // Pushes enemies into array, with an {x, y} position that's unused on grid
       // Easier visualization to check if grid was working
-    for(let i = 0; i < numEnemies; i++){
-      let pos = this.grid.getPos(this.roomSize, this.gen); // Gets {x, y}
-
-      this.enemies.push(new Actor(
-          {x: pos.x, y: pos.y}, null, 'startButton'));
-    }
+    // for(let i = 0; i < numEnemies; i++){
+    //   let pos = this.grid.getPos(this.roomSize, this.gen); // Gets {x, y}
+    //
+    //   this.enemies.push(new Actor(
+    //       {x: pos.x, y: pos.y}, null, 'startButton'));
+    // }
 
     this.hasBeenSetup = true;
   }
 
   this.update = function(delta){
-    // this.enemies.forEach(e => e.update(delta));
-    game.player.update(delta);
-    this.actors.forEach(a => a.update(delta));
+    this.enemies.forEach(e => e.update(delta, this));
+    game.player.update(delta, this);
+    this.actors.forEach(a => a.update(delta, this));
   }
 
   this.draw = function(){
@@ -218,7 +224,7 @@ let Room = function(){
     game.artist.drawImage(0, 0, game.width, game.height, this.backdrop);
     this.actors.forEach(a => a.draw());
     //draw enemies
-      // this.enemies.forEach(e => e.draw());
+    this.enemies.forEach(e => e.draw());
     //draw player
 
      game.player.draw();

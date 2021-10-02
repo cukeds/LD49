@@ -289,11 +289,11 @@ let StartScreen = function(){
   }
 
   this.setup = function(){
-    game.player = new Player();
+    game.player = new Player({x:game.width/2,y:game.height/2}, 'startButton');
     game.player.load();
 
 
-    let startButton = new Actor({x:0,y:0},null,'startButton');
+    let startButton = new Actor({x:0,y:0},'startButton');
     startButton.pos.x = game.width/2;
     startButton.pos.y = 3*game.height/4;
     startButton.startGame = function(){
