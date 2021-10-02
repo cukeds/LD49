@@ -198,7 +198,7 @@ let Room = function(){
 
   this.update = function(delta){
     this.enemies.forEach(e => e.update(delta));
-    game.player.update();
+    game.player.update(delta);
   }
 
   this.draw = function(){

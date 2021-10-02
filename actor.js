@@ -3,9 +3,11 @@ let Actor = function(pos, size, spriteName){
   this.pos.x = pos.x;
   this.pos.y = pos.y;
   this.spriteName = spriteName;
-  this.sprite = new Sprite(spriteName);
-  this.width = this.sprite.width;
-  this.height = this.sprite.height;
+  if(spriteName){
+    this.sprite = new Sprite(spriteName);
+    this.width = this.sprite.width;
+    this.height = this.sprite.height;
+  }
   this.angle = 0;
   // this.color = color;
   // this.ray = new Ray(this.pos);

@@ -14,6 +14,8 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
     this.maxShots = 0;
     this.weapon = 0;
     this.sprite = new Sprite('startButton');
+    this.width = this.sprite.width;
+    this.height = this.sprite.height;
   }
 
   this.update = function(delta){
