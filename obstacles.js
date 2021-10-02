@@ -14,7 +14,7 @@ let Obstacle = function(pos, sheet, tag){
 
 const OBSTACLES = {
   'Wall': {
-    update: function(){
+    update: function(delta){
         let dir = game.collisions.rectangular(game.player,this);
         if(!dir){
           return;
@@ -39,6 +39,7 @@ const OBSTACLES = {
             break;
         }
       },
+
     sheetName: 'testObstacles',
     tag: 'Wall',
     walkable: false
