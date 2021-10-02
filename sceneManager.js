@@ -90,15 +90,18 @@ let StartScreen = function(){
     let startButton = new Actor({x:0,y:0},null,'startButton');
     startButton.pos.x = game.width/2;
     startButton.pos.y = 3*game.height/4;
-    startButton.seed = input.value();
     startButton.startGame = function(){
-      if(this.seed == ''){
+      let seed = input.value();
+      if(seed == ''){
         game.seed = 'Blank!'
       }else{
         game.seed = seed;
       }
       game.srng = new RNG(game.seed);
       game.map = new Map(15);
+      game.weaponsList = []
+      WEAPONS.assignList();
+
       game.sceneManager.pop().end();
       game.sceneManager.addScene(game.map.rooms[0]);
     }

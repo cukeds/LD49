@@ -3,6 +3,7 @@ let game = {
   height: 800, //25 Grid
   gridWidth: 40,
   gridHeight: 25,
+  numWeapons: 10,
   artist: null,
   sceneManager: null,
   player: null,
@@ -31,7 +32,6 @@ let game = {
     this.gridDiv = 32;  // 32px gridUnits grid
     this.sceneManager = new SceneManager();
     this.collisions = new Collision();
-
 
 
     //Call Loadables
@@ -191,6 +191,27 @@ function rotMatrix(point, dir, mathFunc){
   let x = point.x + (processed.x * (cos) + processed.y * (-sin));
   let y = point.y + (processed.x * (sin) + processed.y * (cos));
   return {x:x,y:y};
+}
+
+function combinationsReplacement(x, k) {
+  const combinationList = [];
+
+  for (let i = 0; i < x.length; i++) {
+    if (k === 1) {
+      combinationList.push([x[i]]);
+    } else {
+      const subsetCombinations = combinationsReplacement(
+      x.slice(i, x.length),
+      k - 1
+  );
+
+  for (let j = 0; j < subsetCombinations.length; j++) {
+      combinationList.push([x[i]].concat(subsetCombinations[j]));
+      }
+    }
+  }
+  
+  return combinationList;
 }
 
 document.oncontextmenu =new Function("return false;")

@@ -13,6 +13,12 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     this.shots = 5;
     this.maxShots = 0;
     this.weapon = 0;
+
+    //Weapon material trackers
+    this.matJunk = 3;
+    this.matCrystal = 3;
+    this.matEssence = 3;
+
     this.sprite = new Sprite('startButton');
     this.width = this.sprite.width;
     this.height = this.sprite.height;
@@ -131,5 +137,12 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     //     game.artist.drawLine(this.pos.x, this.pos.y, pt.x, pt.y, '#000');
     //   }
     // }
+  }
+
+  this.createWeapon = function(materialsArr){
+    //Materials Array will look like ['junk','crystal','essence'];
+    //Sorting it so order doesn't matter
+    materialsArr.sort();
+    
   }
 }

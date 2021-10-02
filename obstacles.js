@@ -22,19 +22,19 @@ const OBSTACLES = {
 
         switch(dir){
           case 'left':
-            game.player.pos.x = this.pos.x - this.width/2 - game.player.width/2;
+            game.player.pos.x = this.pos.x - this.width/2 - game.player.width/2 - 1;
             game.player.speed.x /= -15;
             break;
           case 'right':
-            game.player.pos.x = this.pos.x + this.width/2 + game.player.width/2;
+            game.player.pos.x = this.pos.x + this.width/2 + game.player.width/2 + 1;
             game.player.speed.x /= -15;
             break;
           case 'top':
-            game.player.pos.y = this.pos.y - this.height/2 - game.player.height/2;
+            game.player.pos.y = this.pos.y - this.height/2 - game.player.height/2 - 1;
             game.player.speed.y /= -15;
             break;
           case 'bottom':
-            game.player.pos.y = this.pos.y + this.height/2 + game.player.height/2;
+            game.player.pos.y = this.pos.y + this.height/2 + game.player.height/2 + 1;
             game.player.speed.y /= -15;
             break;
         }
