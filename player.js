@@ -1,5 +1,5 @@
-let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,height:10}, image, color = "#b20"){
-  Actor.apply(this,[pos,size,image,color]);
+let Player = function(pos, spriteName){
+  Actor.apply(this,[pos, spriteName]);
 
   this.load = function(){
     this.acceleration = .2;
@@ -21,9 +21,9 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     this.matCrystal = 3;
     this.matEssence = 3;
 
-    this.sprite = new Sprite('startButton');
-    this.width = this.sprite.width;
-    this.height = this.sprite.height;
+    // this.sprite = new Sprite('startButton');
+    // this.width = this.sprite.width;
+    // this.height = this.sprite.height;
     this.exit = null;
   }
 
