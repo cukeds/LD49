@@ -1,0 +1,231 @@
+{ "frames": [
+   {
+    "filename": "emCee0.ase",
+    "frame": { "x": 0, "y": 0, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 500
+   },
+   {
+    "filename": "emCee1.ase",
+    "frame": { "x": 666, "y": 0, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee2.ase",
+    "frame": { "x": 1332, "y": 0, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee3.ase",
+    "frame": { "x": 1998, "y": 0, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 500
+   },
+   {
+    "filename": "emCee4.ase",
+    "frame": { "x": 0, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee5.ase",
+    "frame": { "x": 666, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee6.ase",
+    "frame": { "x": 1332, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 500
+   },
+   {
+    "filename": "emCee7.ase",
+    "frame": { "x": 1998, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee8.ase",
+    "frame": { "x": 0, "y": 1298, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee9.ase",
+    "frame": { "x": 666, "y": 1298, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee10.ase",
+    "frame": { "x": 1332, "y": 1298, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee11.ase",
+    "frame": { "x": 1998, "y": 1298, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee12.ase",
+    "frame": { "x": 0, "y": 1947, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee13.ase",
+    "frame": { "x": 666, "y": 1947, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee14.ase",
+    "frame": { "x": 1332, "y": 1947, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 50
+   },
+   {
+    "filename": "emCee15.ase",
+    "frame": { "x": 666, "y": 1947, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee16.ase",
+    "frame": { "x": 666, "y": 1947, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 150
+   },
+   {
+    "filename": "emCee17.ase",
+    "frame": { "x": 1998, "y": 1947, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 450
+   },
+   {
+    "filename": "emCee18.ase",
+    "frame": { "x": 1332, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee19.ase",
+    "frame": { "x": 1332, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee20.ase",
+    "frame": { "x": 1332, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee21.ase",
+    "frame": { "x": 1332, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   },
+   {
+    "filename": "emCee22.ase",
+    "frame": { "x": 1332, "y": 649, "w": 666, "h": 649 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 308, "y": 76, "w": 666, "h": 649 },
+    "sourceSize": { "w": 1280, "h": 800 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.29-x64",
+  "image": "emCee.png",
+  "format": "RGBA8888",
+  "size": { "w": 2664, "h": 2596 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 8, "direction": "forward" },
+   { "name": "grow", "from": 9, "to": 15, "direction": "forward" },
+   { "name": "throb", "from": 16, "to": 17, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Body", "opacity": 255, "blendMode": "normal" },
+   { "name": "Lanes", "opacity": 255, "blendMode": "normal" },
+   { "name": "Sockets", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
