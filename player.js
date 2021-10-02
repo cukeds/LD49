@@ -20,7 +20,6 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   }
 
   this.update = function(delta){
-    console.log('hello');
     if(game.controller.up){
       this.speed.y -= this.acceleration * delta/16;
     }

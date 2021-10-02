@@ -119,8 +119,8 @@
         self.blur();
       }
     };
-    window.addEventListener('mouseup', autoBlur, true);
-    window.addEventListener('touchend', autoBlur, true);
+    // window.addEventListener('mouseup', autoBlur, true);
+    // window.addEventListener('touchend', autoBlur, true);
 
     // create the hidden input element
     self._hiddenInput = document.createElement('input');
@@ -1206,7 +1206,7 @@
       }
 
       // remove the hidden input box
-      document.body.removeChild(self._hiddenInput);
+      if (self._hiddenInput.parentNode == document.body) document.body.removeChild(self._hiddenInput);
 
       // remove off-DOM canvas
       self._renderCanvas = null;
@@ -1290,15 +1290,18 @@
      * @param  {String} text The text to measure.
      * @return {Number}      The measured width.
      */
-    _textWidth: function(text) {
-      var self = this,
-        ctx = self._renderCtx;
+     _textWidth: function(text) {
+   var self = this,
+   ctx = self._renderCtx;
 
-      ctx.font = self._fontStyle + ' ' + self._fontWeight + ' ' + self._fontSize + 'px ' + self._fontFamily;
-      ctx.textAlign = 'left';
+   if (ctx) {
 
-      return ctx.measureText(text).width;
-    },
+       ctx.font = self._fontStyle + ' ' + self._fontWeight + ' ' + self._fontSize + 'px ' + self._fontFamily;
+       ctx.textAlign = 'left';
+
+       return ctx.measureText(text).width;
+   }
+ },
 
     /**
      * Recalculate the outer with and height of the text box.
