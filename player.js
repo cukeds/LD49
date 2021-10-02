@@ -1,4 +1,4 @@
-let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color = "#b20"){
+let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,height:10}, image, color = "#b20"){
   Actor.apply(this,[pos,size,image,color]);
 
   this.load = function(){

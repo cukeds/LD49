@@ -1,6 +1,8 @@
 let game = {
   width: 1280, //40 Grid
   height: 800, //25 Grid
+  gridWidth: 40,
+  gridHeight: 25,
   artist: null,
   sceneManager: null,
   player: null,
@@ -18,7 +20,7 @@ let game = {
   seed: "Juan5",
   curRoom: null,
   maxEnemies: 500,
-  sheetsToLoad: ['startButton'],
+  sheetsToLoad: ['startButton','testObstacles'],
   collisions: null,
 
   setup: function(){

@@ -176,6 +176,21 @@ let Room = function(){
     this.grid.y = this.roomSize.y / game.gridDiv;
     this.grid.setup();
 
+    //put walls along the outside of the room.
+    for(let j = 0; j < game.gridHeight; j++){
+      for (let i = 0; i < game.gridWidth; i++){
+        //If Edges
+        if((j == 3 || j == game.gridHeight - 4 ||
+           i == 3 || i == game.gridWidth -4)  ){
+             let pos = {
+               x: i * 32 + 16,
+               y: j * 32 + 16
+             }
+             this.actors.push(new Obstacle(pos, 'testObstacles','Wall'));
+        }
+      }
+    }
+
 
     this.gen = new RNG(this.seed);
     let numEnemies = this.gen.randInt(game.maxEnemies);
@@ -195,11 +210,13 @@ let Room = function(){
   this.update = function(delta){
     // this.enemies.forEach(e => e.update(delta));
     game.player.update(delta);
+    this.actors.forEach(a => a.update(delta));
   }
 
   this.draw = function(){
     // Draw backdrop
     game.artist.drawImage(0, 0, game.width, game.height, this.backdrop);
+    this.actors.forEach(a => a.draw());
     //draw enemies
       // this.enemies.forEach(e => e.draw());
     //draw player

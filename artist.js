@@ -219,7 +219,6 @@ let Artist = function(screenWidth,screenHeight){
   }
 
   this.unpackSpriteJSON = function(name,jsonPath = 'https://www.phlip45.com/LD49/json/'){
-    console.log(this.sheetData[name]);
     if(this.sheetData[name] != undefined){
       console.log(`Tried unpacking sheet ${name} but it already existed`);
       return;
@@ -270,11 +269,15 @@ let Artist = function(screenWidth,screenHeight){
     }.bind(this);
   }
 }
-let Sprite = function(sheetName, parent){
+let Sprite = function(sheetName, tag){
   this.sheet = game.artist.sheetData[sheetName];
   this.frameTime = 0;
   this.curFrame = 0;
-  this.curAnim =  Object.keys(this.sheet.tags)[0];
+  if(tag){
+    this.curAnim = tag;
+  }else{
+    this.curAnim =  Object.keys(this.sheet.tags)[0];
+  }
   this.width = this.sheet.width;
   this.height = this.sheet.height;
   this.pingpong = 1;

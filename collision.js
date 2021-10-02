@@ -1,6 +1,4 @@
 let Collision = function(){
-
-
 	this.circular = function(distance, obj1){
 		if(distance < obj1.radius){
 			return true;
@@ -8,16 +6,27 @@ let Collision = function(){
 		return false;
 	}
 
-
+	//Detect from Obj 1 moving into Obj2
 	this.rectangular = function(obj1, obj2){
-
-		if(obj1.pos.x + obj1.width >= obj2.pos.x && obj1.x <= obj2.width + obj2.pos.x){
-			if(obj1.pos.y + obj1.height >= obj2.pos.y && obj1.y <= obj2.height + obj2.pos.y){
-				return true;
+		//next to each other;
+		if( this.isRectColliding(obj1,obj2)){
+			if(Math.abs(obj1.pos.x - obj2.pos.x) >= Math.abs(obj1.pos.y - obj2.pos.y)){
+				//left-right collision;
+				return((obj1.pos.x < obj2.pos.x) ? 'left' : 'right');
+			}else{
+				//up-down collision
+				return((obj1.pos.y < obj2.pos.y) ? 'top' : 'bottom');
 			}
+		}else{
+			return false;
 		}
-		return false;
+	}
 
+	this.isRectColliding =function(obj1,obj2){
+		return obj1.pos.x + obj1.width/2 >= obj2.pos.x - obj2.width/2 &&
+			 obj1.pos.x - obj1.width/2 <= obj2.width/2 + obj2.pos.x &&
+			 obj1.pos.y + obj1.height/2 >= obj2.pos.y - obj2.height/2 &&
+			 obj1.pos.y - obj1.height/2 <= obj2.height/2 + obj2.pos.y;
 	}
 
 	this.boundaries = function(obj, size, boundaries){
