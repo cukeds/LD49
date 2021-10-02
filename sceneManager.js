@@ -126,7 +126,7 @@ let InventoryScreen = function(){
     if(game.controller.pause){
       game.controller.pause = false;
 
-      //TODO End this scene;
+      game.sceneManager.pop();
     }
 
     if(game.mouse.click){
@@ -162,9 +162,7 @@ let InventoryScreen = function(){
         if(index>-1){
           this.clickables.splice(index,1);
           this.bagSprite.setAnim('idle');
-
         }
-
         //get rid of the clickablitly, drawability and updatability
         let id = clickedThing.id;
         index = this.sockets.findIndex(t => {
@@ -243,8 +241,22 @@ let InventoryScreen = function(){
         if(clickedThing.value != 'createWeapon'){
           console.log('Phlip fucked up someThing when checking on what is clickable');
         }
-        console.log('Creating Weapon');
+        let recipe = []
+        recipe.push(this.sockets[0].value.substr(0,1),this.sockets[1].value.substr(0,1), this.sockets[2].value.substr(0,1));
+        recipe.sort();
+        recipe = recipe.join('');
+
+        let type = WEAPONS.recipes[recipe];
+        let weapon = new Weapon(type);
+        if(game.player.curWeapon == null){
+          game.player.curWeapon = weapon;
+        }else if(game.player.altWeapon == null){
+          game.player.altWeapon = weapon;
+        }else{
+          //TODO Play uh oh sound that tells player they can't craft a gun cause their inventory is full
+        }
         //TODO play Sploosh Sound here
+        game.sceneManager.pop();
         //TODO Leave this scene and go back to room
       }
 
