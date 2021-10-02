@@ -272,10 +272,11 @@ let Artist = function(screenWidth,screenHeight){
 let Sprite = function(sheetName, tag){
   this.sheet = game.artist.sheetData[sheetName];
   this.frameTime = 0;
-  this.curFrame = 0;
   if(tag){
     this.curAnim = tag;
+    this.curFrame = this.sheet.tags[tag].from;
   }else{
+    this.curFrame = 0;
     this.curAnim =  Object.keys(this.sheet.tags)[0];
   }
   this.width = this.sheet.width;
