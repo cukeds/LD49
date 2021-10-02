@@ -1,0 +1,38 @@
+{ "frames": [
+   {
+    "filename": "testObstacles0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "testObstacles1.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.29-x64",
+  "image": "testObstacles.png",
+  "format": "RGBA8888",
+  "size": { "w": 64, "h": 32 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Wall", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "Chair", "from": 1, "to": 1, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Wall", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
