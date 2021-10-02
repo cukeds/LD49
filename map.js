@@ -192,11 +192,13 @@ let Room = function(){
   }
 
   this.playerEnters = function(){
-
+    game.sceneManager.pop();
+    game.sceneManager.addScene(this);
   }
 
   this.update = function(delta){
     this.enemies.forEach(e => e.update(delta));
+    game.player.update();
   }
 
   this.draw = function(){
@@ -206,7 +208,7 @@ let Room = function(){
 
     //draw player
      this.enemies.forEach(e => e.draw());
-    game.artist.drawRect(this.loc.x * 50 + 500, this.loc.y * 50 + 400, 45,45,'blue');
+     game.player.draw();
   }
 
   this.attach = function(direction, newRoom, map){

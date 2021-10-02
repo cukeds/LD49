@@ -70,6 +70,7 @@ let StartScreen = function(){
 
   this.setup = function(){
     game.player = new Player();
+    game.player.load();
     this.seedInput = new CanvasInput({
       canvas: game.artist.canvas,
       x: game.width/2-150,
@@ -95,6 +96,7 @@ let StartScreen = function(){
       game.srng = new RNG(game.seed);
       game.map = new Map(15);
       game.sceneManager.pop()
+
       game.sceneManager.addScene(game.map.rooms[0]);
     }
 

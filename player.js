@@ -77,7 +77,6 @@ let Player = function(pos = {x:0,y:0}, size = {width:10,height:10}, image, color
   }
 
   this.draw = function(){
-    game.artist.drawRectObj(this);
     this.sprite.draw(this.pos);
 
     //Specific Style Raycast
