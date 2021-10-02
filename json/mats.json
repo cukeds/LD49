@@ -1,0 +1,53 @@
+{ "frames": [
+   {
+    "filename": "mats0.ase",
+    "frame": { "x": 0, "y": 0, "w": 128, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
+    "sourceSize": { "w": 128, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "mats1.ase",
+    "frame": { "x": 128, "y": 0, "w": 128, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
+    "sourceSize": { "w": 128, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "mats2.ase",
+    "frame": { "x": 0, "y": 128, "w": 128, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
+    "sourceSize": { "w": 128, "h": 128 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.29-x64",
+  "image": "mats.png",
+  "format": "RGBA8888",
+  "size": { "w": 256, "h": 256 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "junk", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "crystal", "from": 1, "to": 1, "direction": "forward" },
+   { "name": "essence", "from": 2, "to": 2, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 4", "opacity": 255, "blendMode": "normal" },
+   { "name": "Bolt 2", "opacity": 255, "blendMode": "normal" },
+   { "name": "Bolt", "opacity": 255, "blendMode": "normal" },
+   { "name": "Girder 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Girder 2", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
