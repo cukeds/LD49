@@ -197,6 +197,10 @@ let InventoryScreen = function(){
         game.player.mat[clickedThing.value]++;
         //TODO Update values over mats when socketing/desocketing
       }else if(!(clickedThing.value == 'createWeapon')){
+        if(game.player.mat[clickedThing.value] <= 0){
+          //TODO Play out of material sound and get out
+          return;
+        }
         //Create the socketed sprite
         let socketSprite = new Sprite('mats', clickedThing.value);
         if(this.sockets[0] == null){
