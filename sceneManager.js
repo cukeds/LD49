@@ -68,24 +68,29 @@ let StartScreen = function(){
   this.drawables = [];
   this.updateables = [];
 
+  let input = this.seedInput = new CanvasInput({
+    canvas: game.artist.canvas,
+    x: game.width/2-150,
+    y: game.height/3,
+    width: 300,
+    fontFamily: 'Audiowide',
+    fontSize: 45,
+    placeHolder: 'Enter Name'
+  });
+
+  this.end = function(){
+    input.destroy();
+  }
+
   this.setup = function(){
     game.player = new Player();
     game.player.load();
-    this.seedInput = new CanvasInput({
-      canvas: game.artist.canvas,
-      x: game.width/2-150,
-      y: game.height/3,
-      width: 300,
-      fontFamily: 'Audiowide',
-      fontSize: 45,
-      placeHolder: 'Enter Name'
-    });
+
 
     let startButton = new Actor({x:0,y:0},null,'startButton');
     startButton.pos.x = game.width/2;
     startButton.pos.y = 3*game.height/4;
-    startButton.seed = this.seedInput.value();
-    delete this.seedInput;
+    startButton.seed = input.value();
     startButton.startGame = function(){
       if(this.seed == ''){
         game.seed = 'Blank!'
@@ -94,7 +99,7 @@ let StartScreen = function(){
       }
       game.srng = new RNG(game.seed);
       game.map = new Map(15);
-      game.sceneManager.pop()
+      game.sceneManager.pop().end();
       game.sceneManager.addScene(game.map.rooms[0]);
     }
 
