@@ -84,11 +84,10 @@ let StartScreen = function(){
     let startButton = new Actor({x:0,y:0},null,'startButton');
     startButton.pos.x = game.width/2;
     startButton.pos.y = 3*game.height/4;
-    startButton.inputGetter = this.seedInput;
-
+    startButton.seed = this.seedInput.value();
+    delete this.seedInput;
     startButton.startGame = function(){
-      let seed = this.inputGetter.value();
-      if(seed == ''){
+      if(this.seed == ''){
         game.seed = 'Blank!'
       }else{
         game.seed = seed;
@@ -96,7 +95,6 @@ let StartScreen = function(){
       game.srng = new RNG(game.seed);
       game.map = new Map(15);
       game.sceneManager.pop()
-
       game.sceneManager.addScene(game.map.rooms[0]);
     }
 
@@ -128,7 +126,9 @@ let StartScreen = function(){
 
   this.draw = function(){
     this.drawables.forEach(d => d.draw());
-    this.seedInput.render();
+    if(this.seedInput){
+      this.seedInput.render();
+    }
   }
 
 
