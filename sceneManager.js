@@ -59,7 +59,6 @@ let Pause = function(tstamp){
   }
 }
 
-//TODO Inventory Scene
 let InventoryScreen = function(){
   this.updateables = [];
   this.drawables = [];
@@ -266,7 +265,7 @@ let InventoryScreen = function(){
           //TODO Play uh oh sound that tells player they can't craft a gun cause their inventory is full
         }
         //TODO play Sploosh Sound here
-        //TODO Leave this scene and go back to room
+
       }
 
     }
@@ -277,7 +276,7 @@ let InventoryScreen = function(){
   }
 
   this.draw = function(){
-    //TODO Draw Backdrop for inventory screen
+
     game.artist.drawImage(game.artist.images['inventoryBackdrop'],0,0,game.width,game.height);
     this.drawables.forEach(d=> d.draw(d.pos));
     if(this.weap1){
@@ -290,7 +289,6 @@ let InventoryScreen = function(){
 
 }
 
-//TODO Start Scene
 let StartScreen = function(){
   this.drawables = [];
   this.updateables = [];

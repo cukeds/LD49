@@ -15,7 +15,6 @@ let Map = function(numRooms){
     }
   }
 
-  // TODO: Check
   this.getRandRoom = function(){
     let randomRoomInd = this.gen.randInt(this.rooms.length);
     return this.rooms[randomRoomInd];
@@ -67,7 +66,7 @@ let Map = function(numRooms){
 
   }
 
-  // TODO: Check
+
   this.getRoom = function(roomID){
     // Binary Search algorithm
     let leftBoundary = 0;

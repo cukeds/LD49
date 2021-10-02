@@ -951,7 +951,7 @@
         isOver = self._overInput(x, y);
 
       if (isOver && self._canvas) {
-        self._canvas.style.cursor = 'text';
+        //self._canvas.style.cursor = 'text';
         self._wasOver = true;
       } else if (self._wasOver && self._canvas) {
         self._canvas.style.cursor = 'default';
