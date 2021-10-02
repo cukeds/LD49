@@ -59,8 +59,6 @@ let Pause = function(tstamp){
   }
 }
 
-//TODO Room Scene
-
 //TODO Inventory Scene
 let InventoryScreen = function(){
   this.updateables = [];
@@ -125,7 +123,13 @@ let InventoryScreen = function(){
     //Check to see if they pressed escape
     if(game.controller.pause){
       game.controller.pause = false;
-
+      //If there is anything socketed, remove it from the sockets and return to player
+      this.sockets.forEach(s=>{
+        if(s == null){
+          return;
+        }
+        game.player.mat[s.value]++;
+      })
       game.sceneManager.pop();
     }
 
@@ -250,13 +254,14 @@ let InventoryScreen = function(){
         let weapon = new Weapon(type);
         if(game.player.curWeapon == null){
           game.player.curWeapon = weapon;
+          game.sceneManager.pop();
         }else if(game.player.altWeapon == null){
           game.player.altWeapon = weapon;
+          game.sceneManager.pop();
         }else{
           //TODO Play uh oh sound that tells player they can't craft a gun cause their inventory is full
         }
         //TODO play Sploosh Sound here
-        game.sceneManager.pop();
         //TODO Leave this scene and go back to room
       }
 
