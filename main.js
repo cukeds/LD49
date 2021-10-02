@@ -12,16 +12,13 @@ let game = {
   controller: null,
   delta: 0,
   timestamp: 0,
-  particles: [],
   srng: null,
   id: 1,
   map: null,
   gridDiv: null, // Division of the grid. Set up on line 30
-  drawParticleLines: true,
-  seed: "Juan5",
-  curRoom: null,
-  maxEnemies: 500,
-  sheetsToLoad: ['startButton','testObstacles'],
+  seed: "UhOhForgotToSetASeed",
+  maxEnemies: 10,
+  sheetsToLoad: ['startButton','testObstacles','emCee','tiles'],
   collisions: null,
 
   setup: function(){
@@ -210,7 +207,7 @@ function combinationsReplacement(x, k) {
       }
     }
   }
-  
+
   return combinationList;
 }
 
