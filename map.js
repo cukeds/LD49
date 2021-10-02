@@ -21,6 +21,52 @@ let Map = function(numRooms){
     return this.rooms[randomRoomInd];
   }
 
+  // Exit is the longest (or one of the longest) paths on the map.
+  this.getRandExit = function(minPath = 3){
+    let start = this.rooms[0];
+    let curRoom = start;
+    let possibleRooms = [];
+    let exit = false;
+    let path = 0;
+    let keys = null;
+    let visited = [];
+
+
+    for(let j = 0; j < this.rooms.length; j++){
+      possibleRooms = [];
+      keys = Object.keys(curRoom.directions);
+      keys.forEach(key => {
+          if(curRoom.directions[key] != null){
+            possibleRooms.push(curRoom.directions[key]);
+          }
+        });
+
+      if(possibleRooms.length <= 2 && path > minPath){
+        return curRoom;
+      }
+
+      visited.push(curRoom.id);
+      for(let i = 0; i < possibleRooms.length; i++){
+        if(!visited.includes(possibleRooms[i].id)){
+          curRoom = possibleRooms[i];
+        }
+        if(i == (possibleRooms.length - 1) && visited.includes(curRoom)){
+          this.rooms.forEach(room => {
+            if(visited.includes(room.id)){
+              curRoom = room;
+            }
+          })
+        }
+      }
+      path++;
+    }
+
+
+    return 'AAAH';
+
+
+  }
+
   // TODO: Check
   this.getRoom = function(roomID){
     // Binary Search algorithm
@@ -135,18 +181,11 @@ let Room = function(){
 
     // Pushes enemies into array, with an {x, y} position that's unused on grid
       // Easier visualization to check if grid was working
-    let color = ['red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'green'];
-      //
     for(let i = 0; i < numEnemies; i++){
       let pos = this.grid.getPos(this.roomSize, this.gen); // Gets {x, y}
 
       this.enemies.push(new Actor(
-          {x: pos.x, y: pos.y},
-          {width:randInt(32),height:randInt(32)},
-          null,
-          'red' // should be changed
-        )
-      );
+          {x: pos.x, y: pos.y}, null, 'startButton'));
     }
 
     this.hasBeenSetup = true;
@@ -161,9 +200,8 @@ let Room = function(){
   }
 
   this.draw = function(){
-    this.enemies.forEach(e => e.draw(game.delta));
-
-    // game.artist.drawRect(this.loc.x * 50 + 500, this.loc.y * 50 + 400, 45,45,'blue');
+    // this.enemies.forEach(e => e.draw(game.delta));
+    game.artist.drawRect(this.loc.x * 50 + 500, this.loc.y * 50 + 400, 45,45,'blue');
   }
 
   this.attach = function(direction, newRoom, map){
