@@ -18,7 +18,8 @@ let game = {
   gridDiv: null, // Division of the grid. Set up on line 30
   seed: "UhOhForgotToSetASeed",
   maxEnemies: 10,
-  sheetsToLoad: ['startButton','testObstacles','emCee','tiles'],
+  sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats'],
+  imagesToLoad: ['inventoryBackdrop'],
   collisions: null,
 
   setup: function(){
@@ -36,6 +37,9 @@ let game = {
 
     //make Starting Scene
 
+    this.imagesToLoad.forEach(img => {
+      this.artist.loadImg(img, `./assets/${img}.png`);
+    })
 
     this.sheetsToLoad.forEach(sheet =>{
       this.artist.loadSpriteSheet(sheet, `./assets/${sheet}.png`);

@@ -6,13 +6,14 @@ let Artist = function(screenWidth,screenHeight){
   this.canvas.height = screenHeight;
   this.width = screenWidth;
   this.height = screenHeight;
+  this.images = [];
   this.sheets = [];
   this.sheetData = [];
   this.curVideo = null;
   this.vidTstamp = 0;
 
   this.writeText = function(text, x, y, size, color){
-    this.brush.font = size + "px monospace";
+    this.brush.font = size + "px Freckle Face";
     this.brush.fillStyle = color;
     this.brush.textBaseline = "top";
     this.brush.fillText(text, x,y);
@@ -55,14 +56,15 @@ let Artist = function(screenWidth,screenHeight){
     return degs*Math.PI/180;
   }
 
-  this.loadImg = function(path){
+  this.loadImg = function(name, path){
   	let image = new Image();
   	image.ready = false;
   	image.onload = function(){
   		image.ready = true;
   	};
   	image.src = path;
-  	return image;
+    image.name = name;
+  	this.images[name] = image;
   }
 
   this.loadSpriteSheet = function(name, path){
@@ -302,8 +304,10 @@ let Sprite = function(sheetName, tag){
     const anim = this.sheet.tags[this.curAnim];
     switch(anim.direction){
       case "forward":
-        if(this.curFrame == anim.to){
+        if(this.curFrame == anim.to && this.loop){
           this.curFrame = anim.from;
+        }else if(this.curFrame == anim.to){
+          //Do nothing; 
         }else{
           this.curFrame++;
         }

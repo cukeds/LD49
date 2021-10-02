@@ -17,9 +17,11 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     this.dyingWeapons = [];
 
     //Weapon material trackers
-    this.matJunk = 3;
-    this.matCrystal = 3;
-    this.matEssence = 3;
+    this.mat = {
+      junk: 3,
+      crystal: 3,
+      essence: 3
+    }
 
     this.sprite = new Sprite('startButton');
     this.width = this.sprite.width;
@@ -39,6 +41,10 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     }
     if(game.controller.right){
       this.speed.x += this.acceleration * delta/16;
+    }
+    if(game.controller.pause){
+      game.controller.pause = false;
+      game.sceneManager.addScene(new InventoryScreen());
     }
     //Action1 is switch weapons
     if(game.controller.action1){
