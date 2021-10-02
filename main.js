@@ -30,6 +30,7 @@ let game = {
     this.sceneManager = new SceneManager();
 
 
+
     //Call Loadables
     this.artist.loadVideo('video.mp4');
 

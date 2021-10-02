@@ -67,6 +67,7 @@ let StartScreen = function(){
 
   this.setup = function(){
     game.player = new Player();
+    let input = new CanvasInput({canvas: game.artist.canvas});
     let pos = {
       x: 0,
       y: 0
