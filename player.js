@@ -12,7 +12,9 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     this.shootCooldown = 0;
     this.shots = 5;
     this.maxShots = 0;
-    this.weapon = 0;
+    this.curWeapon = null;
+    this.altWeapon = null;
+    this.dyingWeapons = [];
 
     //Weapon material trackers
     this.matJunk = 3;
@@ -38,6 +40,12 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     if(game.controller.right){
       this.speed.x += this.acceleration * delta/16;
     }
+    //Action1 is switch weapons
+    if(game.controller.action1){
+      game.controller.action1 = false;
+      //TODO: Switch Weapons
+      console.log("switching weapons");
+    }
 
     // Animation of Player when Firing
 
@@ -47,23 +55,35 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     //   this.sprite.setAnim('Idle');
     // }
 
-    if(game.mouse.click && this.shootCooldown <= 0){
+    //Update weapons
+    if(this.curWeapon){
+      this.curWeapon.update(delta);
+    }
+    if(this.altWeapon){
+      this.altWeapon.update(delta);
+    }
+    this.dyingWeapons.forEach(w=> w.update(delta));
+
+    if(game.mouse.click && this.shootCooldown <= 0 && this.curWeapon){
       if(this.shots <= 0){
         this.shootCooldown = this.shootCooldownReset;
       }else{
         this.shots--;
+        //TODO: Break weapon when shots are out
       }
       let dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
 
-      for(let i = 0; i < 8; i++){
-        let p = new Particle(
-          {x: this.pos.x, y: this.pos.y},
-          4,
-          {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
-          '#00F',
-          'sin',[dir])//,Number(document.getElementById('debug0').value)]);//15]);
-        game.particles.push(p);
-      }
+      this.curWeapon.shoot(dir,this,game.sceneManager.scenes[game.sceneManager.scenes.length - 1]);
+
+      // for(let i = 0; i < 8; i++){
+      //   let p = new Particle(
+      //     {x: this.pos.x, y: this.pos.y},
+      //     4,
+      //     {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
+      //     '#00F',
+      //     'sin',[dir])//,Number(document.getElementById('debug0').value)]);//15]);
+      //   game.particles.push(p);
+      // }
     }
 
 
@@ -143,6 +163,6 @@ let Player = function(pos = {x:game.width/2,y:game.height/2}, size = {width:10,h
     //Materials Array will look like ['junk','crystal','essence'];
     //Sorting it so order doesn't matter
     materialsArr.sort();
-    
+
   }
 }

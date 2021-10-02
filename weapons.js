@@ -1,6 +1,8 @@
-let Weapon = function(){
-
-
+let Weapon = function(type){
+  let keys = Object.keys(WEAPONS.templates[type]);
+  keys.forEach(k=>{
+    this[k] = WEAPONS.templates[type][k];
+  })
 }
 
 let WEAPONS = {
@@ -11,10 +13,15 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+        //
+      },
+      draw: function(){
 
       },
-
+      shoot: function(dir, player, room){
+        //Pistol is a hitscan weapon
+      },
     },
     "shotgun" : {
       name: "shotgun",
@@ -22,8 +29,16 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
 
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player, room){
+        //playSound
+        //createParticles and load them into this.particles
+        //The end?
       },
 
     },
@@ -33,7 +48,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -44,7 +65,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -55,7 +82,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -66,7 +99,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -77,7 +116,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -88,7 +133,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -99,7 +150,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -110,7 +167,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -121,7 +184,13 @@ let WEAPONS = {
       numShots: 60,
       image: null,
       shotSound:null,
-      update: function(){
+      update: function(delta){
+
+      },
+      draw: function(){
+
+      },
+      shoot: function(dir, player,room){
 
       },
 
@@ -146,8 +215,9 @@ let WEAPONS = {
       while(r.length){
         str += r.shift();
       }
-      //str becomes value
-      this.recipes[str] = arr.pop();
+      //str becomes value of recipe
+      let weapon = arr.pop();
+      this.recipes[str] = weapon;
     })
   }
 }

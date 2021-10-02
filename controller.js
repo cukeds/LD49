@@ -23,6 +23,7 @@ let Controller = function(){
         this.right = true;
         break;
       case "Space":
+        this.action1 = true;
         break;
       case "Ctrl":
         break;
@@ -47,6 +48,7 @@ let Controller = function(){
         this.right = false;
         break;
       case "Space":
+        this.action1 = false;
         break;
       case "Ctrl":
         break;
