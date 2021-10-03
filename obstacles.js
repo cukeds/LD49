@@ -80,19 +80,20 @@ const OBSTACLES = {
       if(room.enemies.length <= 0){
         this.open = true;
       }
-
+      this.open = true;
       let anim = this.sprite.curAnim;
+      this.sprite.update(delta);
       if(this.open){
         if(this.dir == 'up' || this.dir == 'down'){
-          if(anim != 'open') {this.sprite.setAnim(anim)}
+          if(anim != 'open') {this.sprite.setAnim('open')}
         }else{
-          if(anim != 'sideOpen') {this.sprite.setAnim(anim)}
+          if(anim != 'sideOpen') {this.sprite.setAnim('sideOpen')}
         }
       }else{
         if(this.dir == 'up' || this.dir == 'down'){
-          if(anim != 'closed') {this.sprite.setAnim(anim)}
+          if(anim != 'closed') {this.sprite.setAnim('closed')}
         }else{
-          if(anim != 'sideClosed') {this.sprite.setAnim(anim)}
+          if(anim != 'sideClosed') {this.sprite.setAnim('sideClosed')}
         }
       }
     },
