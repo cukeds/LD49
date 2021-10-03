@@ -21,6 +21,7 @@ let game = {
   sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons'],
   imagesToLoad: ['inventoryBackdrop'],
   collisions: null,
+  parser: null,
 
   setup: function(){
     this.artist = new Artist(this.width,this.height);
@@ -30,6 +31,7 @@ let game = {
     this.gridDiv = 32;  // 32px gridUnits grid
     this.sceneManager = new SceneManager();
     this.collisions = new Collision();
+    this.parser = new Parser();
 
 
     //Call Loadables
