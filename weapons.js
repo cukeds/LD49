@@ -5,8 +5,14 @@ let Weapon = function(type){
   })
 
   this.particles = [];
-  this.draw = function(pos){
-    this.particles.forEach(p=>p.draw());
+  if(!this.draw){
+    this.draw = function(pos){
+      this.particles.forEach(p=>p.draw());
+    }
+  }
+
+  this.removeDeadParticles = function(){
+    this.particles = this.particles.filter(p=> !p.dead);
   }
 }
 
@@ -39,7 +45,7 @@ let WEAPONS = {
             }
           })
         });
-        this.particles = this.particles.filter(p => !p.dead);
+        this.removeDeadParticles();
       },
       draw: function(pos){
         this.particles.forEach(p=>p.draw());
@@ -75,58 +81,120 @@ let WEAPONS = {
                 p.life = p.maxLife;
                 e.damage(randInt(this.damage)+1);
               }
-
             }
           })
         });
-        this.particles = this.particles.filter(p => !p.dead);
+        this.removeDeadParticles();
       },
       draw: function(pos){
-          this.particles.forEach(p=>p.draw(pos));
+        this.particles.forEach(p=>p.draw(pos));
       },
       shoot: function(dir, player, room){
-        for(let i = 0; i< 8; i++)
-        this.particles.push(new Particle(
-          {x:player.pos.x,y:player.pos.y},
-          4,
-          '#FF0',
-          'shotgun',
-          [dir,20]
-        ))
+        for(let i = 0; i< 8; i++){
+          this.particles.push(new Particle(
+            {x:player.pos.x,y:player.pos.y},
+            4,
+            '#FF0',
+            'shotgun',
+            [dir,20]
+          ))
+        }
       },
 
     },
     "wavegun" : {
       name: "wavegun",
-      cooldown: 10,
-      numShots: 60,
+      cooldown: 90,
+      numShots: 15,
+      damage: 1,
       spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
-
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+              p.dead = true;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              if(!e.dead){
+                e.damage(this.damage*delta/16);
+              }
+            }
+          })
+        });
+        this.removeDeadParticles();
       },
-      draw: function(){
-
+      draw: function(pos){
+        this.particles.forEach(p=>p.draw(pos));
       },
       shoot: function(dir, player,room){
-
+        this.particles.push(new Particle(
+          {x:player.pos.x,y:player.pos.y},
+          10,
+          '#67eb9c',
+          'sin',
+          [dir,30,2,0.7]
+        ))
       },
-
     },
     "zapgun" : {
       name: "zapgun",
       cooldown: 10,
       numShots: 60,
+      damage: 10,
       spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              if(!e.dead){
+                p.life = p.maxLife;
+                e.damage(randInt(this.damage));
+              }
 
+            }
+          })
+        });
+        this.removeDeadParticles();
       },
       draw: function(){
-
+        console.log('drawing zapgunparticles')
+        this.particles.forEach(p=>{
+          let nearbyPoints = [];
+          for(let i = 0; i < 5; i++){
+            nearbyPoints.push({
+              x: p.pos.x + randInt(45) - 22,
+              y: p.pos.y + randInt(45) - 22
+            })
+          }
+          nearbyPoints.push(p.pos);
+          for(let i = 0; i < 5; i++){
+            let p1 = nearbyPoints[randInt(nearbyPoints.length)];
+            let p2 = nearbyPoints[randInt(nearbyPoints.length)];
+            game.artist.drawLine(p1.x,p1.y,p2.x,p2.y,'#FF0');
+          }
+          p.draw();
+        });
       },
-      shoot: function(dir, player,room){
-
+      shoot: function(dir, player, room){
+        this.particles.push(new Particle(
+          {x:player.pos.x,y:player.pos.y},
+          4,
+          '#FF0',
+          'line',
+          [dir]
+        ))
       },
 
     },

@@ -95,6 +95,7 @@ let Player = function(pos, spriteName){
     }
 
     this.particles.forEach(p=>p.update(delta));
+    this.particles = this.particles.filter(p=>!p.dead);
 
     //try to shoot curWeapon
     if(game.mouse.click && this.shootCooldown <= 0 && this.curWeapon){

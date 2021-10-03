@@ -48,16 +48,20 @@ let PUPS = {
       // this.pos.y = 200
     };
   },
-  sin: function(dir){
+  sin: function(dir,amplitude = 15,frequency = 3.5,speed){
     this.dir = dir;
+    this.amplitude = amplitude;
+    this.frequency = frequency;
+    this.bulletSpeed = speed;
+
     this.update = function(delta){
       if(this.life >= this.maxLife && !this.dead){
         this.dead = true;
       }
-      this.life += delta;
+      this.life += delta*this.bulletSpeed;
 
-      let amplitude = 15;
-      let frequency = 3.5*delta/16;
+      let amplitude = this.amplitude;
+      let frequency = this.frequency*delta/16;
 
       // let amplitude = Number(document.getElementById('debug0').value);
       // let frequency = Number(document.getElementById('debug1').value);
