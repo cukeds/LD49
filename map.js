@@ -150,7 +150,7 @@ let Room = function(){
   this.gen = null;
   this.seed = null;
   this.loc = {x:null,y:null};
-  this.backdrop = null; //image
+  this.backdrop = game.artist.images['levelBackdrop']; //image
   this.hasBeenSetup = false;
   this.actors = [];
   this.enemies = [];
@@ -220,7 +220,7 @@ let Room = function(){
 
   this.draw = function(){
     // Draw backdrop
-    game.artist.drawImage(0, 0, game.width, game.height, this.backdrop);
+    game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height );
     this.actors.forEach(a => a.draw());
     //draw enemies
     this.enemies.forEach(e => e.draw());
@@ -325,3 +325,11 @@ let Room = function(){
 //   }
 //   return result;
 // }
+
+
+let LEVELS = {
+  level0: [],
+  level1: [],
+  level2: [],
+  level3: [],
+}

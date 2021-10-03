@@ -19,7 +19,7 @@ let game = {
   seed: "UhOhForgotToSetASeed",
   maxEnemies: 10,
   sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons'],
-  imagesToLoad: ['inventoryBackdrop'],
+  imagesToLoad: ['inventoryBackdrop','levelBackdrop'],
   collisions: null,
   parser: null,
 
