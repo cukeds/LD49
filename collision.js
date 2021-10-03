@@ -54,8 +54,8 @@ let Collision = function(){
 	}
 
 	//Uses width, do not use with rectangles, only squares
-	this.circleCollision = function(obj1, obj2){
-		if(distance(obj1.pos,obj2.pos) < obj1.width/2 + obj2.width/2){
+	this.circleCollision = function(obj1, obj2, range = 0){
+		if(distance(obj1.pos,obj2.pos) < obj1.width/2 + obj2.width/2  + range){
 			return true;
 		}else{
 			return false;
@@ -71,10 +71,10 @@ let Collision = function(){
 			obj.speed.x /= -15;
 		}
 		if(obj.pos.y < 32 + obj.height/2){
-			obj.pos.y = 32 + obj.height/2-0.2;
+			obj.pos.y = 32 + obj.height/2+0.2;
 			obj.speed.y /= -15;
 		}else if(obj.pos.y > game.height -32 - obj.height/2){
-			obj.pos.y = game.height - 32 - obj.height/2+0.2;
+			obj.pos.y = game.height - 32 - obj.height/2-0.2;
 			obj.speed.y /= -15;
 		}
 	}

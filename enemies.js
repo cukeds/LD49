@@ -3,8 +3,8 @@ let Enemy = function(pos, type){
   keys.forEach(k=>{
     this[k] = ENEMIES.templates[type][k];
   });
+  Actor.apply(this,[pos,this.spriteSheet,this.tag]);
   this.pos = pos;
-  Actor.apply(this,[pos, this.spriteSheet, this.tag]);
   this.speed = {
     x: 0,
     y: 0
@@ -34,6 +34,32 @@ let Enemy = function(pos, type){
     this.pos.x += this.speed.x * delta/16;
     this.pos.y += this.speed.y * delta/16;
 
+
+
+    room.enemies.forEach(enemy => {
+      if(enemy == this){return}
+      let dir = game.collisions.rectangular(this, enemy);
+      if(!dir){return}
+
+      switch(dir){
+        case 'left':
+          this.pos.x = enemy.pos.x - enemy.width/2 - this.width/2 - 1;
+          this.speed.x /= -15;
+          break;
+        case 'right':
+          this.pos.x = enemy.pos.x + enemy.width/2 + this.width/2 + 1;
+          this.speed.x /= -15;
+          break;
+        case 'top':
+          this.pos.y = enemy.pos.y - enemy.height/2 - this.height/2 - 1;
+          this.speed.y /= -15;
+          break;
+        case 'bottom':
+          this.pos.y = enemy.pos.y + enemy.height/2 + this.height/2 + 1;
+          this.speed.y /= -15;
+          break;
+      }
+    })
     room.actors.forEach(actor=>{
       //Collide against outer edge
       game.collisions.objPerimiter(this);
@@ -65,97 +91,73 @@ let Enemy = function(pos, type){
       }
     })
 
-    room.enemies.forEach(enemy => {
-      if(enemy == this){return}
-      let dir = game.collisions.rectangular(this, enemy);
-      if(!dir){return}
-
-      switch(dir){
-        case 'left':
-          this.pos.x = enemy.pos.x - enemy.width/2 - this.width/2 - 1;
-          this.speed.x /= -15;
-          break;
-        case 'right':
-          this.pos.x = enemy.pos.x + enemy.width/2 + this.width/2 + 1;
-          this.speed.x /= -15;
-          break;
-        case 'top':
-          this.pos.y = enemy.pos.y - enemy.height/2 - this.height/2 - 1;
-          this.speed.y /= -15;
-          break;
-        case 'bottom':
-          this.pos.y = enemy.pos.y + enemy.height/2 + this.height/2 + 1;
-          this.speed.y /= -15;
-          break;
-      }
-    })
-
 
   }
 
-  this.update = function(delta, room){
-    if (game.collisions.rectangular(game.player, this)){
-      // Handles collision with player. Damage and what not
-      console.log('Collided with player')
-    };
 
-    this.sprite.update(delta);
-    let dist = distance(game.player.pos, this.pos);
-    switch(this.behaviour){
-      case "aggressive":
-        if(dist <= this.range && this.cooldown <= 0){
-          this.speed.x = 0;
-          this.speed.y = 0;
-          this.action();
-          this.cooldown = this.maxCooldown;
-        }
-
-        if(dist > this.range){
-          this.moveTowards(game.player.pos);
-        }
-
-        break;
-      case "idle":
-        this.speed.x = 0;
-        this.speed.y = 0;
-        if(dist <= this.range){
-          this.action();
-        }
-        break;
-      case "hiding":
-        if(dist >= this.range && this.cooldown <= 0){
-          this.speed.x = 0;
-          this.speed.y = 0;
-          this.action();
-          this.cooldown = this.maxCooldown;
-        }
-
-        if(dist <= 200){
-          let x = 0;
-          let y = 0;
-          // x part of hiding
-          if(this.pos.x < game.player.pos.x){
-            x = 0;
-          }else if(this.pos.x > game.player.pos.x){
-            x = game.width;
-          }
-
-          // y part of hiding
-          if(this.pos.y < game.player.pos.y){
-            y = 0;
-          }else if(this.pos.y > game.player.pos.y){
-            y = game.height;
-          }
-          this.moveTowards({x: x, y: y});
-          }
-        break;
-      default:
-        console.log('New behaviour! ', this.behaviour);
-        break;
-    }
-    this.move(delta, room);
-    this.cooldown -= delta/16;
-  }
+  // this.update = function(delta, room){
+  //   if (game.collisions.rectangular(game.player, this)){
+  //     // Handles collision with player. Damage and what not
+  //     console.log('Collided with player')
+  //   };
+  //
+  //   this.sprite.update(delta);
+  //   let dist = distance(game.player.pos, this.pos);
+  //   switch(this.behaviour){
+  //     case "aggressive":
+  //       if(dist <= this.range && this.cooldown <= 0){
+  //         this.speed.x = 0;
+  //         this.speed.y = 0;
+  //         this.action();
+  //         this.cooldown = this.maxCooldown;
+  //       }
+  //
+  //       if(dist > this.range){
+  //         this.moveTowards(game.player.pos);
+  //       }
+  //
+  //       break;
+  //     case "idle":
+  //       this.speed.x = 0;
+  //       this.speed.y = 0;
+  //       if(dist <= this.range){
+  //         this.action();
+  //       }
+  //       break;
+  //     case "hiding":
+  //       if(dist >= this.range && this.cooldown <= 0){
+  //         this.speed.x = 0;
+  //         this.speed.y = 0;
+  //         this.action();
+  //         this.cooldown = this.maxCooldown;
+  //       }
+  //
+  //       if(dist <= 200){
+  //         let x = 0;
+  //         let y = 0;
+  //         // x part of hiding
+  //         if(this.pos.x < game.player.pos.x){
+  //           x = 0;
+  //         }else if(this.pos.x > game.player.pos.x){
+  //           x = game.width;
+  //         }
+  //
+  //         // y part of hiding
+  //         if(this.pos.y < game.player.pos.y){
+  //           y = 0;
+  //         }else if(this.pos.y > game.player.pos.y){
+  //           y = game.height;
+  //         }
+  //         this.moveTowards({x: x, y: y});
+  //         }
+  //       break;
+  //     default:
+  //       console.log('New behaviour! ', this.behaviour);
+  //       break;
+  //   }
+  //   this.move(delta, room);
+  //   this.cooldown -= delta/16;
+  // }
 
   this.draw = function(){
     this.sprite.draw(this.pos);
@@ -208,22 +210,23 @@ let ENEMIES = {
       tag: undefined,
       voice: "businessman",
       behaviour: 'aggressive',
-      action: function(){
-        this.update = function(delta,room){
-          //functional
-          this.moveTowards(game.player.pos);
-          this.move(delta, room);
-          let hitPlayer = game.collisions.circleCollision(this,game.player);
-          if(hitPlayer && this.cooldown <= 0){
-            this.cooldown = this.maxCooldown;
-            console.log('hitPlayer');
-          }
-          this.cooldown -= delta/16;
-
-          //graphical
-          this.walkAnimationSet(15);
-          this.sprite.update(delta);
+      update: function(delta,room){
+        //functional
+        this.moveTowards(game.player.pos);
+        this.move(delta, room);
+        let hitPlayer = game.collisions.circleCollision(this,game.player,this.range);
+        if(hitPlayer && this.cooldown <= 0){
+          this.cooldown = this.maxCooldown;
+          this.action();
         }
+        this.cooldown -= delta/16;
+
+        //graphical
+        this.walkAnimationSet(15);
+        this.sprite.update(delta);
+      },
+      action: function(){
+
       }
     },
     "shooty" : {
@@ -238,14 +241,14 @@ let ENEMIES = {
       tag: "man",
       voice: "shooty",
       behaviour: "aggressive",
-
+      update: function(delta,room){
+        this.update = ENEMIES.templates.businessman.update;
+      },
       action: function(){
         // Shoots the player
         console.log('Bang bang player');
       },
     },
-
-
     "sniper" : {
       name: "sniper",
       weapon: "sniper",
@@ -258,7 +261,39 @@ let ENEMIES = {
       tag: "man",
       voice: "sniper",
       behaviour: "hiding",
+      update: function(delta,room){
+        let dist = distance(game.player.pos, this.pos);
+        if(dist < range){
+          let x = 0;
+          let y = 0;
+          // x part of hiding
+          if(this.pos.x < game.player.pos.x){
+            x = 0;
+          }else if(this.pos.x > game.player.pos.x){
+            x = game.width;
+          }
 
+          // y part of hiding
+          if(this.pos.y < game.player.pos.y){
+            y = 0;
+          }else if(this.pos.y > game.player.pos.y){
+            y = game.height;
+          }
+          this.moveTowards({x: x, y: y});
+          this.move(delta, room);
+        }else{
+          if(this.cooldown <= 0){
+            this.cooldown = maxCooldown;
+            this.action();
+          }
+
+        this.cooldown -= delta/16;
+
+        //graphical
+        this.walkAnimationSet(15);
+        this.sprite.update(delta);
+        }
+      },
       action: function(){
         // Shoots the player
         console.log('Sniped player');
@@ -277,7 +312,15 @@ let ENEMIES = {
       tag: "man",
       voice: "turret",
       behaviour: "idle",
-
+      update: function(delta,room){
+        this.speed.x = 0;
+        this.speed.y = 0;
+        let inRange = distance(game.player.pos,this.pos) <= this.range ;
+        if(inRange && this.cooldown <= 0){
+          this.cooldown = maxCooldown;
+          this.action();
+        }
+      },
       action: function(){
         // Shoots the player
         console.log('Bang bang player');

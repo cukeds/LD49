@@ -31,6 +31,7 @@ let WEAPONS = {
             if(game.collisions.circleCollision(e,p)){
               p.life = p.maxLife;
               //TODO Enemy takes damage
+              
             }
           })
         });

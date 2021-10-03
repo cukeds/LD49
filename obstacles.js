@@ -68,11 +68,10 @@ const OBSTACLES = {
     sheetName: 'exit',
     name: 'exit',
     walkable: false,
-    open: null,
+    open: false,
     dir: null,
 
     setup: function(dir){
-      this.open = false;
       this.dir = dir;
     },
 
@@ -80,7 +79,6 @@ const OBSTACLES = {
       if(room.enemies.length <= 0){
         this.open = true;
       }
-      this.open = true;
       let anim = this.sprite.curAnim;
       this.sprite.update(delta);
       if(this.open){
