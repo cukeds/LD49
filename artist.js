@@ -383,4 +383,8 @@ let Sprite = function(sheetName, tag){
     this.loop = loop;
     this.tiedToValue = false;
   }
+
+  this.getAnim = function(tagName){
+    return this.sheet.tags[tagName];
+  }
 }

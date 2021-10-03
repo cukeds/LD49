@@ -174,6 +174,10 @@ let game = {
   getId: function(){
     this.id++;
     return this.id;
+  },
+
+  getCurRoom: function(){
+    return this.sceneManager.scenes[this.sceneManager.scenes.length-1];
   }
 }
 
