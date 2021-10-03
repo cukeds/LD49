@@ -14,6 +14,9 @@ let Player = function(pos, spriteName){
     this.maxShots = 0;
     this.curWeapon = null;
     this.altWeapon = null;
+    this.health = 100;
+    this.dead = false;
+    this.particles = [];
     this.dyingWeapons = [];
 
     //Weapon material trackers
@@ -30,6 +33,17 @@ let Player = function(pos, spriteName){
   }
 
   this.update = function(delta,room){
+    if(this.dead){
+      this.particles.forEach(p=>p.update());
+      this.sprite.update(delta);
+      let deathAnim = this.sprite.getAnim('death');
+      if(this.sprite.curFrame == deathAnim.to){
+        //deathAnimation played out
+        //TODO put up Game Over Screen
+      }
+      return;
+    }
+
     if(game.controller.up){
       this.speed.y -= this.acceleration * delta/16;
     }
@@ -79,6 +93,8 @@ let Player = function(pos, spriteName){
     if(game.controller.action2){
       room.enemies.pop();
     }
+
+    this.particles.forEach(p=>p.update(delta));
 
     //try to shoot curWeapon
     if(game.mouse.click && this.shootCooldown <= 0 && this.curWeapon){
@@ -222,6 +238,28 @@ let Player = function(pos, spriteName){
     //     game.artist.drawLine(this.pos.x, this.pos.y, pt.x, pt.y, '#000');
     //   }
     // }
+  }
+
+  this.damage = function(amount){
+    if(this.dead){
+      return;
+    }
+    console.log(`taking ${amount} damage` );
+    this.health -= amount;
+    if(this.health <= 0){
+      this.dead = true;
+      this.sprite.setAnim('death', false);
+    }
+
+    for(let i = 0; i < amount; i++){
+      game.getCurRoom().particles.push(new Particle(
+        this.pos,
+        3,
+        'red',
+        'blood',
+        [null]
+      ));
+    }
   }
 
   this.createWeapon = function(materialsArr){

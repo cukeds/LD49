@@ -10,6 +10,39 @@ let Enemy = function(pos, type){
     y: 0
   };
   this.range = this.range * game.gridDiv;
+  this.dead = false;
+
+  this.damage = function(amount){
+
+    if(this.dead){
+      return;
+    }
+    this.health -= amount;
+    if(this.health <= 0){
+      this.dead = true;
+      this.sprite.setAnim('death',false);
+    }
+
+    for(let i = 0; i < amount; i++){
+      game.getCurRoom().particles.push(new Particle(
+        this.pos,
+        3,
+        'purple',
+        'blood',
+        [null]
+      ));
+    }
+  }
+
+  this.die = function(delta){
+    this.sprite.update(delta);
+    let deathAnim = this.sprite.getAnim('death');
+    if(this.sprite.curFrame == deathAnim.to){
+      //deathAnimation played out
+      //TODO Play Death Sound?
+    }
+    return;
+  }
 
   this.moveTowards = function(pos){
     let diff = {x: this.pos.x - pos.x, y: this.pos.y - pos.y};
@@ -37,7 +70,7 @@ let Enemy = function(pos, type){
 
 
     room.enemies.forEach(enemy => {
-      if(enemy == this){return}
+      if(enemy == this || enemy.dead){return}
       let dir = game.collisions.rectangular(this, enemy);
       if(!dir){return}
 
@@ -61,6 +94,7 @@ let Enemy = function(pos, type){
       }
     })
     room.actors.forEach(actor=>{
+
       //Collide against outer edge
       game.collisions.objPerimiter(this);
 
@@ -200,10 +234,11 @@ let ENEMIES = {
   templates: {
     "businessman":{
       name: "businessman",
+      health: 10,
       weapon: "melee",
       maxCooldown: 60,
       cooldown: 0,
-      range: 3,
+      range: 0,
       spriteSheet: "businessman",
       acc: 0.05,
       maxSpeed: 1.5,
@@ -211,6 +246,10 @@ let ENEMIES = {
       voice: "businessman",
       behaviour: 'aggressive',
       update: function(delta,room){
+        if(this.dead){
+          this.die(delta);
+          return;
+        }
         //functional
         this.moveTowards(game.player.pos);
         this.move(delta, room);
@@ -226,13 +265,14 @@ let ENEMIES = {
         this.sprite.update(delta);
       },
       action: function(){
-
+        game.player.damage(10);
       }
     },
     "shooty" : {
       name: "shooty",
+      health: 10,
       weapon: "shotgun",
-      maxCooldown: 25,
+      maxCooldown: 30,
       cooldown: 0,
       range: 5,
       spriteSheet: "tiles",
@@ -242,7 +282,27 @@ let ENEMIES = {
       voice: "shooty",
       behaviour: "aggressive",
       update: function(delta,room){
-        this.update = ENEMIES.templates.businessman.update;
+        if(this.dead){
+          this.die(delta);
+          return;
+        }
+        //functional
+        this.moveTowards(game.player.pos);
+        this.move(delta, room);
+        let hitPlayer = game.collisions.circleCollision(this,game.player,this.range);
+        if(hitPlayer && this.cooldown <= 0){
+          let ray = new Ray(this.pos);
+          let los = ray.cast([room.actors,game.player], game.player.pos);
+          if(los == game.player){
+            this.action();
+          }
+          this.cooldown = this.maxCooldown;
+        }
+        this.cooldown -= delta/16;
+
+        //graphical
+        this.walkAnimationSet(15);
+        this.sprite.update(delta);
       },
       action: function(){
         // Shoots the player
@@ -251,6 +311,7 @@ let ENEMIES = {
     },
     "sniper" : {
       name: "sniper",
+      health: 10,
       weapon: "sniper",
       maxCooldown: 50,
       cooldown: 0,
@@ -302,6 +363,7 @@ let ENEMIES = {
 
     "turret" : {
       name: "turret",
+      health: 10,
       weapon: "machinegun",
       maxCooldown: 15,
       cooldown: 0,
