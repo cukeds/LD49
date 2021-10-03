@@ -14,9 +14,11 @@ let WEAPONS = {
   templates: {
     "pistol" : {
       name: "pistol",
-      cooldown: 10,
-      numShots: 60,
+      cooldown: 20,
+      numShots: 30,
+      damage: 15,
       spriteSheet: 'weapons',
+      //TODO Sound Pistol Shot
       shotSound:null,
 
       update: function(delta,room){
@@ -29,9 +31,11 @@ let WEAPONS = {
           })
           room.enemies.forEach(e=>{
             if(game.collisions.circleCollision(e,p)){
-              p.life = p.maxLife;
-              //TODO Enemy takes damage
-              
+              if(!e.dead){
+                p.life = p.maxLife;
+                e.damage(randInt(this.damage));
+              }
+
             }
           })
         });
@@ -41,11 +45,10 @@ let WEAPONS = {
         this.particles.forEach(p=>p.draw());
       },
       shoot: function(dir, player, room){
-        console.log('Shooting Gun');
         this.particles.push(new Particle(
           {x:player.pos.x,y:player.pos.y},
           4,
-          '#00F',
+          '#FF0',
           'line',
           [dir]
         ))
@@ -53,20 +56,43 @@ let WEAPONS = {
     },
     "shotgun" : {
       name: "shotgun",
-      cooldown: 10,
-      numShots: 60,
+      cooldown: 60,
+      numShots: 15,
+      damage: 4,
       spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              if(!e.dead){
+                p.life = p.maxLife;
+                e.damage(randInt(this.damage)+1);
+              }
 
+            }
+          })
+        });
+        this.particles = this.particles.filter(p => !p.dead);
       },
-      draw: function(){
-
+      draw: function(pos){
+          this.particles.forEach(p=>p.draw(pos));
       },
       shoot: function(dir, player, room){
-        //playSound
-        //createParticles and load them into this.particles
-        //The end?
+        for(let i = 0; i< 8; i++)
+        this.particles.push(new Particle(
+          {x:player.pos.x,y:player.pos.y},
+          4,
+          '#FF0',
+          'shotgun',
+          [dir,20]
+        ))
       },
 
     },
