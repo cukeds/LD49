@@ -3,31 +3,41 @@ let Weapon = function(type){
   keys.forEach(k=>{
     this[k] = WEAPONS.templates[type][k];
   })
+
+  this.particles = [];
 }
 
 let WEAPONS = {
   templates: {
     "pistol" : {
       name: "pistol",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
-        //
-      },
-      draw: function(){
 
+      update: function(delta){
+        this.particles.forEach(p => p.update(delta));
+      },
+      draw: function(pos){
+        this.particles.forEach(p=>p.draw());
       },
       shoot: function(dir, player, room){
-        //Pistol is a hitscan weapon
+        console.log('Shooting Gun');
+        this.particles.push(new Particle(
+          {x:player.pos.x,y:player.pos.y},
+          4,
+          '#00F',
+          'line',
+          [dir]
+        ))
       },
     },
     "shotgun" : {
       name: "shotgun",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -44,9 +54,9 @@ let WEAPONS = {
     },
     "wavegun" : {
       name: "wavegun",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -61,9 +71,9 @@ let WEAPONS = {
     },
     "zapgun" : {
       name: "zapgun",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -78,9 +88,9 @@ let WEAPONS = {
     },
     "axe" : {
       name: "axe",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -95,9 +105,9 @@ let WEAPONS = {
     },
     "laserSword" : {
       name: "laserSword",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -112,9 +122,9 @@ let WEAPONS = {
     },
     "minigun" : {
       name: "minigun",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -129,9 +139,9 @@ let WEAPONS = {
     },
     "smg" : {
       name: "smg",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -146,9 +156,9 @@ let WEAPONS = {
     },
     "beamgun" : {
       name: "beamgun",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -163,9 +173,9 @@ let WEAPONS = {
     },
     "zapshotgun" : {
       name: "zapshotgun",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 
@@ -180,9 +190,9 @@ let WEAPONS = {
     },
     "bonegun" : {
       name: "bonegun",
-      shotCooldown: 10,
+      cooldown: 10,
       numShots: 60,
-      image: null,
+      spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
 

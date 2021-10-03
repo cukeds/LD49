@@ -70,17 +70,27 @@ let Player = function(pos, spriteName){
     }
     this.dyingWeapons.forEach(w=> w.update(delta));
 
+    //try to shoot curWeapon
     if(game.mouse.click && this.shootCooldown <= 0 && this.curWeapon){
-      if(this.shots <= 0){
-        this.shootCooldown = this.shootCooldownReset;
-      }else{
-        this.shots--;
-        //TODO: Break weapon when shots are out
+      //if shot is ready
+      if(this.shootCooldown <= 0){
+        //get direction
+        let dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
+
+        //Lower ammo by one
+        this.curWeapon.numShots--;
+
+        //Set cooldown
+        this.shootCooldown = this.curWeapon.cooldown;
+
+        //shoot weapon, giving direction, player, and room
+        this.curWeapon.shoot(dir,this,game.sceneManager.scenes[game.sceneManager.scenes.length - 1]);
+
+        //checkif weapon empty
+        if(this.curWeapon.numShots <= 0){
+          //TODO Blow up gun when it is empty
+        }
       }
-      let dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
-
-      this.curWeapon.shoot(dir,this,game.sceneManager.scenes[game.sceneManager.scenes.length - 1]);
-
       // for(let i = 0; i < 8; i++){
       //   let p = new Particle(
       //     {x: this.pos.x, y: this.pos.y},
@@ -90,6 +100,10 @@ let Player = function(pos, spriteName){
       //     'sin',[dir])//,Number(document.getElementById('debug0').value)]);//15]);
       //   game.particles.push(p);
       // }
+    }
+
+    if(this.shootCooldown > 0){
+      this.shootCooldown -= delta/16;
     }
 
 
@@ -117,10 +131,7 @@ let Player = function(pos, spriteName){
         break;
     }
 
-    if(this.shootCooldown > 0){
-      this.shootCooldown -= delta/16;
-      this.shots = this.maxShots;
-    }
+
 
     this.speed.x /=1.02;
     this.speed.y /=1.02;
@@ -133,10 +144,17 @@ let Player = function(pos, spriteName){
     this.pos.y += this.speed.y;
 
     this.sprite.update(delta);
-
   }
 
   this.draw = function(){
+    if(this.curWeapon){
+      this.curWeapon.draw();
+    }
+    if(this.altWeapon){
+      this.altWeapon.draw();
+    }
+    this.dyingWeapons.forEach(d=> d.draw());
+
     this.sprite.draw(this.pos);
 
     //Specific Style Raycast

@@ -1,4 +1,4 @@
-let Particle = function(pos,size,speed,color,setupName,setupArgs){
+let Particle = function(pos,size,color,setupName,setupArgs){
   this.id = game.getId();
   this.pos = {};
   this.speed = {};
@@ -8,8 +8,6 @@ let Particle = function(pos,size,speed,color,setupName,setupArgs){
   this.pos.x = pos.x;
   this.pos.y = pos.y;
   this.radius = size;
-  this.speed.x = speed.x;
-  this.speed.y = speed.y;
   this.color = color;
   this.life = 0;
   this.maxLife = 1000;
@@ -20,16 +18,7 @@ let Particle = function(pos,size,speed,color,setupName,setupArgs){
     this.setup = PUPS[setupName];
     this.setup(...setupArgs);
   }else{
-    this.update = function(delta){
-      if(this.life >= this.maxLife && !this.dead){
-        this.dead = true;
-      }
-      this.life += delta;
-      this.pos.x += this.speed.x * delta;
-      this.pos.y += this.speed.y * delta;
-      this.speed.x /= 1.01;
-      this.speed.y /= 1.01;
-    }
+    console.log('tried creating a particle which had no setupName');
   }
 
   this.draw = function(){
