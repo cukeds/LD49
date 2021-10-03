@@ -286,10 +286,38 @@ let Sprite = function(sheetName, tag){
   this.pingpong = 1;
   this.loop = true;
 
+  //player.tieAnimToValue('walkRight',this.pos,'x',15)
+  this.tieAnimToValue = function(anim, obj, objKey,modulus){
+    this.setAnim(anim);
+    this.tiedToValue = true;
+
+    this.tied = {
+      obj: obj,
+      objKey: objKey,
+      modulus: modulus
+    }
+  }
+
   this.update = function(delta){
     if(this.curAnim == null) return;
     if(!delta){
       console.log("Trying to update sprite, but delta does not exist");
+      return;
+    }
+
+    if(this.tiedToValue){
+      let anim = this.sheet.tags[this.curAnim];
+      let start = anim.from; 2
+      let end = anim.to; 4
+      let numFrames = Math.abs(end - start) + 1;
+      let mod = this.tied.modulus;
+      let value = this.tied.obj[this.tied.objKey];
+
+      this.curFrame = Math.floor(value/mod)%numFrames + start;
+      //look at start and end points and number of frames.
+      //numberOfFrames * Modulus = Max
+      // 0 = Min
+      //Math.floor(value/Modulus)%numFrames
       return;
     }
 
@@ -307,7 +335,7 @@ let Sprite = function(sheetName, tag){
         if(this.curFrame == anim.to && this.loop){
           this.curFrame = anim.from;
         }else if(this.curFrame == anim.to){
-          //Do nothing; 
+          //Do nothing;
         }else{
           this.curFrame++;
         }
@@ -353,5 +381,6 @@ let Sprite = function(sheetName, tag){
     this.curFrame = this.sheet.tags[tagName].from;
     this.frameTime = 0;
     this.loop = loop;
+    this.tiedToValue = false;
   }
 }

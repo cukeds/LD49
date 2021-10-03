@@ -18,7 +18,7 @@ let game = {
   gridDiv: null, // Division of the grid. Set up on line 30
   seed: "UhOhForgotToSetASeed",
   maxEnemies: 10,
-  sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman'],
+  sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit'],
   imagesToLoad: ['inventoryBackdrop','levelBackdrop'],
   collisions: null,
   parser: null,

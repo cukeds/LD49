@@ -308,7 +308,7 @@ let StartScreen = function(){
   }
 
   this.setup = function(){
-    game.player = new Player({x:game.width/2,y:game.height/2}, 'startButton');
+    game.player = new Player({x:game.width/2,y:game.height/2}, 'player');
     game.player.load();
 
 
