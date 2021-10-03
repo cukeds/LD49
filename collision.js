@@ -53,6 +53,15 @@ let Collision = function(){
 		}
 	}
 
+	//Uses width, do not use with rectangles, only squares
+	this.circleCollision = function(obj1, obj2){
+		if(distance(obj1.pos,obj2.pos) < obj1.width/2 + obj2.width/2){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	this.objPerimiter = function(obj){
 		if(obj.pos.x < 32 + obj.width/2){
 			obj.pos.x = 32 + obj.width/2+0.2;
