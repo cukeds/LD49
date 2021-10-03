@@ -110,7 +110,7 @@
    { "name": "pistol", "from": 0, "to": 0, "direction": "forward" },
    { "name": "shotgun", "from": 1, "to": 1, "direction": "forward" },
    { "name": "wavegun", "from": 2, "to": 2, "direction": "forward" },
-   { "name": "zapgun", "from": 3, "to": 4, "direction": "forward" },
+   { "name": "zapgun", "from": 3, "to": 3, "direction": "forward" },
    { "name": "axe", "from": 4, "to": 4, "direction": "forward" },
    { "name": "laserSword", "from": 5, "to": 5, "direction": "forward" },
    { "name": "minigun", "from": 6, "to": 6, "direction": "forward" },
