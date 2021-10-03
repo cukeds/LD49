@@ -75,6 +75,11 @@ let Player = function(pos, spriteName){
     }
     this.dyingWeapons.forEach(w=> w.update(delta,room));
 
+
+    if(game.controller.action2){
+      room.enemies.pop();
+    }
+
     //try to shoot curWeapon
     if(game.mouse.click && this.shootCooldown <= 0 && this.curWeapon){
       //if shot is ready
@@ -116,21 +121,21 @@ let Player = function(pos, spriteName){
     switch(this.exit){
       case 'left':
         game.sceneManager.addScene(game.sceneManager.pop().directions.left);
-        this.pos.x += game.width;
+        this.pos.x = game.width - 250;
         this.exit = null;
         break;
       case 'right':
-        this.pos.x -= game.width;
+        this.pos.x = 0 + 250;
         game.sceneManager.addScene(game.sceneManager.pop().directions.right);
         this.exit = null;
         break;
       case 'up':
-        this.pos.y += game.height;
+        this.pos.y = game.height - 250;
         game.sceneManager.addScene(game.sceneManager.pop().directions.up);
         this.exit = null;
         break;
       case 'down':
-        this.pos.y -= game.height;
+        this.pos.y = 0 + 250;
         game.sceneManager.addScene(game.sceneManager.pop().directions.down);
         this.exit = null;
         break;

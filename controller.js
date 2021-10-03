@@ -26,6 +26,8 @@ let Controller = function(){
         this.action1 = true;
         break;
       case "Ctrl":
+      case "KeyX":
+        this.action2 = true;
         break;
       case "Escape":
       case "KeyP":
@@ -52,7 +54,10 @@ let Controller = function(){
         this.action1 = false;
         break;
       case "Ctrl":
+      case "KeyX":
+        this.action2 = false;
         break;
+      case "Escape":
       case "KeyP":
         this.pause = false;
         break;

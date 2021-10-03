@@ -94,6 +94,10 @@ const OBSTACLES = {
           if(anim != 'sideClosed') {this.sprite.setAnim('sideClosed')}
         }
       }
+
+      if(game.collisions.circleCollision(this, game.player, -10) && this.open){
+        game.player.exit = this.dir;
+      }
     },
   },
 

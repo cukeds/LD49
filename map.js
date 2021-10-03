@@ -123,9 +123,11 @@ let Map = function(numRooms){
       let newRoom = new Room();
 
       // Get opposite direction of chosen
+      let names = ['HQ Main Room', 'Very important Room', 'Janitors Room', 'Help Desk']
       if(chosenDir != null){
         newRoom.seed = this.roomSeeds.pop();
         newRoom.id = game.getId();
+        newRoom.name = names[this.gen.randInt(names.length)];
         hostRoom.attach(chosenDir, newRoom,this);
         this.rooms.push(newRoom);
         rs--;
@@ -155,6 +157,7 @@ let Room = function(){
   this.actors = [];
   this.enemies = [];
   this.roomSize = {x: game.width, y: game.height};
+  this.name = 'Starting Room';
 
 
   this.directions = {
@@ -183,7 +186,7 @@ let Room = function(){
     let keys = Object.keys(this.directions);
     keys.forEach(k=>{
         let pos = {x: 0, y: 0};
-        if(k != null){
+        if(this.directions[k] != null){
           switch(k){
             case 'left':
               pos.y = game.height / 2;
@@ -219,6 +222,7 @@ let Room = function(){
     // Draw backdrop
     game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height );
     this.actors.forEach(a => a.draw());
+    game.artist.writeText(this.name, 0, 0, 18,'white');
     //draw enemies
     this.enemies.forEach(e => e.draw());
     //draw player
