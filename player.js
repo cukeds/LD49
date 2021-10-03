@@ -49,7 +49,12 @@ let Player = function(pos, spriteName){
     //Action1 is switch weapons
     if(game.controller.action1){
       game.controller.action1 = false;
-      //TODO: Switch Weapons
+      if(this.altWeapon == null){
+        return;
+      }
+      let temp = this.curWeapon;
+      this.curWeapon = this.altWeapon;
+      this.altWeapon = temp;
       console.log("switching weapons");
     }
 
