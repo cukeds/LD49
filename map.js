@@ -136,6 +136,13 @@ let Map = function(numRooms){
       //Get new host room
       hostRoom = this.rooms[this.gen.randInt(this.rooms.length)];
     }
+    exit = this.getRandExit(5);
+    let keys = Object.keys(exit.directions);
+    keys.forEach(k=>{
+        if(exit.directions[k] == null){
+          exit.finalRoom = k;
+          }
+        });
 
     return start;
   }
@@ -184,6 +191,7 @@ let Room = function(){
 
     // set exit
     let keys = Object.keys(this.directions);
+    let done = false;
     keys.forEach(k=>{
         let pos = {x: 0, y: 0};
         if(this.directions[k] != null){
@@ -209,7 +217,34 @@ let Room = function(){
           }
           this.actors.push(new Obstacle(pos, 'exit', 'exit', 'open', [k, this]))
         }
+        else{
+          if(k == this.finalRoom){
+            switch(k){
+              case 'left':
+                pos.y = game.height / 2;
+                pos.x += 48;
+                break;
+              case 'right':
+                pos.y = game.height / 2;
+                pos.x = game.width - 48;
+                break;
+              case 'up':
+                pos.x = game.width / 2;
+                pos.y += 48;
+                break;
+              case 'down':
+                pos.x = game.width / 2;
+                pos.y = game.height - 48;
+                break;
+              default:
+              console.log('unexpected direction', direction);
+            }
+            this.actors.push(new Obstacle(pos, 'exit', 'finalExit', 'finalDoorOpen', [k, this]));
+          }
+        }
       });
+
+
   }
 
   this.update = function(delta){
@@ -223,6 +258,7 @@ let Room = function(){
     game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height );
     this.actors.forEach(a => a.draw());
     game.artist.writeText(this.name, 0, 0, 18,'white');
+    game.artist.writeText(this.id, 20, 20, 18, 'white');
     //draw enemies
     this.enemies.forEach(e => e.draw());
     //draw player

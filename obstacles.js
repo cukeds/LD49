@@ -101,4 +101,19 @@ const OBSTACLES = {
     },
   },
 
+  'finalExit': {
+    sheetName: 'exit',
+    name: 'finalExit',
+    open: false,
+    dir: null,
+
+    setup: function(dir){
+      this.dir = dir;
+    },
+    update: function(delta, room){
+
+    },
+
+  }
+
 }
