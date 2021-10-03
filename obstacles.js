@@ -1,9 +1,20 @@
-let Obstacle = function(pos, sheet, tag){
+let Obstacle = function(pos, sheet, name, tag, setupArgs){
   this.pos = {};
   this.pos.x = pos.x;
   this.pos.y = pos.y;
-  this.update = OBSTACLES[tag].update;
-  this.sprite = new Sprite(sheet,tag);
+  this.update = OBSTACLES[name].update;
+  this.tag = tag;
+
+  if(name != undefined){
+    if(OBSTACLES[name].setup != undefined){
+      this.setup = OBSTACLES[name].setup;
+      this.setup(...setupArgs);
+    }
+  }else{
+    console.log('tried setting up an obstacle which had no name');
+  }
+
+  this.sprite = new Sprite(sheet, this.tag);
   this.width = this.sprite.width;
   this.height = this.sprite.height;
 
@@ -41,16 +52,50 @@ const OBSTACLES = {
       },
 
     sheetName: 'testObstacles',
-    tag: 'Wall',
+    name: 'Wall',
     walkable: false
   },
   'Chair': {
     sheetName: 'testObstacles',
-    tag: 'Chair',
+    name: 'Chair',
     walkable: true,
     update: function(){
 
     }
-  }
+  },
+
+  'exit': {
+    sheetName: 'exit',
+    name: 'exit',
+    walkable: false,
+    open: null,
+    dir: null,
+
+    setup: function(dir){
+      this.open = false;
+      this.dir = dir;
+    },
+
+    update: function(delta, room){
+      if(room.enemies.length <= 0){
+        this.open = true;
+      }
+
+      let anim = this.sprite.curAnim;
+      if(this.open){
+        if(this.dir == 'up' || this.dir == 'down'){
+          if(anim != 'open') {this.sprite.setAnim(anim)}
+        }else{
+          if(anim != 'sideOpen') {this.sprite.setAnim(anim)}
+        }
+      }else{
+        if(this.dir == 'up' || this.dir == 'down'){
+          if(anim != 'closed') {this.sprite.setAnim(anim)}
+        }else{
+          if(anim != 'sideClosed') {this.sprite.setAnim(anim)}
+        }
+      }
+    },
+  },
 
 }

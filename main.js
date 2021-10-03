@@ -187,6 +187,17 @@ function distance(p1,p2){
   return Math.hypot(p1.x - p2.x,p1.y - p2.y);
 }
 
+function randKey(rng, dict){
+  let keys = Object.keys(dict);
+  let rand = rng.randInt(keys.length);
+  if(dict[keys[rand]]){
+    return dict[keys[rand]];
+  }
+  else{
+    return randKey(rng, dict);
+  }
+}
+
 function rotMatrix(point, dir, mathFunc){
   let cos = Math.cos(dir);
   let sin = Math.sin(dir);
