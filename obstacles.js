@@ -76,7 +76,7 @@ const OBSTACLES = {
     },
 
     update: function(delta, room){
-      if(room.enemies.length <= 0){
+      if(room.enemies.filter(e => !e.dead).length == 0){
         this.open = true;
       }
       let anim = this.sprite.curAnim;
