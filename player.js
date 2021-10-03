@@ -29,7 +29,7 @@ let Player = function(pos, spriteName){
     this.exit = null;
   }
 
-  this.update = function(delta){
+  this.update = function(delta,room){
     if(game.controller.up){
       this.speed.y -= this.acceleration * delta/16;
     }
@@ -68,12 +68,12 @@ let Player = function(pos, spriteName){
 
     //Update weapons
     if(this.curWeapon){
-      this.curWeapon.update(delta);
+      this.curWeapon.update(delta,room);
     }
     if(this.altWeapon){
-      this.altWeapon.update(delta);
+      this.altWeapon.update(delta,room);
     }
-    this.dyingWeapons.forEach(w=> w.update(delta));
+    this.dyingWeapons.forEach(w=> w.update(delta,room));
 
     //try to shoot curWeapon
     if(game.mouse.click && this.shootCooldown <= 0 && this.curWeapon){

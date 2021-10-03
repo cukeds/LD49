@@ -5,6 +5,9 @@ let Weapon = function(type){
   })
 
   this.particles = [];
+  this.draw = function(pos){
+    this.particles.forEach(p=>p.draw());
+  }
 }
 
 let WEAPONS = {
@@ -16,8 +19,22 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
 
-      update: function(delta){
-        this.particles.forEach(p => p.update(delta));
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              p.life = p.maxLife;
+              //TODO Enemy takes damage
+            }
+          })
+        });
+        this.particles = this.particles.filter(p => !p.dead);
       },
       draw: function(pos){
         this.particles.forEach(p=>p.draw());
