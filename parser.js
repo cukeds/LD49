@@ -18,7 +18,7 @@ let Parser = function(){
           actors.push(new Obstacle(pos, 'testObstacles', 'Chair', 'Chair'));
           break;
         case 4:
-          enemies.push(new Enemy(pos, "shooty"));
+          enemies.push(new Enemy(pos, "businessman"));
           break;
         case 3:
           actors.push(new Obstacle(pos, 'testObstacles', 'Wall', 'Wall'));

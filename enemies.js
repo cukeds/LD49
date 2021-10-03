@@ -28,8 +28,8 @@ let Enemy = function(pos, type){
   }
 
   this.move = function(delta, room){
-    this.speed.x =Math.min(this.maxSpeed,Math.max(-this.maxSpeed,this.speed.x));
-    this.speed.y =Math.min(this.maxSpeed,Math.max(-this.maxSpeed,this.speed.y));
+    this.speed.x=Math.min(this.maxSpeed,Math.max(-this.maxSpeed,this.speed.x));
+    this.speed.y=Math.min(this.maxSpeed,Math.max(-this.maxSpeed,this.speed.y));
 
     this.pos.x += this.speed.x * delta/16;
     this.pos.y += this.speed.y * delta/16;
@@ -37,7 +37,7 @@ let Enemy = function(pos, type){
     room.actors.forEach(actor=>{
       //Collide against outer edge
       game.collisions.objPerimiter(this);
-      
+
       let dir = game.collisions.rectangular(this, actor);
       if(!dir){return}
 
@@ -99,7 +99,7 @@ let Enemy = function(pos, type){
       console.log('Collided with player')
     };
 
-
+    this.sprite.update(delta);
     let dist = distance(game.player.pos, this.pos);
     switch(this.behaviour){
       case "aggressive":
@@ -160,11 +160,72 @@ let Enemy = function(pos, type){
   this.draw = function(){
     this.sprite.draw(this.pos);
   }
+
+  this.walkAnimationSet = function(modulus){
+    let quickDir = Math.abs(this.speed.x) > Math.abs(this.speed.y) ? 'x' : 'y';
+    if(this.speed[quickDir] > 0){
+      if(quickDir == 'x'){
+        let anim = 'walkRight'
+        if(this.sprite.curAnim != anim){
+          this.sprite.tieAnimToValue(anim,this.pos,'x',modulus);
+          // this.sprite.setAnim(anim);
+        }
+      }else{
+        let anim = 'walkDown'
+        if(this.sprite.curAnim != anim){
+          this.sprite.tieAnimToValue(anim,this.pos,'y',modulus);
+        }
+      }
+    }else{
+      if(quickDir == 'x'){
+        let anim = 'walkLeft'
+        if(this.sprite.curAnim != anim){
+          this.sprite.tieAnimToValue(anim,this.pos,'x',modulus);
+
+        }
+      }else{
+        let anim = 'walkUp'
+        if(this.sprite.curAnim != anim){
+          this.sprite.tieAnimToValue(anim,this.pos,'y',modulus);
+        }
+      }
+    }
+  }
 }
 
 
 let ENEMIES = {
   templates: {
+    "businessman":{
+      name: "businessman",
+      weapon: "melee",
+      maxCooldown: 60,
+      cooldown: 0,
+      range: 3,
+      spriteSheet: "businessman",
+      acc: 0.05,
+      maxSpeed: 1.5,
+      tag: undefined,
+      voice: "businessman",
+      behaviour: 'aggressive',
+      action: function(){
+        this.update = function(delta,room){
+          //functional
+          this.moveTowards(game.player.pos);
+          this.move(delta, room);
+          let hitPlayer = game.collisions.circleCollision(this,game.player);
+          if(hitPlayer && this.cooldown <= 0){
+            this.cooldown = this.maxCooldown;
+            console.log('hitPlayer');
+          }
+          this.cooldown -= delta/16;
+
+          //graphical
+          this.walkAnimationSet(15);
+          this.sprite.update(delta);
+        }
+      }
+    },
     "shooty" : {
       name: "shooty",
       weapon: "shotgun",

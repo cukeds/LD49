@@ -19,4 +19,6 @@ let Actor = function(pos, spriteName, tag){
   this.draw = function(){
     this.sprite.draw(this.pos);
   }
+
+  
 }
