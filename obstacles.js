@@ -110,8 +110,28 @@ const OBSTACLES = {
     setup: function(dir){
       this.dir = dir;
     },
-    update: function(delta, room){
 
+
+    update: function(delta, room){
+      let anim = this.sprite.curAnim;
+      this.sprite.update(delta);
+      if(this.open){
+        if(this.dir == 'up' || this.dir == 'down'){
+          if(anim != 'finalDoorOpen') {this.sprite.setAnim('finalDoorOpen')}
+        }else{
+          if(anim != 'finalDoorSideOpen') {this.sprite.setAnim('finalDoorSideOpen')}
+        }
+      }else{
+        if(this.dir == 'up' || this.dir == 'down'){
+          if(anim != 'finalDoor') {this.sprite.setAnim('finalDoor')}
+        }else{
+          if(anim != 'finalDoorSide') {this.sprite.setAnim('finalDoorSide')}
+        }
+      }
+
+      if(game.collisions.circleCollision(this, game.player, -10) && this.open){
+        game.player.exit = this.dir;
+      }
     },
 
   }
