@@ -234,35 +234,83 @@ let WEAPONS = {
     },
     "minigun" : {
       name: "minigun",
-      cooldown: 10,
-      numShots: 60,
+      cooldown: 3,
+      damage: 3,
+      numShots: 120,
       spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              if(!e.dead){
+                p.life = p.maxLife;
+                e.damage(randInt(this.damage));
+              }
 
+            }
+          })
+        });
+        this.removeDeadParticles();
       },
-      draw: function(){
-
+      draw: function(pos){
+        this.particles.forEach(p=>p.draw());
       },
-      shoot: function(dir, player,room){
-
+      shoot: function(dir, player, room){
+        this.particles.push(new Particle(
+          {x:player.pos.x,y:player.pos.y},
+          2,
+          '#FF0',
+          'line',
+          [dir]
+        ))
       },
 
     },
     "smg" : {
       name: "smg",
-      cooldown: 10,
-      numShots: 60,
+      cooldown: 7,
+      damage: 6,
+      numShots: 120,
       spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              if(!e.dead){
+                p.life = p.maxLife;
+                e.damage(randInt(this.damage));
+              }
 
+            }
+          })
+        });
+        this.removeDeadParticles();
       },
-      draw: function(){
-
+      draw: function(pos){
+        this.particles.forEach(p=>p.draw());
       },
-      shoot: function(dir, player,room){
-
+      shoot: function(dir, player, room){
+        this.particles.push(new Particle(
+          {x:player.pos.x,y:player.pos.y},
+          2,
+          '#FF0',
+          'shotgun',
+          [dir,15]
+        ))
       },
 
     },
