@@ -53,6 +53,23 @@ let Collision = function(){
 		}
 	}
 
+	this.objPerimiter = function(obj){
+		if(obj.pos.x < 32 + obj.width/2){
+			obj.pos.x = 32 + obj.width/2+0.2;
+			obj.speed.x /= -15;
+		}else if(obj.pos.x > game.width -32 - obj.width/2){
+			obj.pos.x = game.width - 32 - obj.width/2 -0.2;
+			obj.speed.x /= -15;
+		}
+		if(obj.pos.y < 32 + obj.height/2){
+			obj.pos.y = 32 + obj.height/2-0.2;
+			obj.speed.y /= -15;
+		}else if(obj.pos.y > game.height -32 - obj.height/2){
+			obj.pos.y = game.height - 32 - obj.height/2+0.2;
+			obj.speed.y /= -15;
+		}
+	}
+
 	this.isRectColliding = function(obj1,obj2){
 		return obj1.pos.x + obj1.width/2 >= obj2.pos.x - obj2.width/2 &&
 			 obj1.pos.x - obj1.width/2 <= obj2.width/2 + obj2.pos.x &&

@@ -35,6 +35,9 @@ let Enemy = function(pos, type){
     this.pos.y += this.speed.y * delta/16;
 
     room.actors.forEach(actor=>{
+      //Collide against outer edge
+      game.collisions.objPerimiter(this);
+      
       let dir = game.collisions.rectangular(this, actor);
       if(!dir){return}
 
@@ -63,9 +66,6 @@ let Enemy = function(pos, type){
     })
 
     room.enemies.forEach(enemy => {
-
-
-
       if(enemy == this){return}
       let dir = game.collisions.rectangular(this, enemy);
       if(!dir){return}

@@ -148,6 +148,8 @@ let Player = function(pos, spriteName){
     this.pos.x += this.speed.x;
     this.pos.y += this.speed.y;
 
+    game.collisions.objPerimiter(this);
+
     let quickDir = Math.abs(this.speed.x) > Math.abs(this.speed.y) ? 'x' : 'y';
     if(this.speed[quickDir] > 0){
       if(quickDir == 'x'){
