@@ -162,6 +162,7 @@ let Room = function(){
   this.backdrop = game.artist.images['levelBackdrop']; //image
   this.hasBeenSetup = false;
   this.actors = [];
+  this.particles = [];
   this.enemies = [];
   this.roomSize = {x: game.width, y: game.height};
   this.name = 'Starting Room';
@@ -248,6 +249,8 @@ let Room = function(){
   }
 
   this.update = function(delta){
+    this.particles = this.particles.filter(p => !p.dead);
+    this.particles.forEach(p => p.update(delta,this));
     this.enemies.forEach(e => e.update(delta, this));
     game.player.update(delta, this);
     this.actors.forEach(a => a.update(delta, this));
@@ -256,6 +259,7 @@ let Room = function(){
   this.draw = function(){
     // Draw backdrop
     game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height );
+    this.particles.forEach(p => p.draw());
     this.actors.forEach(a => a.draw());
     game.artist.writeText(this.name, 0, 0, 18,'white');
     game.artist.writeText(this.id, 20, 20, 18, 'white');

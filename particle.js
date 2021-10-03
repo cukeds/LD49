@@ -102,5 +102,28 @@ let PUPS = {
       this.speed.x /= 1.01;
       this.speed.y /= 1.01;
     }
+  },
+  blood: function(){
+    this.speed.x = Math.random() * 3 - 1;
+    this.speed.y = -Math.random() * 3;
+
+    this.update = function(delta){
+      if(this.life >= this.maxLife && !this.dead){
+        this.dead = true;
+      }
+      this.life += delta;
+      if(!this.floor){
+        this.floor = this.pos.y + 32;
+      }
+
+      if(this.pos.y >= this.floor){
+        return;
+      }
+      this.pos.x += this.speed.x;
+      this.pos.y += this.speed.y;
+      this.speed.y += .3 * delta/16;
+      this.speed.y = Math.min(2, this.speed.y);
+
+    }
   }
 }
