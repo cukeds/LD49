@@ -214,10 +214,6 @@ let WEAPONS = {
       },
       draw: function(){
 
-        if(this.debug){
-          this.debug.forEach(d=>{
-            game.artist.drawLine(game.player.pos.x + d.x, game.player.pos.y + d.y, game.player.pos.x, game.player.pos.y, 'white');
-          })
         }
       },
       shoot: function(dir, player, room){
@@ -226,10 +222,8 @@ let WEAPONS = {
         let hits = [];
         this.debug = [];
         for(let i = 0; i < 5; i++){
-          this.debug.push({x:Math.cos(dir - Math.PI/4 + Math.PI/8 * i) * 100, y:Math.sin(dir - Math.PI/4 + Math.PI/8 * i) * 100});
           let hit = ray.cast(room.enemies, {x:Math.cos(dir - Math.PI/4 + i * Math.PI/8), y:Math.sin(dir - Math.PI/4 + i * Math.PI/8)});
           if(hit){
-            this.debug.push(hit());
             if(distance(hit.obj.pos, game.player.pos) <= 112){
               hits.push(hit.obj);
             }
