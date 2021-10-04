@@ -410,13 +410,155 @@ let ENEMIES = {
         this.speed.y = 0;
         let inRange = distance(game.player.pos,this.pos) <= this.range ;
         if(inRange && this.cooldown <= 0){
-          this.cooldown = maxCooldown;
+          this.cooldown = this.maxCooldown;
           this.action();
         }
       },
       action: function(){
         // Shoots the player
         console.log('Bang bang player');
+      },
+    },
+
+    "finalBoss" : {
+      name: "shooty",
+      health: 100,
+      maxCooldown: 15,
+      cooldown: 0,
+      dmgVal: 5,
+      spriteSheet: "shooty",
+      acc: 0,
+      attacks: 0,
+      act: 0,
+      maxSpeed: 0,
+      tag: undefined,
+      ready: true,
+      voice: "finalBoss",
+      behaviour: "idle",
+      update: function(delta,room){
+        this.speed.x = 0;
+        this.speed.y = 0;
+        if(!this.particles){
+          this.particles = [];
+        }
+        this.particles = this.particles.filter(p=> !p.dead);
+
+        this.particles.forEach(p=>{
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.dead;
+              p.life = p.maxLife;
+            }
+          });
+          if(game.collisions.circleCollision(game.player,p)){
+            if(!game.player.dead){
+              p.dead;
+              p.life = p.maxLife;
+              game.player.damage(randInt(this.dmgVal));
+              }
+            }
+          }
+        );
+
+        if(this.dead){
+          this.die();
+          return;
+        }
+
+
+        if(this.health <= 0){
+          this.dead = true;
+        }
+
+
+        if(this.ready){
+          this.act = randInt(100);
+          this.attacks = 0;
+          this.ready = false;
+        }
+
+        if(this.act <= 31){
+          // attack 1
+          let maxAttacks = 5;
+          if(this.cooldown <= 0){
+            for(let i = 1; i <= 8; i++){
+              this.particles.push(new Particle(
+                this.pos,
+                8,
+                '#FEA',
+                'line',
+                [0.78 * i]
+              ));
+              this.cooldown = 30;
+            }
+          this.attacks++;
+          }
+          if(this.attacks >= maxAttacks){
+            this.ready = true;
+            this.cooldown = 60;
+          }
+        }else if(this.act <= 62){
+          // attack 2
+          let maxAttacks = 10;
+          if(this.cooldown <= 0){
+            this.particles.push(new Particle(
+              this.pos,
+              12,
+              '#FEA',
+              'line',
+              [Math.atan2(game.player.pos.y - this.pos.y,game.player.pos.x - this.pos.x)]
+            ));
+          this.attacks++;
+          this.cooldown = 15;
+          }
+          if(this.attacks >= maxAttacks){
+            this.ready = true;
+            this.cooldown = 60;
+          }
+        }else if(this.act <= 95){
+          // idle
+          if(this.cooldown <= 0){
+            this.ready = true;
+          }
+          this.sprite.setAnim('idle');
+        }
+        else{
+          // spawn Enemy
+          let maxEnemies = 4;
+          for(let j = 0; j < 10; j++){
+            for(let i = 0; i < maxEnemies; i++){
+              let corners = ['topleft', 'topright', 'bottomleft', 'bottomright'];
+              let pos = getCorner(game, corners[i]);
+              this.particles.push(new Particle(
+                pos,
+                30 - i * 2,
+                '#000',
+                'stationary',
+                [100]
+              ));
+              }
+            }
+          for(let i = 0; i < maxEnemies; i++){
+            let corners = ['topleft', 'topright', 'bottomleft', 'bottomright'];
+            let pos = getCorner(game, corners[i]);
+            if(randInt(2) == 0){
+              game.getCurRoom().enemies.push(new Enemy(pos, 'shooty'));
+            }
+            else{
+              game.getCurRoom().enemies.push(new Enemy(pos, 'businessman'));
+            }
+          }
+          this.cooldown = 120;
+          this.ready = true;
+        }
+
+      this.sprite.update(delta);
+      this.cooldown -= delta/16;
+
+      },
+      action: function(){
+
       },
     },
   }
