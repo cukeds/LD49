@@ -263,8 +263,8 @@ let Room = function(){
     game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height );
     this.particles.forEach(p => p.draw());
     this.actors.forEach(a => a.draw());
-    game.artist.writeText(this.name, 64, 64, 18,'white');
-    game.artist.writeText(this.id, 64, 84, 18, 'white');
+    game.artist.writeText(this.name, 32, 32, 18,'white');
+    game.artist.writeText(this.id, 32, 52, 18, 'white');
 
 
     //draw enemies
@@ -272,7 +272,11 @@ let Room = function(){
     //draw player
      game.player.draw();
 
+     game.artist.drawCircle(game.width - 64, game.height - 64, 32, 'white')
 
+     if(game.player.altWeapon){
+       game.player.altWeapon.sprite.draw({x: game.width - 64, y: game.height - 64}, 64, 64, -Math.PI/8);
+     }
      let maxX = 0;
      let maxY = 0;
      game.map.rooms.forEach(r=>{
@@ -283,6 +287,10 @@ let Room = function(){
          maxY = r.loc.y;
        }
      });
+     game.artist.writeText('Shots Left:', 32, game.height - 64, 24, 'white');
+     if(game.player.curWeapon){
+       game.artist.writeText(game.player.curWeapon.numShots, 150, game.height - 64, 24, 'white');
+     }
      game.map.rooms.filter(r=> r.visited).forEach(r=>{
        let pos = {x: r.loc.x, y: r.loc.y};
        pos.x *= 25;
