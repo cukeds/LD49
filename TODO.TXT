@@ -1,12 +1,12 @@
 // TODO (#DONE IS TEMPORARY. ONLY REALLY DONE WHEN IT'S CHECKED BY -C AND -P)
 
 ABSOLUTE MUST COMPLETE STUFF
-Weapons explode and give juice
-Spawn Final Boss and Final Boss Stuff
-Game Over (restart button)
-Winning Screen
-Title Screen
-Name!!!
+Weapons explode and give juice // explosions asset in ase folder
+Spawn Final Boss and Final Boss Stuff // works
+Game Over (restart button)  // Kind of
+Winning Screen // kind of
+Title Screen // Better assets in progress
+Name!!! //
 Music
 Sound Effects
 
