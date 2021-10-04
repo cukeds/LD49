@@ -294,11 +294,11 @@ let Room = function(){
        maxY = r.loc.y;
      }
     });
-    game.artist.writeText('Stability:', 32, game.height - 64, 24, 'white');
+
     if(game.player.curWeapon){
      let max = WEAPONS.templates[game.player.curWeapon.name].numShots;
-     let perc = Math.round(game.player.curWeapon.numShots/max * 100);
      let color = 'white';
+     let perc = Math.round(game.player.curWeapon.numShots/max * 100);
      if(perc < 10){
        color = game.artist.randColor();
      }else if(perc < 20){
@@ -309,8 +309,22 @@ let Room = function(){
        color = 'yellow';
      }
 
-     game.artist.writeText(perc + '%', 130, game.height - 64, 24, color);
+
+
+     game.artist.writeText(`Stability: ${perc}%`, 32, game.height - 64, 24, 'white');
     }
+    let healthColor = 'white';
+    if(game.player.health < 10){
+      healthColor = game.artist.randColor();
+    }else if(game.player.health < 20){
+      healthColor = 'red';
+    }else if(game.player.health < 50){
+      healthColor = 'orange';
+    }else if(game.player.health < 80){
+      healthColor = 'yellow';
+    }
+    game.artist.writeText(`Health: ${game.player.health}`, 32, game.height- 96,24,healthColor);
+    
      game.map.rooms.filter(r=> r.visited).forEach(r=>{
        let pos = {x: r.loc.x, y: r.loc.y};
        pos.x *= 25;
