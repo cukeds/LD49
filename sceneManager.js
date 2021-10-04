@@ -556,7 +556,7 @@ let WinScreen = function(){
 
   this.draw = function(){
     // game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
-    game.artist.writeText('Congratulations!', game.width / 2 - 64, 2 * game.height / 4, 20, 'black');
+    game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
     this.drawables.forEach(d => d.draw());
   }
 
