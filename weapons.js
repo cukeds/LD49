@@ -204,13 +204,19 @@ let WEAPONS = {
     },
     "axe" : {
       name: "axe",
-      cooldown: 5,
+      cooldown: 60,
       numShots: 60,
       damage: 500,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
-
+        this.sprite.update(delta);
+        let an = this.sprite.getAnim('axeHit');
+        if(an){
+          if(this.sprite.curFrame == this.sprite.getAnim('axeHit').to){
+            this.sprite = new Sprite('weapons', 'axe');
+          }
+        }
       },
       draw: function(){
 
@@ -218,7 +224,7 @@ let WEAPONS = {
       shoot: function(dir, player, room){
         if(this.sprite.curAnim != 'axeHit'){
           this.sprite = new Sprite('hitAnims', 'axeHit');
-          this.sprite.setAnim('axeHit');
+          this.sprite.setAnim('axeHit',false);
         }
         let ray = new Ray(game.player.pos);
         let hits = [];
@@ -235,25 +241,48 @@ let WEAPONS = {
         hits.forEach(hit => {
           hit.damage(randInt(this.damage));
         });
-        if(this.sprite.curFrame == this.sprite.getAnim('axeHit').to){
-          this.sprite = new Sprite('weapons', 'axe');
-        }
-      },
 
+      },
     },
     "laserSword" : {
       name: "laserSword",
-      cooldown: 10,
+      cooldown: 30,
       numShots: 60,
+      damage: 30,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
-
+        this.sprite.update(delta);
+        let an = this.sprite.getAnim('swordHit');
+        if(an){
+          if(this.sprite.curFrame == this.sprite.getAnim('swordHit').to){
+            this.sprite = new Sprite('weapons', 'laserSword');
+          }
+        }
       },
       draw: function(){
 
       },
-      shoot: function(dir, player,room){
+      shoot: function(dir, player, room){
+        if(this.sprite.curAnim != 'swordHit'){
+          this.sprite = new Sprite('hitAnims', 'swordHit');
+          this.sprite.setAnim('swordHit',false);
+        }
+        let ray = new Ray(game.player.pos);
+        let hits = [];
+        this.debug = [];
+        for(let i = 0; i < 5; i++){
+          this.debug.push({x:Math.cos(dir - Math.PI/4 + Math.PI/8 * i) * 100, y:Math.sin(dir - Math.PI/4 + Math.PI/8 * i) * 100});
+          let hit = ray.cast(room.enemies, this.pos);
+          if(hit){
+            if(distance(hit.obj.pos, game.player.pos) <= 112){
+              hits.push(hit.obj);
+            }
+          }
+        }
+        hits.forEach(hit => {
+          hit.damage(randInt(this.damage));
+        });
 
       },
 

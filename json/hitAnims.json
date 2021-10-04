@@ -1,74 +1,74 @@
 { "frames": [
    {
     "filename": "hitAnims0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 128, "h": 128 },
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 50
    },
    {
     "filename": "hitAnims1.aseprite",
-    "frame": { "x": 128, "y": 0, "w": 128, "h": 128 },
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 50
    },
    {
     "filename": "hitAnims2.aseprite",
-    "frame": { "x": 256, "y": 0, "w": 128, "h": 128 },
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 50
    },
    {
     "filename": "hitAnims3.aseprite",
-    "frame": { "x": 0, "y": 128, "w": 128, "h": 128 },
+    "frame": { "x": 0, "y": 128, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 150
    },
    {
     "filename": "hitAnims4.aseprite",
-    "frame": { "x": 128, "y": 128, "w": 128, "h": 128 },
+    "frame": { "x": 64, "y": 128, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 50
    },
    {
     "filename": "hitAnims5.aseprite",
-    "frame": { "x": 256, "y": 128, "w": 128, "h": 128 },
+    "frame": { "x": 128, "y": 128, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 50
    },
    {
     "filename": "hitAnims6.aseprite",
-    "frame": { "x": 0, "y": 256, "w": 128, "h": 128 },
+    "frame": { "x": 0, "y": 256, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 50
    },
    {
     "filename": "hitAnims7.aseprite",
-    "frame": { "x": 128, "y": 256, "w": 128, "h": 128 },
+    "frame": { "x": 64, "y": 256, "w": 64, "h": 128 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
-    "sourceSize": { "w": 128, "h": 128 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+    "sourceSize": { "w": 64, "h": 128 },
     "duration": 150
    }
  ],
@@ -77,7 +77,7 @@
   "version": "1.2.29-x64",
   "image": "hitAnims.png",
   "format": "RGBA8888",
-  "size": { "w": 384, "h": 384 },
+  "size": { "w": 192, "h": 384 },
   "scale": "1",
   "frameTags": [
    { "name": "axeHit", "from": 0, "to": 3, "direction": "forward" },
