@@ -11,12 +11,14 @@ let Enemy = function(pos, type){
   };
   this.range = this.range * game.gridDiv;
   this.dead = false;
+  this.hitSound = `${type}Hit`;
 
   this.damage = function(amount){
 
     if(this.dead){
       return;
     }
+    game.maestro.play(this.hitSound);
     this.health -= amount;
     if(this.health <= 0){
       this.dead = true;
