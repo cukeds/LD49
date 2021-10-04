@@ -201,7 +201,25 @@ function randKey(rng, dict){
     return randKey(rng, dict);
   }
 }
-
+function getCorner(game, corner){
+  switch(corner){
+    case 'topleft':
+      return {x: 64, y: 64};
+      break;
+    case 'topright':
+      return {x: game.width - 64, y: 64}
+      break;
+    case 'bottomleft':
+      return {x: 64, y: game.height - 64};
+      break;
+    case 'bottomright':
+      return {x: game.width - 64, y: game.height - 64};
+      break;
+    default:
+      console.log('tried getting weird corner', corner);
+      break;
+  }
+}
 function rotMatrix(point, dir, mathFunc){
   let cos = Math.cos(dir);
   let sin = Math.sin(dir);
@@ -231,6 +249,8 @@ function combinationsReplacement(x, k) {
 
   return combinationList;
 }
+
+
 
 document.oncontextmenu =new Function("return false;")
 document.onselectstart =new Function("return false;")
