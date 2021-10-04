@@ -411,32 +411,7 @@ let WinScreen = function(){
 
   this.setup = function(){
 
-    let restartButton = new Actor({x:0,y:0},'startButton');
-    restartButton.pos.x = game.width/2;
-    restartButton.pos.y = 3*game.height/4;
-    restartButton.restartGame = function(){
-      game.sceneManager.pop();
-      game.sceneManager.addScene(new StartScreen());
-    }
-
-    restartButton.update = function(delta){
-      this.sprite.update(delta);
-      //check if mouse over button
-      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
-          game.mouse.pos.x > this.pos.x -this.width/2 &&
-          game.mouse.pos.y < this.pos.y + this.height/2 &&
-          game.mouse.pos.y > this.pos.y - this.height/2){
-        if(game.mouse.click){
-          game.mouse.click= false;
-          this.sprite.setAnim('click');
-          this.restartGame();
-        }else{
-          this.sprite.setAnim('hover');
-        }
-      }else{
-        this.sprite.setAnim('idle');
-      }
-    }
+    let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'restartButtonGO','idle',this.restartGame);
     this.drawables.push(restartButton);
     this.updateables.push(restartButton);
   }
@@ -468,7 +443,7 @@ let GameOver = function(){
 
   this.setup = function(){
 
-    let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'restartButton','idle',this.restartGame);
+    let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'restartButtonGO','idle',this.restartGame);
     this.drawables.push(restartButton);
     this.updateables.push(restartButton);
 
