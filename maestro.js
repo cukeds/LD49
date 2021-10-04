@@ -3,7 +3,7 @@ let Maestro = function(){
   this.music = [];
   this.curMusic = null;
   this.sfxVolume = .5;
-  this.musicVolume = .5;
+  this.musicVolume = .15;
 
 	this.loadSound = function(name, isMusic = false){
 		let sound = new Audio(`./sounds/${name}.mp3`);
