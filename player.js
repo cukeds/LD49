@@ -23,7 +23,7 @@ let Player = function(pos, spriteName){
 
     //Weapon material trackers
     this.mat = {
-      junk: 3,
+      junk: 1,
       crystal: 2,
       essence: 1
     }
@@ -41,7 +41,8 @@ let Player = function(pos, spriteName){
       let deathAnim = this.sprite.getAnim('death');
       if(this.sprite.curFrame == deathAnim.to){
         //deathAnimation played out
-        //TODO put up Game Over Screen
+        game.sceneManager.pop();
+        game.sceneManager.addScene(new GameOver());
       }
       return;
     }
