@@ -438,37 +438,19 @@ let WinScreen = function(){
 let GameOver = function(){
   this.drawables = [];
   this.updateables = [];
+  this.backdrop = 'gameOver'
+
+  this.restartGame = function(){
+    game.sceneManager.pop();
+    game.sceneManager.addScene(new StartScreen());
+  }
 
   this.setup = function(){
 
-    let restartButton = new Actor({x:0,y:0},'startButton');
-    restartButton.pos.x = game.width/2;
-    restartButton.pos.y = 3*game.height/4;
-    restartButton.restartGame = function(){
-      game.sceneManager.pop();
-      game.sceneManager.addScene(new StartScreen());
-    }
-
-    restartButton.update = function(delta){
-      this.sprite.update(delta);
-      //check if mouse over button
-      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
-          game.mouse.pos.x > this.pos.x -this.width/2 &&
-          game.mouse.pos.y < this.pos.y + this.height/2 &&
-          game.mouse.pos.y > this.pos.y - this.height/2){
-        if(game.mouse.click){
-          game.mouse.click= false;
-          this.sprite.setAnim('Clicked');
-          this.restartGame();
-        }else{
-          this.sprite.setAnim('Hover');
-        }
-      }else{
-        this.sprite.setAnim('Idle');
-      }
-    }
+    let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'startButton','idle',this.restartGame);
     this.drawables.push(restartButton);
     this.updateables.push(restartButton);
+
   }
 
   this.update=function(delta){
@@ -476,6 +458,7 @@ let GameOver = function(){
   }
 
   this.draw = function(){
+    // game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height);
     this.drawables.forEach(d => d.draw());
   }
 
