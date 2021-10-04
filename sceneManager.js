@@ -559,7 +559,7 @@ let WinScreen = function(){
   }
 
   this.setup = function(){
-
+    game.maestro.pauseAll();
     let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'restartButtonGO','idle',this.restartGame);
     this.drawables.push(restartButton);
     this.updateables.push(restartButton);
@@ -591,7 +591,7 @@ let GameOver = function(){
   }
 
   this.setup = function(){
-
+    game.maestro.pauseAll();
     let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'restartButtonGO','idle',this.restartGame);
     this.drawables.push(restartButton);
     this.updateables.push(restartButton);
