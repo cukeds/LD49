@@ -220,7 +220,7 @@ let Player = function(pos, spriteName){
     }
 
     if(game.getCurRoom().finalRoom){
-      if(game.map.rooms.filter(r => r.enemies.filter(e=>!e.dead).length).length == 0 && game.getCurRoom().enemies.filter(e=> e.voice == 'finalBoss').length == 0){
+      if(game.map.rooms.filter(r => r.enemies.filter(e=>!e.dead).length).length == 0 && game.getCurRoom().enemies.filter(e=> e.name == 'finalBoss').length == 0){
         console.log('Spawning final boss');
 
         game.getCurRoom().enemies.push(new Enemy({x: game.width / 2, y: game.height / 2}, 'finalBoss'));
