@@ -19,7 +19,7 @@ let game = {
   gridDiv: null, // Division of the grid. Set up on line 30
   seed: "UhOhForgotToSetASeed",
   maxEnemies: 10,
-  sfxToLoad: ['click','axe','bonegun','businessmanHit','finalBossHit','inventoryFull','laserSword','minigun','pistol','shootyHit','shotgun','smg','wavegun','weaponCreate','zapgun','zapshotgun','ow','ugh','ouch','oimy','matPlace','matRemove','weaponExplode', 'quips1', 'quips2', 'quips3', 'quips4', 'quips5', 'quips6', 'quips7', 'quips8', 'quips9', 'quips10', 'quips11', 'quips12','finalBossDeath'],
+  sfxToLoad: ['click','axe','bonegun','businessmanHit','finalBossHit','inventoryFull','laserSword','minigun','pistol','shootyHit','shotgun','smg','wavegun','weaponCreate','zapgun','zapshotgun','ow','ugh','ouch','oimy','matPlace','matRemove','weaponExplode', 'quips1', 'quips2', 'quips3', 'quips4', 'quips5', 'quips6', 'quips7', 'quips8', 'quips9', 'quips10', 'quips11', 'quips12','finalBossDeath','weaponDeathPlayerQuip','playerDeath'],
   musicToLoad: ['music'],
   sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit','shooty', 'hitAnims','weaponExplosion','titleScreen','finalBoss', 'restartButtonGO','optionsButton'],
   imagesToLoad: ['inventoryBackdrop','levelBackdrop', 'titleScreen', 'gameOver', 'winScreen','optionsScreen'],
@@ -36,10 +36,6 @@ let game = {
     this.collisions = new Collision();
     this.parser = new Parser();
     this.maestro = new Maestro();
-
-
-    //Call Loadables
-    this.artist.loadVideo('video.mp4');
 
     //make Starting Scene
 
