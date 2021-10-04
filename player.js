@@ -19,6 +19,8 @@ let Player = function(pos, spriteName){
     this.dead = false;
     this.damageSounds = ['ow','ugh','ouch','oimy']
     this.particles = [];
+    this.quips = ['quips1', 'quips2', 'quips3', 'quips4', 'quips5', 'quips6', 'quips7', 'quips8', 'quips9', 'quips10', 'quips11', 'quips12'];
+    this.quipCooldown = 0;
     this.dyingWeapons = [];
     this.dir = 0;
     this.iFrames = 60;
@@ -37,6 +39,7 @@ let Player = function(pos, spriteName){
   }
 
   this.update = function(delta,room){
+
     if(this.dead){
       this.particles.forEach(p=>p.update());
       this.sprite.update(delta);
@@ -48,6 +51,13 @@ let Player = function(pos, spriteName){
       }
       return;
     }
+    if(Math.random() < 0.001 && room.enemies && this.quipCooldown < 0){
+      console.log('hiii');
+      game.maestro.play(this.quips[randInt(this.quips.length)]);
+      this.quipCooldown = 600;
+    }
+
+    this.quipCooldown -= delta/16;
     this.iFrames -= delta/16;
 
     if(game.controller.up){
