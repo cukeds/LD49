@@ -15,6 +15,11 @@ let Particle = function(pos,size,color,setupName,setupArgs){
   this.maxLife = 1000;
   this.dead = false;
 
+  this.draw = function(){
+    if(!this.dead){
+      game.artist.drawCircle(this.pos.x,this.pos.y,this.radius,this.color);
+    }
+  }
 
   if(setupName != undefined){
     this.setup = PUPS[setupName];
@@ -23,11 +28,6 @@ let Particle = function(pos,size,color,setupName,setupArgs){
     console.log('tried creating a particle which had no setupName');
   }
 
-  this.draw = function(){
-    if(!this.dead){
-      game.artist.drawCircle(this.pos.x,this.pos.y,this.radius,this.color);
-    }
-  }
 }
 
 //Particle Update Patterns
@@ -143,26 +143,44 @@ let PUPS = {
         return {x: this.life/2,y: 0};
       }.bind(this))
     };
-},
-    mat: function(dir){
-      this.dir = dir;
-      this.maxLife = 1500;
-      this.update = function(delta){
-        if(this.life >= this.maxLife && !this.dead){
-          this.dead = true;
-        }
-        this.life += delta * 4;
-        this.pos = rotMatrix(this.startPos,this.dir,function(){
-          if(this.maxLife - this.life >= this.maxLife / 2){
-            return {x: (this.life) / delta, y: 0};
-          }
-          return {x: ((this.maxLife - this.life) / delta), y: 0};
-        }.bind(this))
-        if(this.maxLife - this.life <= this.maxLife / 2 && game.collisions.circleCollision(this, game.player)){
-          this.dead = true;
-        }
+  },
+  mat: function(dir){
+    this.dir = dir;
+    this.speed.x = randInt(31)-15;
+    this.speed.y = randInt(31)-15;
+    this.maxLife = 1500;
+    this.update = function(delta){
+      if(this.life >= this.maxLife && !this.dead){
+        this.dead = true;
       }
-    },
+      this.life += delta/16;
+
+      this.speed.x += (game.player.pos.x - this.pos.x)/75;
+      this.speed.y += (game.player.pos.y - this.pos.y)/75;
+      this.pos.x += this.speed.x;
+      this.pos.y += this.speed.y;
+
+      if( Math.abs(this.pos.x - game.player.pos.x) < 20 &&
+          Math.abs(this.pos.x - game.player.pos.x) < 20 &&
+          this.life > 20){
+        this.dead = true;
+      }
+    }
+  },
+  weaponExplosion: function(){
+    this.sprite = new Sprite('weaponExplosion');
+    this.sprite.setAnim('explode', false);
+    this.update = function(delta){
+      if(this.life >= this.maxLife && !this.dead){
+        this.dead = true;
+      }
+      this.sprite.update(delta);
+      this.life += delta;
+    }
+    this.draw = function(){
+      this.sprite.draw(this.startPos);
+    }
+  },
   stationary: function(life){
     this.maxLife = life;
     this.update = function(delta){
