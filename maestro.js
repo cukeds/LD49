@@ -39,6 +39,15 @@ let Maestro = function(){
     }
   }
 
+  this.pause = function(sndName){
+    this.sfx[sndName].pause();
+  }
+  this.pauseAll = function(){
+    this.sfx.forEach(s=>{
+      s.pause();
+    })
+  }
+
   this.musicPlay = function(sndName, restart, vol){
     let sound = this.music[sndName];
 
