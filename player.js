@@ -23,7 +23,7 @@ let Player = function(pos, spriteName){
 
     //Weapon material trackers
     this.mat = {
-      junk: 1,
+      junk: 3,
       crystal: 2,
       essence: 1
     }
@@ -128,6 +128,7 @@ let Player = function(pos, spriteName){
         if(this.curWeapon.numShots <= 0){
           //TODO Blow up gun when it is empty
 
+
           //move to dying weapons
           this.dyingWeapons.push(this.curWeapon);
           //set curWeapon to null
@@ -138,17 +139,28 @@ let Player = function(pos, spriteName){
             this.altWeapon = null;
           }
           //Give 4 random mats
+          let color = 'white';
           for(let i = 0; i < 4; i++){
             let rand = randInt(100);
             if(rand <= 33){
               this.mat.junk++;
+              color = 'blue';
             }
             else if(rand <= 66){
               this.mat.crystal++;
+              color = 'brown';
             }
             else if(rand <= 100){
               this.mat.essence++;
+              color = 'white';
             }
+            game.getCurRoom().particles.push(new Particle(
+              this.pos,
+              4,
+              color,
+              'mat',
+              [(Math.random() * 6.28)]
+            ));
           }
         }
       }
@@ -194,7 +206,13 @@ let Player = function(pos, spriteName){
       }
     }
 
+    if(game.getCurRoom().finalRoom){
+      if(game.map.rooms.filter(r => r.enemies.filter(e=>!e.dead).length).length == 0 && game.getCurRoom().enemies.filter(e=> e.voice == 'finalBoss').length == 0){
+        console.log('Spawning final boss');
 
+        game.getCurRoom().enemies.push(new Enemy({x: game.width / 2, y: game.height / 2}, 'finalBoss'));
+      }
+    }
 
 
     this.speed.x /=1.02;

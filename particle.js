@@ -143,5 +143,33 @@ let PUPS = {
         return {x: this.life/2,y: 0};
       }.bind(this))
     };
+},
+    mat: function(dir){
+      this.dir = dir;
+      this.maxLife = 1500;
+      this.update = function(delta){
+        if(this.life >= this.maxLife && !this.dead){
+          this.dead = true;
+        }
+        this.life += delta * 4;
+        this.pos = rotMatrix(this.startPos,this.dir,function(){
+          if(this.maxLife - this.life >= this.maxLife / 2){
+            return {x: (this.life) / delta, y: 0};
+          }
+          return {x: ((this.maxLife - this.life) / delta), y: 0};
+        }.bind(this))
+        if(this.maxLife - this.life <= this.maxLife / 2 && game.collisions.circleCollision(this, game.player)){
+          this.dead = true;
+        }
+      }
+    },
+  stationary: function(life){
+    this.maxLife = life;
+    this.update = function(delta){
+      if(this.life >= this.maxLife && !this.dead){
+        this.dead = true;
+      }
+      this.life += delta;
+    }
   }
 }
