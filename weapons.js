@@ -214,20 +214,18 @@ let WEAPONS = {
       },
       draw: function(){
 
-        if(this.debug){
-          this.debug.forEach(d=>{
-            game.artist.drawLine(game.player.pos.x + d.x, game.player.pos.y + d.y, game.player.pos.x, game.player.pos.y, 'white');
-          })
-        }
       },
       shoot: function(dir, player, room){
-        this.sprite = new Sprite('hitAnims', 'axeHit');
+        if(this.sprite.curAnim != 'axeHit'){
+          this.sprite = new Sprite('hitAnims', 'axeHit');
+          this.sprite.setAnim('axeHit');
+        }
         let ray = new Ray(game.player.pos);
         let hits = [];
         this.debug = [];
         for(let i = 0; i < 5; i++){
           this.debug.push({x:Math.cos(dir - Math.PI/4 + Math.PI/8 * i) * 100, y:Math.sin(dir - Math.PI/4 + Math.PI/8 * i) * 100});
-          let hit = ray.cast(room.enemies, {x:Math.cos(dir - Math.PI/4 + i * Math.PI/8), y:Math.sin(dir - Math.PI/4 + i * Math.PI/8)});
+          let hit = ray.cast(room.enemies, this.pos);
           if(hit){
             if(distance(hit.obj.pos, game.player.pos) <= 112){
               hits.push(hit.obj);
@@ -237,7 +235,9 @@ let WEAPONS = {
         hits.forEach(hit => {
           hit.damage(randInt(this.damage));
         });
-        //this.sprite = new Sprite('weapons', 'axe');
+        if(this.sprite.curFrame == this.sprite.getAnim('axeHit').to){
+          this.sprite = new Sprite('weapons', 'axe');
+        }
       },
 
     },
