@@ -372,14 +372,27 @@ let WEAPONS = {
             })
           }
 
+
           this.particles.filter(par=> par.id == p.id).forEach(par => nearbyPoints.push(par.pos));
           for(let i = 0; i < 5; i++){
             let p1 = nearbyPoints[randInt(nearbyPoints.length)];
             let p2 = nearbyPoints[randInt(nearbyPoints.length)];
-            game.artist.drawLine(p1.x,p1.y,p2.x,p2.y,'#FF0');
+            let length = {}
+            length.x = Math.floor((p2.x - p1.x) / 10);
+            length.y = Math.floor((p2.y - p1.y) / 10);
+            let previous = {x:(p1.x), y: (p1.y)}
+            for(let j = 1; j < 10; j++){
+                let offSetX = randInt(9) - 4;
+                let offSetY = randInt(9) - 4;
+                game.artist.drawLine(previous.x, previous.y, previous.x + (length.x) + offSetX, previous.y + (length.y) + offSetY,'#29C');
+                previous.x = previous.x + (length.x) + offSetX;
+                previous.y = previous.y + (length.y) + offSetY;
+                if(Math.abs(previous.x) > Math.abs(p2.x) && Math.abs(previous.y) > Math.abs(p2.y)){
+                  break;
+                }
+              }
           }
-          p.draw();
-        });
+          p.draw();});
       },
       shoot: function(dir, player, room){
         let id = game.getId();
