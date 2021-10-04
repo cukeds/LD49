@@ -13,11 +13,13 @@ let Player = function(pos, spriteName){
     this.shots = 5;
     this.maxShots = 0;
     this.curWeapon = null;
+    this.weaponPos = {};
     this.altWeapon = null;
     this.health = 100;
     this.dead = false;
     this.particles = [];
     this.dyingWeapons = [];
+    this.dir = 0;
 
     //Weapon material trackers
     this.mat = {
@@ -96,13 +98,22 @@ let Player = function(pos, spriteName){
 
     this.particles.forEach(p=>p.update(delta));
     this.particles = this.particles.filter(p=>!p.dead);
+    this.dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
+    if(this.curWeapon){
+      this.curWeapon.pos = rotMatrix(this.pos,this.dir,function(){
+        return {x: 64, y: 0};
+      }.bind(this));
+      this.curWeapon.bulletPos = rotMatrix(this.pos,this.dir,function(){
+        return {x: 80, y: 0};
+      }.bind(this));
+    }
 
     //try to shoot curWeapon
     if(game.mouse.click && this.shootCooldown <= 0 && this.curWeapon){
       //if shot is ready
       if(this.shootCooldown <= 0){
         //get direction
-        let dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
+
 
         //Lower ammo by one
         this.curWeapon.numShots--;
@@ -111,7 +122,7 @@ let Player = function(pos, spriteName){
         this.shootCooldown = this.curWeapon.cooldown;
 
         //shoot weapon, giving direction, player, and room
-        this.curWeapon.shoot(dir,this,game.sceneManager.scenes[game.sceneManager.scenes.length - 1]);
+        this.curWeapon.shoot(this.dir,this,game.sceneManager.scenes[game.sceneManager.scenes.length - 1]);
 
         //checkif weapon empty
         if(this.curWeapon.numShots <= 0){
@@ -206,6 +217,7 @@ let Player = function(pos, spriteName){
 
   this.draw = function(){
     if(this.curWeapon){
+      this.curWeapon.sprite.draw(this.curWeapon.pos, this.curWeapon.sprite.width, this.curWeapon.sprite.height, this.dir);
       this.curWeapon.draw();
 
     }

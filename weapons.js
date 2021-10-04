@@ -14,6 +14,10 @@ let Weapon = function(type){
   this.removeDeadParticles = function(){
     this.particles = this.particles.filter(p=> !p.dead);
   }
+
+
+  this.sprite = new Sprite(this.spriteSheet, this.name);
+  this.pos = {};
 }
 
 let WEAPONS = {
@@ -133,7 +137,7 @@ let WEAPONS = {
       },
       shoot: function(dir, player,room){
         this.particles.push(new Particle(
-          {x:player.pos.x,y:player.pos.y},
+          {x:this.bulletPos.x,y:this.bulletPos.y},
           10,
           '#67eb9c',
           'sin',
