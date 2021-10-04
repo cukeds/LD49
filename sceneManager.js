@@ -334,23 +334,31 @@ let OptionScreen = function(){
   this.increaseSFX = function(){
     if(game.maestro.sfxVolume <= .95){
       game.maestro.sfxVolume += .05;
+    }else{
+      game.maestro.sfxVolume =1;
     }
     game.maestro.play('click');
   }
   this.decreaseSFX = function(){
     if(game.maestro.sfxVolume >= .05){
       game.maestro.sfxVolume -= .05;
+    }else{
+      game.maestro.sfxVolume = 0;
     }
     game.maestro.play('click');
   }
   this.increaseMusic = function(){
     if(game.maestro.musicVolume <= .95){
       game.maestro.musicVolume += .05;
+    }else{
+      game.maestro.musicVolume = 1;
     }
   }
   this.decreaseMusic = function(){
     if(game.maestro.musicVolume >= .05){
       game.maestro.musicVolume -= .05;
+    }else{
+      game.maestro.musicVolume = 0;
     }
   }
   this.goBack = function(){
