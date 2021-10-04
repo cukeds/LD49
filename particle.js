@@ -33,13 +33,13 @@ let Particle = function(pos,size,color,setupName,setupArgs){
 //Particle Update Patterns
 let PUPS = {
   //these are setup functions and will assign the proper update function upon running
-  line: function(dir){
+  line: function(dir, spd = 1){
     this.dir = dir;
     this.update = function(delta){
       if(this.life >= this.maxLife && !this.dead){
         this.dead = true;
       }
-      this.life += delta;
+      this.life += delta * spd;;
 
       this.pos = rotMatrix(this.startPos,this.dir,function(){
         return {x: this.life/2,y: 0};

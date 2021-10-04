@@ -195,6 +195,9 @@ let Enemy = function(pos, type){
 
   this.draw = function(){
     this.sprite.draw(this.pos);
+    if(this.particles){
+      this.particles.forEach(p=>p.draw());
+    }
   }
 
   this.walkAnimationSet = function(modulus){
@@ -238,6 +241,7 @@ let ENEMIES = {
       weapon: "melee",
       maxCooldown: 60,
       cooldown: 0,
+      dmgVal: 10,
       range: 0,
       spriteSheet: "businessman",
       acc: 0.05,
@@ -265,7 +269,7 @@ let ENEMIES = {
         this.sprite.update(delta);
       },
       action: function(){
-        game.player.damage(10);
+        game.player.damage(randInt(this.dmgVal));
       }
     },
     "shooty" : {
@@ -275,27 +279,48 @@ let ENEMIES = {
       maxCooldown: 30,
       cooldown: 0,
       range: 5,
+      dmgVal: 2,
       spriteSheet: "shooty",
       acc: 0.05,
-      maxSpeed: 2,
+      maxSpeed: 1,
       tag: undefined,
       voice: "shooty",
       behaviour: "aggressive",
       update: function(delta,room){
+        if(!this.particles){
+          this.particles = [];
+        }
+
+        this.particles = this.particles.filter(p=> !p.dead);
+
+        this.particles.forEach(p=>{
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.dead;
+              p.life = p.maxLife;
+            }
+          });
+          if(game.collisions.circleCollision(game.player,p)){
+            if(!game.player.dead){
+              p.dead;
+              p.life = p.maxLife;
+              game.player.damage(randInt(this.dmgVal));
+            }
+
+          }
+        });
+
         if(this.dead){
           this.die(delta);
           return;
         }
+
         //functional
         this.moveTowards(game.player.pos);
         this.move(delta, room);
-        let hitPlayer = game.collisions.circleCollision(this,game.player,this.range);
-        if(hitPlayer && this.cooldown <= 0){
-          let ray = new Ray(this.pos);
-          let los = ray.cast([room.actors,game.player], game.player.pos);
-          if(los == game.player){
-            this.action();
-          }
+        if(this.cooldown <= 0){
+          this.action();
           this.cooldown = this.maxCooldown;
         }
         this.cooldown -= delta/16;
@@ -305,7 +330,13 @@ let ENEMIES = {
         this.sprite.update(delta);
       },
       action: function(){
-        // Shoots the player
+        let dir = Math.atan2(-this.pos.y+game.player.pos.y,-this.pos.x+game.player.pos.x);
+        this.particles.push(new Particle(
+          this.pos,
+          4,
+          "#cd6eee",
+          'line',[dir,0.5]
+        ))
         console.log('Bang bang player');
       },
     },

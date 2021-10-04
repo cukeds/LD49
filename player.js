@@ -23,9 +23,9 @@ let Player = function(pos, spriteName){
 
     //Weapon material trackers
     this.mat = {
-      junk: 3,
-      crystal: 3,
-      essence: 3
+      junk: 1,
+      crystal: 2,
+      essence: 1
     }
 
     // this.sprite = new Sprite('startButton');
@@ -127,6 +127,11 @@ let Player = function(pos, spriteName){
         //checkif weapon empty
         if(this.curWeapon.numShots <= 0){
           //TODO Blow up gun when it is empty
+
+          //move to dying weapons
+          //set curWeapon to null
+          //if altWeapon exists, switch weapons
+          //Give 4 random mats
         }
       }
       // for(let i = 0; i < 8; i++){

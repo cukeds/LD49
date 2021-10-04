@@ -1,11 +1,20 @@
 // TODO (#DONE IS TEMPORARY. ONLY REALLY DONE WHEN IT'S CHECKED BY -C AND -P)
 
+ABSOLUTE MUST COMPLETE STUFF
+Weapons explode and give juice
+Spawn Final Boss and Final Boss Stuff
+Game Over (restart button)
+Winning Screen
+Title Screen
+Name!!!
+Music
+Sound Effects
+
 WISHLIST
 - Settings SCREEN
 - Cinematics
 
 GRAPHICS
-- ENEMIES
 - START SCREEN
 - GAME OVER SCREEN
 - CREDIT SCREEN
@@ -34,6 +43,7 @@ GAMEPLAY STUFF (KINDA BACKEND, ANYWAYS):
 
 
 Finished things:
+- ENEMIES
 - COMPONENTS
 - TILES
 - WEAPONS

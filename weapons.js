@@ -369,23 +369,6 @@ let WEAPONS = {
       },
 
     },
-    "beamgun" : {
-      name: "beamgun",
-      cooldown: 10,
-      numShots: 60,
-      spriteSheet: 'weapons',
-      shotSound:null,
-      update: function(delta){
-
-      },
-      draw: function(){
-
-      },
-      shoot: function(dir, player,room){
-
-      },
-
-    },
     "zapshotgun" : {
       name: "zapshotgun",
       cooldown: 45,
@@ -505,6 +488,24 @@ let WEAPONS = {
       },
 
     },
+
+    //"beamgun" : {
+    //   name: "beamgun",
+    //   cooldown: 10,
+    //   numShots: 60,
+    //   spriteSheet: 'weapons',
+    //   shotSound:null,
+    //   update: function(delta){
+    //
+    //   },
+    //   draw: function(){
+    //
+    //   },
+    //   shoot: function(dir, player,room){
+    //
+    //   },
+    //
+    // },
   },
   recipes: {},
   assignList: function(){
