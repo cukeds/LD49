@@ -326,6 +326,18 @@ let InventoryScreen = function(){
 
 }
 
+
+
+let OptionScreen = function(){
+  // TODO
+}
+
+
+
+
+
+
+
 let StartScreen = function(){
   this.drawables = [];
   this.updateables = [];
@@ -345,6 +357,10 @@ let StartScreen = function(){
     input.destroy();
   }
 
+
+  this.options = function(){
+    this.addScene(new OptionsScreen);
+  }
   this.startGame = function(){
     let seed = input.value();
     if(seed == ''){
@@ -366,6 +382,7 @@ let StartScreen = function(){
     game.player.load();
 
     let startButton = new game.sceneManager.Button(975,240,'startButton','idle',this.startGame);
+    let optionsButton = new game.sceneManager.Button(975,340,'optionsButton','idle',this.options);
 
     this.drawables.push(startButton);
     this.updateables.push(startButton);
