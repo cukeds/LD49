@@ -18,14 +18,14 @@ let game = {
   gridDiv: null, // Division of the grid. Set up on line 30
   seed: "UhOhForgotToSetASeed",
   maxEnemies: 10,
-  sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit','shooty', 'hitAnims','weaponExplosion','titleScreen', 'finalBoss'],
+  sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit','shooty', 'hitAnims','weaponExplosion','titleScreen','finalBoss'],
   imagesToLoad: ['inventoryBackdrop','levelBackdrop'],
   collisions: null,
   parser: null,
 
   setup: function(){
     this.artist = new Artist(this.width,this.height);
-    this.artist.drawRect(0,0,this.width,this.height,'#aaa');
+    this.artist.drawRect(0,0,this.wisdth,this.height,'#aaa');
     this.mouse = new MouseController();
     this.controller = new Controller();
     this.gridDiv = 32;  // 32px gridUnits grid

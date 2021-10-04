@@ -392,13 +392,13 @@ let WinScreen = function(){
           game.mouse.pos.y > this.pos.y - this.height/2){
         if(game.mouse.click){
           game.mouse.click= false;
-          this.sprite.setAnim('Clicked');
+          this.sprite.setAnim('click');
           this.restartGame();
         }else{
-          this.sprite.setAnim('Hover');
+          this.sprite.setAnim('hover');
         }
       }else{
-        this.sprite.setAnim('Idle');
+        this.sprite.setAnim('idle');
       }
     }
     this.drawables.push(restartButton);
