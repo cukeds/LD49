@@ -40,6 +40,42 @@ let SceneManager = function(){
   this.draw = function(){
     this.scenes[this.scenes.length-1].draw();
   }
+
+  this.Button = function(x,y,sheetName,tag,callback){
+    this.pos = {};
+    this.pos.x = x;
+    this.pos.y = y;
+    this.sprite = new Sprite(sheetName,tag);
+    this.width = this.sprite.width;
+    this.height = this.sprite.height;
+    this.click = callback;
+
+    //handles if it is clicked/hovered/idle
+    this.update = function(delta){
+      this.sprite.update(delta);
+      //check if mouse over button
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          this.sprite.setAnim('click');
+          game.maestro.play('click');
+          this.click();
+        }else{
+          this.sprite.setAnim('hover');
+        }
+      }else{
+        this.sprite.setAnim('idle');
+      }
+    }
+
+    this.draw = function(){
+      this.sprite.draw(this.pos);
+    }
+
+  }
 }
 
 let Pause = function(tstamp){
@@ -312,6 +348,12 @@ let StartScreen = function(){
     game.player = new Player({x:game.width/2,y:game.height/2}, 'player');
     game.player.load();
 
+    let startButton2 = new game.sceneManager.Button(3,3*game.height/4,'startButton','idle',function(){
+      alert('working');
+    });
+    this.drawables.push(startButton2);
+    this.updateables.push(startButton2);
+
 
     let startButton = new Actor({x:0,y:0},'startButton');
     startButton.pos.x = game.width/2;
@@ -365,8 +407,6 @@ let StartScreen = function(){
       this.seedInput.render();
     }
   }
-
-
 
 }
 
