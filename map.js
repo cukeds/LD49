@@ -90,6 +90,7 @@ let Map = function(numRooms){
   this.createMap = function(start){
     // Create Initial Room
     let hostRoom = start;
+    hostRoom.visited = true;
     hostRoom.seed = this.roomSeeds.pop();
     hostRoom.id = game.getId();
     hostRoom.loc = {x:0,y:0};
@@ -158,6 +159,7 @@ let Map = function(numRooms){
 let Room = function(){
   this.gen = null;
   this.seed = null;
+  this.visited = false;
   this.loc = {x:null,y:null};
   this.backdrop = game.artist.images['levelBackdrop']; //image
   this.hasBeenSetup = false;
@@ -262,12 +264,38 @@ let Room = function(){
     this.particles.forEach(p => p.draw());
     this.actors.forEach(a => a.draw());
     game.artist.writeText(this.name, 64, 64, 18,'white');
-    game.artist.writeText(this.id, 20, 20, 18, 'white');
+    game.artist.writeText(this.id, 64, 84, 18, 'white');
+
+
     //draw enemies
     this.enemies.forEach(e => e.draw());
     //draw player
-
      game.player.draw();
+
+
+     let maxX = 0;
+     let maxY = 0;
+     game.map.rooms.forEach(r=>{
+       if(r.loc.x > maxX){
+         maxX = r.loc.x;
+       }
+       if(r.loc.y < maxY){
+         maxY = r.loc.y;
+       }
+     });
+     game.map.rooms.filter(r=> r.visited).forEach(r=>{
+       let pos = {x: r.loc.x, y: r.loc.y};
+       pos.x *= 25;
+       pos.y *= 25;
+
+       pos.x += game.width - (maxX + 3) * 25;
+       pos.y += (maxY - 3) * -25;
+       if(r.id == this.id){
+         game.artist.drawRect(pos.x, pos.y, 20, 20, '#AA9DA0');
+       }else{
+         game.artist.drawRect(pos.x, pos.y, 20, 20, '#86777A');
+       }
+     });
   }
 
   this.attach = function(direction, newRoom, map){

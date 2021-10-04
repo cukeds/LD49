@@ -204,25 +204,34 @@ let Player = function(pos, spriteName){
 
     // this.exit keeps track of the players exit
     if(this.exit != null){
+      let entered;
       switch(this.exit){
         case 'left':
-          game.sceneManager.addScene(game.sceneManager.pop().directions.left);
+          entered = game.sceneManager.pop().directions.left;
+          entered.visited = true;
+          game.sceneManager.addScene(entered);
           this.pos.x = game.width - 250;
           this.exit = null;
           break;
         case 'right':
           this.pos.x = 0 + 250;
-          game.sceneManager.addScene(game.sceneManager.pop().directions.right);
+          entered = game.sceneManager.pop().directions.right;
+          entered.visited = true;
+          game.sceneManager.addScene(entered);
           this.exit = null;
           break;
         case 'up':
           this.pos.y = game.height - 250;
-          game.sceneManager.addScene(game.sceneManager.pop().directions.up);
+          entered = game.sceneManager.pop().directions.up;
+          entered.visited = true;
+          game.sceneManager.addScene(entered);
           this.exit = null;
           break;
         case 'down':
           this.pos.y = 0 + 250;
-          game.sceneManager.addScene(game.sceneManager.pop().directions.down);
+          entered = game.sceneManager.pop().directions.down;
+          entered.visited = true;
+          game.sceneManager.addScene(entered);
           this.exit = null;
           break;
       }
