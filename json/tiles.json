@@ -1,5 +1,6 @@
-{ "frames": {
-   "tiles0.ase": {
+{ "frames": [
+   {
+    "filename": "tiles0.ase",
     "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +8,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles1.ase": {
+   {
+    "filename": "tiles1.ase",
     "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -15,7 +17,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles2.ase": {
+   {
+    "filename": "tiles2.ase",
     "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -23,7 +26,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles3.ase": {
+   {
+    "filename": "tiles3.ase",
     "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -31,7 +35,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles4.ase": {
+   {
+    "filename": "tiles4.ase",
     "frame": { "x": 128, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -39,7 +44,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles5.ase": {
+   {
+    "filename": "tiles5.ase",
     "frame": { "x": 0, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -47,7 +53,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles6.ase": {
+   {
+    "filename": "tiles6.ase",
     "frame": { "x": 32, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -55,7 +62,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles7.ase": {
+   {
+    "filename": "tiles7.ase",
     "frame": { "x": 64, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -63,7 +71,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles8.ase": {
+   {
+    "filename": "tiles8.ase",
     "frame": { "x": 96, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -71,7 +80,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles9.ase": {
+   {
+    "filename": "tiles9.ase",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -79,7 +89,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles10.ase": {
+   {
+    "filename": "tiles10.ase",
     "frame": { "x": 0, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -87,7 +98,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles11.ase": {
+   {
+    "filename": "tiles11.ase",
     "frame": { "x": 32, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -95,7 +107,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles12.ase": {
+   {
+    "filename": "tiles12.ase",
     "frame": { "x": 64, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -103,7 +116,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles13.ase": {
+   {
+    "filename": "tiles13.ase",
     "frame": { "x": 96, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -111,7 +125,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles14.ase": {
+   {
+    "filename": "tiles14.ase",
     "frame": { "x": 128, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -119,7 +134,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles15.ase": {
+   {
+    "filename": "tiles15.ase",
     "frame": { "x": 0, "y": 96, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -127,7 +143,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles16.ase": {
+   {
+    "filename": "tiles16.ase",
     "frame": { "x": 32, "y": 96, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -135,7 +152,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles17.ase": {
+   {
+    "filename": "tiles17.ase",
     "frame": { "x": 64, "y": 96, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -143,7 +161,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles18.ase": {
+   {
+    "filename": "tiles18.ase",
     "frame": { "x": 96, "y": 96, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -151,7 +170,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles19.ase": {
+   {
+    "filename": "tiles19.ase",
     "frame": { "x": 128, "y": 96, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -159,7 +179,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles20.ase": {
+   {
+    "filename": "tiles20.ase",
     "frame": { "x": 0, "y": 128, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -167,7 +188,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles21.ase": {
+   {
+    "filename": "tiles21.ase",
     "frame": { "x": 32, "y": 128, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -175,7 +197,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles22.ase": {
+   {
+    "filename": "tiles22.ase",
     "frame": { "x": 64, "y": 128, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -183,7 +206,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles23.ase": {
+   {
+    "filename": "tiles23.ase",
     "frame": { "x": 96, "y": 128, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -191,7 +215,8 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "tiles24.ase": {
+   {
+    "filename": "tiles24.ase",
     "frame": { "x": 128, "y": 128, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -199,7 +224,7 @@
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    }
- },
+ ],
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.2.29-x64",
@@ -208,30 +233,34 @@
   "size": { "w": 160, "h": 160 },
   "scale": "1",
   "frameTags": [
-   { "name": "alien", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "wob", "from": 0, "to": 0, "direction": "forward" },
    { "name": "man", "from": 1, "to": 1, "direction": "forward" },
-   { "name": "simpleSquare", "from": 2, "to": 2, "direction": "forward" },
-   { "name": "brownStar", "from": 3, "to": 3, "direction": "forward" },
-   { "name": "decharging", "from": 4, "to": 9, "direction": "reverse" },
-   { "name": "charging", "from": 4, "to": 9, "direction": "forward" },
-   { "name": "complexSquare", "from": 10, "to": 10, "direction": "forward" },
-   { "name": "complexDouble", "from": 11, "to": 11, "direction": "forward" },
-   { "name": "complexSpool", "from": 12, "to": 12, "direction": "forward" },
-   { "name": "brownEmpty", "from": 13, "to": 13, "direction": "forward" },
-   { "name": "brownCross", "from": 14, "to": 14, "direction": "forward" },
-   { "name": "brownSpool", "from": 15, "to": 15, "direction": "forward" },
-   { "name": "brownFilled", "from": 16, "to": 16, "direction": "forward" },
-   { "name": "brownBackpack", "from": 17, "to": 17, "direction": "forward" },
-   { "name": "wall", "from": 18, "to": 18, "direction": "forward" },
-   { "name": "horizontalWall", "from": 19, "to": 19, "direction": "forward" },
-   { "name": "verticalWall", "from": 20, "to": 20, "direction": "forward" },
-   { "name": "cornerLD", "from": 21, "to": 21, "direction": "forward" },
-   { "name": "cornerRD", "from": 22, "to": 22, "direction": "forward" },
-   { "name": "corner RU", "from": 23, "to": 23, "direction": "forward" },
-   { "name": "cornerLU", "from": 24, "to": 24, "direction": "forward" }
+   { "name": "square", "from": 2, "to": 2, "direction": "forward" },
+   { "name": "peg", "from": 3, "to": 3, "direction": "forward" },
+   { "name": "businessman", "from": 4, "to": 4, "direction": "forward" },
+   { "name": "enemySlot", "from": 5, "to": 5, "direction": "forward" },
+   { "name": "shooty", "from": 6, "to": 6, "direction": "forward" },
+   { "name": "enemySlot2", "from": 7, "to": 7, "direction": "forward" },
+   { "name": "enemySlot3", "from": 8, "to": 8, "direction": "forward" },
+   { "name": "enemySlot4", "from": 9, "to": 9, "direction": "forward" },
+   { "name": "doubleBlue", "from": 10, "to": 10, "direction": "forward" },
+   { "name": "doubleWhite", "from": 11, "to": 11, "direction": "forward" },
+   { "name": "compressor", "from": 12, "to": 12, "direction": "forward" },
+   { "name": "extractor", "from": 13, "to": 13, "direction": "forward" },
+   { "name": "fourOhFour", "from": 14, "to": 14, "direction": "forward" },
+   { "name": "pipe", "from": 15, "to": 15, "direction": "forward" },
+   { "name": "shuriken", "from": 16, "to": 16, "direction": "forward" },
+   { "name": "capsule", "from": 17, "to": 17, "direction": "forward" },
+   { "name": "wallCross", "from": 18, "to": 18, "direction": "forward" },
+   { "name": "wallHoriz", "from": 19, "to": 19, "direction": "forward" },
+   { "name": "wallVert", "from": 20, "to": 20, "direction": "forward" },
+   { "name": "wallLD", "from": 21, "to": 21, "direction": "forward" },
+   { "name": "wallRD", "from": 22, "to": 22, "direction": "forward" },
+   { "name": "wallRU", "from": 23, "to": 23, "direction": "forward" },
+   { "name": "wallLU", "from": 24, "to": 24, "direction": "forward" }
   ],
   "layers": [
-   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+   { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]
