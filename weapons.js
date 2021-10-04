@@ -337,7 +337,7 @@ let WEAPONS = {
     },
     "zapshotgun" : {
       name: "zapshotgun",
-      cooldown: 10,
+      cooldown: 45,
       damage: 5,
       numShots: 60,
       spriteSheet: 'weapons',
@@ -367,11 +367,12 @@ let WEAPONS = {
           let nearbyPoints = [];
           for(let i = 0; i < 5; i++){
             nearbyPoints.push({
-              x: p.bulletPos.x + randInt(45) - 22,
-              y: p.bulletPos.y + randInt(45) - 22
+              x: p.pos.x + randInt(45) - 22,
+              y: p.pos.y + randInt(45) - 22
             })
           }
-          nearbyPoints.push(p.pos);
+
+          this.particles.filter(par=> par.id == p.id).forEach(par => nearbyPoints.push(par.pos));
           for(let i = 0; i < 5; i++){
             let p1 = nearbyPoints[randInt(nearbyPoints.length)];
             let p2 = nearbyPoints[randInt(nearbyPoints.length)];
@@ -381,15 +382,16 @@ let WEAPONS = {
         });
       },
       shoot: function(dir, player, room){
+        let id = game.getId();
         for(let i = 0; i<8; i++){
-          this.particles.push(new Particle(
+          let part = new Particle(
             {x:this.bulletPos.x,y:this.bulletPos.y},
             4,
             '#FF0',
             'shotgun',
             [dir,30]
-          ))
-          part.id = game.getId();
+          )
+          part.id = id;
           this.particles.push(part);
         }
       },
