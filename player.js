@@ -103,6 +103,9 @@ let Player = function(pos, spriteName){
       this.curWeapon.pos = rotMatrix(this.pos,this.dir,function(){
         return {x: 64, y: 0};
       }.bind(this));
+      this.curWeapon.bulletPos = rotMatrix(this.pos,this.dir,function(){
+        return {x: 80, y: 0};
+      }.bind(this));
     }
 
     //try to shoot curWeapon
