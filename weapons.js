@@ -14,6 +14,10 @@ let Weapon = function(type){
   this.removeDeadParticles = function(){
     this.particles = this.particles.filter(p=> !p.dead);
   }
+
+
+  this.sprite = new Sprite(this.spriteSheet, this.name);
+  this.pos = {};
 }
 
 let WEAPONS = {

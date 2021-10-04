@@ -171,16 +171,34 @@ let Artist = function(screenWidth,screenHeight){
     this.brush.closePath();
   }
 
-  this.drawSpriteFromSheet = function(sheet, box, pos, width, height){
+  this.drawRotSpriteFromSheet = function(sheet, box, pos, width, height, rot){
     let image = this.sheets[sheet];
     if(this.sheets[sheet] == undefined){
       console.log(`Trying to draw sprite sheet ${sheet} that hasn't loaded yet. Bailing on the draw`);
       return;
     }
 
+    if(image.ready == true){
+      this.brush.translate(pos.x,pos.y);
+      this.brush.rotate(rot);
+      this.brush.translate(-pos.x,-pos.y);
+      this.brush.drawImage(image,
+        box.x,box.y,box.w,box.h,
+        Math.floor(pos.x - (width/2)),Math.floor(pos.y - (height/2)),width,height);
+      this.brush.setTransform(1,0,0,1,0,0);
+    }
+  }
+
+  this.drawSpriteFromSheet = function(sheet, box, pos, width, height){
+    let image = this.sheets[sheet];
+    if(this.sheets[sheet] == undefined){
+      console.log(`Trying to draw sprite sheet ${sheet} that hasn't loaded yet. Bailing on the draw`);
+      return;
+    }
     this.brush.drawImage(image,
       box.x,box.y,box.w,box.h,
       Math.floor(pos.x - (width/2)),Math.floor(pos.y - (height/2)),width,height);
+
   }
 
   this.drawRectObj = function(obj){
@@ -372,8 +390,12 @@ let Sprite = function(sheetName, tag){
 
   }
 
-  this.draw = function(pos, width = this.width, height = this.height){
-    game.artist.drawSpriteFromSheet(this.sheet.name, this.sheet.frames[this.curFrame].box, pos, width, height)
+  this.draw = function(pos, width = this.width, height = this.height, rot=null){
+    if(rot){
+      game.artist.drawRotSpriteFromSheet(this.sheet.name, this.sheet.frames[this.curFrame].box, pos, width, height, rot)
+    }else{
+      game.artist.drawSpriteFromSheet(this.sheet.name, this.sheet.frames[this.curFrame].box, pos, width, height)
+    }
   }
 
   this.setAnim = function(tagName, loop = true){
