@@ -20,6 +20,7 @@ let Player = function(pos, spriteName){
     this.particles = [];
     this.dyingWeapons = [];
     this.dir = 0;
+    this.iFrames = 60;
 
     //Weapon material trackers
     this.mat = {
@@ -46,6 +47,7 @@ let Player = function(pos, spriteName){
       }
       return;
     }
+    this.iFrames -= delta/16;
 
     if(game.controller.up){
       this.speed.y -= this.acceleration * delta/16;
@@ -91,6 +93,10 @@ let Player = function(pos, spriteName){
       this.altWeapon.update(delta,room);
     }
     this.dyingWeapons.forEach(w=> w.update(delta,room));
+    let dyingTS = Date.now();
+    this.dyingWeapons = this.dyingWeapons.filter(w=>{
+      return dyingTS - w.timestamp < 2000;
+    })
 
 
     if(game.controller.action2){
@@ -131,6 +137,7 @@ let Player = function(pos, spriteName){
 
 
           //move to dying weapons
+          this.curWeapon.timestamp = Date.now();
           this.dyingWeapons.push(this.curWeapon);
           //set curWeapon to null
           this.curWeapon = null;
@@ -139,6 +146,15 @@ let Player = function(pos, spriteName){
             this.curWeapon = this.altWeapon;
             this.altWeapon = null;
           }
+          //explode weapon
+          room.particles.push(new Particle(
+            this.pos,
+            4,
+            'red',
+            'weaponExplosion',
+            []
+          ));
+
           //Give 4 random mats
           let color = 'white';
           for(let i = 0; i < 4; i++){
@@ -155,7 +171,7 @@ let Player = function(pos, spriteName){
               this.mat.essence++;
               color = 'white';
             }
-            game.getCurRoom().particles.push(new Particle(
+            room.particles.push(new Particle(
               this.pos,
               4,
               color,
@@ -205,6 +221,7 @@ let Player = function(pos, spriteName){
           this.exit = null;
           break;
       }
+      this.iFrames = 60;
     }
 
     if(game.getCurRoom().finalRoom){
@@ -271,7 +288,12 @@ let Player = function(pos, spriteName){
     }
     this.dyingWeapons.forEach(d=> d.draw());
 
-    this.sprite.draw(this.pos);
+    if(this.iFrames > 0 && Math.floor(this.iFrames) % 2){
+      //Don't draw for blinking iFrames effect;
+
+    }else{
+      this.sprite.draw(this.pos);
+    }
 
     //Specific Style Raycast
     // game.actors.forEach(actor => {
@@ -300,7 +322,7 @@ let Player = function(pos, spriteName){
   }
 
   this.damage = function(amount){
-    if(this.dead){
+    if(this.dead || this.iFrames > 0){
       return;
     }
     console.log(`taking ${amount} damage` );
