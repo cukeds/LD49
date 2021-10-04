@@ -329,11 +329,12 @@ let InventoryScreen = function(){
 let StartScreen = function(){
   this.drawables = [];
   this.updateables = [];
+  this.backdrop = 'titleScreen';
 
   let input = this.seedInput = new CanvasInput({
     canvas: game.artist.canvas,
-    x: game.width/2-150,
-    y: game.height/3,
+    x: 250,
+    y: 460,
     width: 300,
     fontFamily: 'Audiowide',
     fontSize: 45,
@@ -364,7 +365,7 @@ let StartScreen = function(){
     game.player = new Player({x:game.width/2,y:game.height/2}, 'player');
     game.player.load();
 
-    let startButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'startButton','idle',this.startGame);
+    let startButton = new game.sceneManager.Button(975,240,'startButton','idle',this.startGame);
 
     this.drawables.push(startButton);
     this.updateables.push(startButton);
@@ -376,6 +377,7 @@ let StartScreen = function(){
   }
 
   this.draw = function(){
+    game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
     this.drawables.forEach(d => d.draw());
     if(this.seedInput){
       this.seedInput.render();
@@ -388,6 +390,7 @@ let StartScreen = function(){
 let WinScreen = function(){
   this.drawables = [];
   this.updateables = [];
+  this.backdrop = 'winScreen'
 
   this.setup = function(){
 
@@ -426,6 +429,7 @@ let WinScreen = function(){
   }
 
   this.draw = function(){
+    // game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
     game.artist.writeText('Congratulations!', game.width / 2 - 64, 2 * game.height / 4, 20, 'black');
     this.drawables.forEach(d => d.draw());
   }
@@ -447,7 +451,7 @@ let GameOver = function(){
 
   this.setup = function(){
 
-    let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'startButton','idle',this.restartGame);
+    let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'restartButton','idle',this.restartGame);
     this.drawables.push(restartButton);
     this.updateables.push(restartButton);
 
@@ -458,7 +462,7 @@ let GameOver = function(){
   }
 
   this.draw = function(){
-    // game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height);
+    game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
     this.drawables.forEach(d => d.draw());
   }
 
