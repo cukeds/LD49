@@ -25,7 +25,7 @@ let WEAPONS = {
     "pistol" : {
       name: "pistol",
       cooldown: 20,
-      numShots: 30,
+      numShots: 20,
       damage: 15,
       spriteSheet: 'weapons',
       //TODO Sound Pistol Shot
@@ -70,7 +70,7 @@ let WEAPONS = {
     "shotgun" : {
       name: "shotgun",
       cooldown: 60,
-      numShots: 15,
+      numShots: 10,
       damage: 4,
       spriteSheet: 'weapons',
       shotSound:null,
@@ -115,7 +115,7 @@ let WEAPONS = {
     "wavegun" : {
       name: "wavegun",
       cooldown: 90,
-      numShots: 15,
+      numShots: 10,
       damage: 1,
       spriteSheet: 'weapons',
       shotSound:null,
@@ -157,7 +157,7 @@ let WEAPONS = {
     "zapgun" : {
       name: "zapgun",
       cooldown: 10,
-      numShots: 60,
+      numShots: 30,
       damage: 10,
       spriteSheet: 'weapons',
       shotSound:null,
@@ -185,7 +185,6 @@ let WEAPONS = {
         this.removeDeadParticles();
       },
       draw: function(){
-        console.log('drawing zapgunparticles')
         this.particles.forEach(p=>{
           let nearbyPoints = [];
           for(let i = 0; i < 5; i++){
@@ -217,8 +216,8 @@ let WEAPONS = {
     "axe" : {
       name: "axe",
       cooldown: 60,
-      numShots: 10,
-      damage: 500,
+      numShots: 7,
+      damage: 9,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
@@ -259,8 +258,8 @@ let WEAPONS = {
     "laserSword" : {
       name: "laserSword",
       cooldown: 30,
-      numShots: 60,
-      damage: 30,
+      numShots: 9,
+      damage: 6,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
@@ -303,7 +302,7 @@ let WEAPONS = {
       name: "minigun",
       cooldown: 3,
       damage: 3,
-      numShots: 120,
+      numShots: 60,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
@@ -347,7 +346,7 @@ let WEAPONS = {
       name: "smg",
       cooldown: 7,
       damage: 6,
-      numShots: 120,
+      numShots: 40,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
@@ -391,7 +390,7 @@ let WEAPONS = {
       name: "zapshotgun",
       cooldown: 45,
       damage: 5,
-      numShots: 60,
+      numShots: 12,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
@@ -468,8 +467,8 @@ let WEAPONS = {
     "bonegun" : {
       name: "bonegun",
       cooldown: 60,
-      damage: 1000,
-      numShots: 60,
+      damage: 10,
+      numShots: 5,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
@@ -486,7 +485,6 @@ let WEAPONS = {
           room.enemies.forEach(e=>{
             if(game.collisions.circleCollision(e,p)){
               if(!e.dead && p.life < p.maxLife){
-                console.log(p);
                 p.life = p.maxLife;
                 e.damage(randInt(this.damage));
               }
@@ -541,7 +539,7 @@ let WEAPONS = {
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value);
     //Make a list of possible material combinations.
-    console.log(arr);
+    //console.log(arr);
     //e is essence, j is junk, c is crystals
     let mats = ['c','e','j'];
     let listOfRecipes = combinationsReplacement(mats,3);
