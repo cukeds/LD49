@@ -190,8 +190,8 @@ let WEAPONS = {
           let nearbyPoints = [];
           for(let i = 0; i < 5; i++){
             nearbyPoints.push({
-              x: p.bulletPos.x + randInt(45) - 22,
-              y: p.bulletPos.y + randInt(45) - 22
+              x: p.pos.x + randInt(45) - 22,
+              y: p.pos.y + randInt(45) - 22
             })
           }
           nearbyPoints.push(p.pos);
