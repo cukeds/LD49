@@ -263,47 +263,47 @@ let Room = function(){
     game.artist.drawImage(this.backdrop, 0, 0, game.width, game.height );
     this.particles.forEach(p => p.draw());
     this.actors.forEach(a => a.draw());
-    game.artist.writeText(this.name, 32, 32, 18,'white');
-    game.artist.writeText(this.id, 32, 52, 18, 'white');
-
 
     //draw enemies
-    this.enemies.forEach(e => e.draw());
     //draw player
-     game.player.draw();
+    this.enemies.forEach(e => e.draw());
+    game.player.draw();
 
-     game.artist.drawCircle(game.width - 64, game.height - 64, 32, 'white')
 
-     if(game.player.altWeapon){
+
+    game.artist.writeText(this.name, 32, 32, 18,'white');
+    game.artist.drawCircle(game.width - 64, game.height - 64, 32, 'white')
+
+    if(game.player.altWeapon){
        game.player.altWeapon.sprite.draw({x: game.width - 64, y: game.height - 64}, 64, 64, -Math.PI/8);
      }
-     let maxX = 0;
-     let maxY = 0;
-     game.map.rooms.forEach(r=>{
-       if(r.loc.x > maxX){
-         maxX = r.loc.x;
-       }
-       if(r.loc.y < maxY){
-         maxY = r.loc.y;
-       }
-     });
-     game.artist.writeText('Stability:', 32, game.height - 64, 24, 'white');
-     if(game.player.curWeapon){
-       let max = WEAPONS.templates[game.player.curWeapon.name].numShots;
-       let perc = Math.round(game.player.curWeapon.numShots/max * 100);
-       let color = 'white';
-       if(perc < 10){
-         color = game.artist.randColor();
-       }else if(perc < 25){
-         color = 'red';
-       }else if(perc < 50){
-         color = 'orange';
-       }else if(perc < 80){
-         color = 'yellow';
-       }
-
-       game.artist.writeText(perc + '%', 130, game.height - 64, 24, color);
+    let maxX = 0;
+    let maxY = 0;
+    game.map.rooms.forEach(r=>{
+      if(r.loc.x > maxX){
+        maxX = r.loc.x;
      }
+     if(r.loc.y < maxY){
+       maxY = r.loc.y;
+     }
+    });
+    game.artist.writeText('Stability:', 32, game.height - 64, 24, 'white');
+    if(game.player.curWeapon){
+     let max = WEAPONS.templates[game.player.curWeapon.name].numShots;
+     let perc = Math.round(game.player.curWeapon.numShots/max * 100);
+     let color = 'white';
+     if(perc < 10){
+       color = game.artist.randColor();
+     }else if(perc < 20){
+       color = 'red';
+     }else if(perc < 50){
+       color = 'orange';
+     }else if(perc < 80){
+       color = 'yellow';
+     }
+
+     game.artist.writeText(perc + '%', 130, game.height - 64, 24, color);
+    }
      game.map.rooms.filter(r=> r.visited).forEach(r=>{
        let pos = {x: r.loc.x, y: r.loc.y};
        pos.x *= 25;

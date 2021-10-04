@@ -476,7 +476,7 @@ let StartScreen = function(){
   let input = this.seedInput = new CanvasInput({
     canvas: game.artist.canvas,
     x: 250,
-    y: 460,
+    y: 650,
     width: 300,
     fontFamily: 'Audiowide',
     fontSize: 45,
@@ -511,6 +511,7 @@ let StartScreen = function(){
   this.setup = function(){
     game.player = new Player({x:game.width/2,y:game.height/2}, 'player');
     game.player.load();
+    game.maestro = new Maestro();
 
     let startButton = new game.sceneManager.Button(975,240,'startButton','idle',this.startGame);
     this.drawables.push(startButton);
