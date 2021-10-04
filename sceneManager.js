@@ -344,57 +344,31 @@ let StartScreen = function(){
     input.destroy();
   }
 
+  this.startGame = function(){
+    let seed = input.value();
+    if(seed == ''){
+      game.seed = 'Blank!'
+    }else{
+      game.seed = seed;
+    }
+    game.srng = new RNG(game.seed);
+    game.map = new Map(15);
+    game.weaponsList = []
+    WEAPONS.assignList();
+
+    game.sceneManager.pop().end();
+    game.sceneManager.addScene(game.map.rooms[0]);
+  }
+
   this.setup = function(){
     game.player = new Player({x:game.width/2,y:game.height/2}, 'player');
     game.player.load();
 
-    let startButton2 = new game.sceneManager.Button(3,3*game.height/4,'startButton','idle',function(){
-      alert('working');
-    });
-    this.drawables.push(startButton2);
-    this.updateables.push(startButton2);
+    let startButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'startButton','idle',this.startGame);
 
-
-    let startButton = new Actor({x:0,y:0},'startButton');
-    startButton.pos.x = game.width/2;
-    startButton.pos.y = 3*game.height/4;
-    startButton.startGame = function(){
-      let seed = input.value();
-      if(seed == ''){
-        game.seed = 'Blank!'
-      }else{
-        game.seed = seed;
-      }
-      game.srng = new RNG(game.seed);
-      game.map = new Map(15);
-      game.weaponsList = []
-      WEAPONS.assignList();
-
-      game.sceneManager.pop().end();
-      game.sceneManager.addScene(game.map.rooms[0]);
-    }
-
-    startButton.update = function(delta){
-      this.sprite.update(delta);
-      //check if mouse over button
-      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
-          game.mouse.pos.x > this.pos.x -this.width/2 &&
-          game.mouse.pos.y < this.pos.y + this.height/2 &&
-          game.mouse.pos.y > this.pos.y - this.height/2){
-        if(game.mouse.click){
-          game.mouse.click= false;
-          this.sprite.setAnim('click');
-          game.maestro.play('click');
-          this.startGame();
-        }else{
-          this.sprite.setAnim('hover');
-        }
-      }else{
-        this.sprite.setAnim('idle');
-      }
-    }
     this.drawables.push(startButton);
     this.updateables.push(startButton);
+
   }
 
   this.update=function(delta){
