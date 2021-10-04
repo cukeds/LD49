@@ -543,6 +543,11 @@ let WinScreen = function(){
   this.updateables = [];
   this.backdrop = 'winScreen'
 
+  this.restartGame = function(){
+    game.sceneManager.scenes = [];
+    game.sceneManager.addScene(new StartScreen());
+  }
+
   this.setup = function(){
 
     let restartButton = new game.sceneManager.Button(game.width/2,3*game.height/4,'restartButtonGO','idle',this.restartGame);
@@ -571,7 +576,7 @@ let GameOver = function(){
   this.backdrop = 'gameOver'
 
   this.restartGame = function(){
-    game.sceneManager.pop();
+    game.sceneManager.scenes = [];
     game.sceneManager.addScene(new StartScreen());
   }
 
