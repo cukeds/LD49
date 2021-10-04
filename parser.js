@@ -21,7 +21,7 @@ let Parser = function(){
           enemies.push(new Enemy(pos, "businessman"));
           break;
         case 3:
-          actors.push(new Enemy(pos, 'shooty'));
+          enemies.push(new Enemy(pos, 'shooty'));
           break;
         case 'tt':
           enemies.push(new Enemey(pos, "turret"));
