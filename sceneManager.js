@@ -385,8 +385,9 @@ let StartScreen = function(){
     let optionsButton = new game.sceneManager.Button(975,340,'optionsButton','idle',this.options);
 
     this.drawables.push(startButton);
+    this.drawables.push(optionsButton);
     this.updateables.push(startButton);
-
+    this.updateables.push(optionsButton);
   }
 
   this.update=function(delta){
