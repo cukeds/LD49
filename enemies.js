@@ -275,10 +275,10 @@ let ENEMIES = {
       maxCooldown: 30,
       cooldown: 0,
       range: 5,
-      spriteSheet: "tiles",
+      spriteSheet: "shooty",
       acc: 0.05,
       maxSpeed: 2,
-      tag: "man",
+      tag: undefined,
       voice: "shooty",
       behaviour: "aggressive",
       update: function(delta,room){
