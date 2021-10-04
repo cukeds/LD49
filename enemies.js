@@ -421,12 +421,12 @@ let ENEMIES = {
     },
 
     "finalBoss" : {
-      name: "shooty",
+      name: "finalBoss",
       health: 100,
       maxCooldown: 15,
       cooldown: 0,
       dmgVal: 5,
-      spriteSheet: "shooty",
+      spriteSheet: "finalBoss",
       acc: 0,
       attacks: 0,
       act: 0,
