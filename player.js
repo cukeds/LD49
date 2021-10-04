@@ -101,10 +101,10 @@ let Player = function(pos, spriteName){
     this.dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
     if(this.curWeapon){
       this.curWeapon.pos = rotMatrix(this.pos,this.dir,function(){
-        return {x: 64, y: 0};
+        return {x: 50, y: 0};
       }.bind(this));
       this.curWeapon.bulletPos = rotMatrix(this.pos,this.dir,function(){
-        return {x: 80, y: 0};
+        return {x: 75, y: 0};
       }.bind(this));
     }
 
