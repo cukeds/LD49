@@ -287,9 +287,22 @@ let Room = function(){
          maxY = r.loc.y;
        }
      });
-     game.artist.writeText('Shots Left:', 32, game.height - 64, 24, 'white');
+     game.artist.writeText('Stability:', 32, game.height - 64, 24, 'white');
      if(game.player.curWeapon){
-       game.artist.writeText(game.player.curWeapon.numShots, 150, game.height - 64, 24, 'white');
+       let max = WEAPONS.templates[game.player.curWeapon.name].numShots;
+       let perc = Math.round(game.player.curWeapon.numShots/max * 100);
+       let color = 'white';
+       if(perc < 10){
+         color = game.artist.randColor();
+       }else if(perc < 25){
+         color = 'red';
+       }else if(perc < 50){
+         color = 'orange';
+       }else if(perc < 80){
+         color = 'yellow';
+       }
+
+       game.artist.writeText(perc + '%', 130, game.height - 64, 24, color);
      }
      game.map.rooms.filter(r=> r.visited).forEach(r=>{
        let pos = {x: r.loc.x, y: r.loc.y};
