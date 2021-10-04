@@ -25,7 +25,7 @@ let game = {
 
   setup: function(){
     this.artist = new Artist(this.width,this.height);
-    this.artist.drawRect(0,0,this.width,this.height,'#aaa');
+    this.artist.drawRect(0,0,this.wisdth,this.height,'#aaa');
     this.mouse = new MouseController();
     this.controller = new Controller();
     this.gridDiv = 32;  // 32px gridUnits grid
