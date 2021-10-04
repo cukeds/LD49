@@ -204,9 +204,9 @@ let WEAPONS = {
     },
     "axe" : {
       name: "axe",
-      cooldown: 60,
+      cooldown: 5,
       numShots: 60,
-      damage: 50,
+      damage: 500,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
@@ -214,21 +214,31 @@ let WEAPONS = {
       },
       draw: function(){
 
+        if(this.debug){
+          this.debug.forEach(d=>{
+            game.artist.drawLine(game.player.pos.x + d.x, game.player.pos.y + d.y, game.player.pos.x, game.player.pos.y, 'white');
+          })
+        }
       },
       shoot: function(dir, player, room){
         this.sprite = new Sprite('hitAnims', 'axeHit');
         let ray = new Ray(game.player.pos);
         let hits = [];
+        this.debug = [];
         for(let i = 0; i < 5; i++){
-          let hit = ray.cast([room.enemies], {x:Math.cos(dir - Math.PI/4 + i * Math.PI/8), y:Math.sin(dir - Math.PI/4 + i * Math.PI/8)});
+          this.debug.push({x:Math.cos(dir - Math.PI/4 + Math.PI/8 * i) * 100, y:Math.sin(dir - Math.PI/4 + Math.PI/8 * i) * 100});
+          let hit = ray.cast(room.enemies, {x:Math.cos(dir - Math.PI/4 + i * Math.PI/8), y:Math.sin(dir - Math.PI/4 + i * Math.PI/8)});
           if(hit){
-            if(distance(hit.obj.pos, game.player.pos) <= 48){
+            this.debug.push(hit());
+            if(distance(hit.obj.pos, game.player.pos) <= 112){
               hits.push(hit.obj);
             }
           }
         }
-        hits.forEach(hit => hit.damage(randInt(this.damage)))
-        this.sprite = new Sprite('weapons', 'axe');
+        hits.forEach(hit => {
+          hit.damage(randInt(this.damage));
+        });
+        //this.sprite = new Sprite('weapons', 'axe');
       },
 
     },
