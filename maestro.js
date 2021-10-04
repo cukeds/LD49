@@ -43,8 +43,8 @@ let Maestro = function(){
     this.sfx[sndName].pause();
   }
   this.pauseAll = function(){
-    this.sfx.forEach(s=>{
-      s.pause();
+    game.sfxToLoad.forEach(s=>{
+      this.pause(s);
     })
   }
 
