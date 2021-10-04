@@ -32,6 +32,9 @@ let WEAPONS = {
       shotSound:null,
 
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
@@ -72,6 +75,9 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
@@ -114,6 +120,9 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
@@ -153,6 +162,9 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
@@ -205,7 +217,7 @@ let WEAPONS = {
     "axe" : {
       name: "axe",
       cooldown: 60,
-      numShots: 60,
+      numShots: 10,
       damage: 500,
       spriteSheet: 'weapons',
       shotSound:null,
@@ -295,6 +307,9 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
@@ -336,6 +351,9 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
@@ -377,6 +395,9 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
@@ -452,6 +473,9 @@ let WEAPONS = {
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta,room){
+        if(game.player.exit){
+          this.particles = [];
+        }
         this.particles.forEach(p => {
           p.update(delta,room);
           room.actors.forEach(a=>{
