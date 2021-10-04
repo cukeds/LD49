@@ -413,7 +413,7 @@ let WEAPONS = {
     "bonegun" : {
       name: "bonegun",
       cooldown: 60,
-      damage: 10,
+      damage: 1000,
       numShots: 60,
       spriteSheet: 'weapons',
       shotSound:null,
@@ -427,7 +427,8 @@ let WEAPONS = {
           })
           room.enemies.forEach(e=>{
             if(game.collisions.circleCollision(e,p)){
-              if(!e.dead){
+              if(!e.dead && p.life < p.maxLife){
+                console.log(p);
                 p.life = p.maxLife;
                 e.damage(randInt(this.damage));
               }

@@ -36,7 +36,7 @@ let Ray = function(pos){
         return shortestIntersect;
       }
     }
-    if(target.angle != undefined){
+    if(target.pos != undefined){
       //check if we are even in the right quadrant, if not return null
       //This should speed things up by about 4 depending on where the player is
 
