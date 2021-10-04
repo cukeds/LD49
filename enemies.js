@@ -13,28 +13,31 @@ let Enemy = function(pos, type){
   this.dead = false;
   this.hitSound = `${type}Hit`;
 
-  this.damage = function(amount){
+  if(!this.damage){
+    this.damage = function(amount){
 
-    if(this.dead){
-      return;
-    }
-    game.maestro.play(this.hitSound);
-    this.health -= amount;
-    if(this.health <= 0){
-      this.dead = true;
-      this.sprite.setAnim('death',false);
-    }
+      if(this.dead){
+        return;
+      }
+      game.maestro.play(this.hitSound);
+      this.health -= amount;
+      if(this.health <= 0){
+        this.dead = true;
+        this.sprite.setAnim('death',false);
+      }
 
-    for(let i = 0; i < amount; i++){
-      game.getCurRoom().particles.push(new Particle(
-        this.pos,
-        3,
-        'purple',
-        'blood',
-        [null]
-      ));
+      for(let i = 0; i < amount; i++){
+        game.getCurRoom().particles.push(new Particle(
+          this.pos,
+          3,
+          'purple',
+          'blood',
+          [null]
+        ));
+      }
     }
   }
+
 
   this.die = function(delta){
     this.sprite.update(delta);
@@ -523,9 +526,7 @@ let ENEMIES = {
           if(this.cooldown <= 0){
             this.ready = true;
           }
-          this.sprite.setAnim('idle');
-        }
-        else{
+        }else{
           // spawn Enemy
           let maxEnemies = 4;
           for(let j = 0; j < 10; j++){
@@ -555,9 +556,39 @@ let ENEMIES = {
           this.ready = true;
         }
 
-      this.sprite.update(delta);
-      this.cooldown -= delta/16;
+        if(this.sprite.curAnim == "hitscan"){
+          let a = this.sprite.getAnim('hitscan');
+          if(this.sprite.curFrame == a.to){
+            this.sprite.setAnim('idle');
+          }
+        }
 
+        this.sprite.update(delta);
+        this.cooldown -= delta/16;
+
+      },
+      damage: function(amount){
+        if(this.dead){
+          return;
+        }
+        game.maestro.play(this.hitSound);
+        this.health -= amount;
+        this.sprite.setAnim('hitscan',false);
+        if(this.health <= 0){
+          this.dead = true;
+          this.sprite.setAnim('death',false);
+          game.maestro.play('finalBossDeath');
+        }
+
+        for(let i = 0; i < amount; i++){
+          game.getCurRoom().particles.push(new Particle(
+            this.pos,
+            3,
+            '#FEA',
+            'blood',
+            [null]
+          ));
+        }
       },
       action: function(){
 

@@ -108,7 +108,7 @@ let PUPS = {
     }
   },
   blood: function(){
-    this.speed.x = Math.random() * 3 - 1;
+    this.speed.x = Math.random() * 7 - 3;
     this.speed.y = -Math.random() * 3;
 
     this.update = function(delta){
