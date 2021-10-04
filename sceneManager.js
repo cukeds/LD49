@@ -391,6 +391,9 @@ let StartScreen = function(){
   }
 
   this.update=function(delta){
+    if(game.mouse.click && !game.maestro.curMusic){
+      game.maestro.musicPlay('music');
+    }
     this.updateables.forEach(u=>u.update(delta));
   }
 
