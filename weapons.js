@@ -338,6 +338,7 @@ let WEAPONS = {
     "zapshotgun" : {
       name: "zapshotgun",
       cooldown: 10,
+      damage: 5,
       numShots: 60,
       spriteSheet: 'weapons',
       shotSound:null,
@@ -353,7 +354,7 @@ let WEAPONS = {
             if(game.collisions.circleCollision(e,p)){
               if(!e.dead){
                 p.life = p.maxLife;
-                e.damage(randInt(this.damage));
+                e.damage(randInt(this.damage)+1);
               }
 
             }
@@ -381,13 +382,15 @@ let WEAPONS = {
       },
       shoot: function(dir, player, room){
         for(let i = 0; i<8; i++){
-          this.particles.push(new Particle(
+          let part = new Particle(
             {x:player.pos.x,y:player.pos.y},
             4,
             '#FF0',
-            'line',
-            [dir]
+            'shotgun',
+            [dir,30]
           ))
+          part.id = game.getId();
+          this.particles.push(part);
         }
       },
 
