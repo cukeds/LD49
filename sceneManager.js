@@ -326,17 +326,145 @@ let InventoryScreen = function(){
 
 }
 
-
-
 let OptionScreen = function(){
-  // TODO
+  this.drawables = [];
+  this.updateables = [];
+  this.backdrop = 'optionsScreen';
+
+  this.increaseSFX = function(){
+    if(game.maestro.sfxVolume <= .95){
+      game.maestro.sfxVolume += .05;
+    }
+    game.maestro.play('click');
+  }
+  this.decreaseSFX = function(){
+    if(game.maestro.sfxVolume >= .05){
+      game.maestro.sfxVolume -= .05;
+    }
+    game.maestro.play('click');
+  }
+  this.increaseMusic = function(){
+    if(game.maestro.musicVolume <= .95){
+      game.maestro.musicVolume += .05;
+    }
+  }
+  this.decreaseMusic = function(){
+    if(game.maestro.musicVolume >= .05){
+      game.maestro.musicVolume -= .05;
+    }
+  }
+  this.goBack = function(){
+    game.sceneManager.pop();
+  }
+
+
+  this.setup = function(){
+    let sfxUp = new game.sceneManager.Button(325,450,'optionsButton','idle',this.increaseSFX);
+    sfxUp.update = function(){
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          game.maestro.play('click');
+          this.click();
+        }
+      }
+    }
+    sfxUp.width = 257;
+    sfxUp.height = 104;
+    sfxUp.draw = function(){};
+    this.drawables.push(sfxUp);
+    this.updateables.push(sfxUp);
+
+    let sfxDown = new game.sceneManager.Button(320,566,'optionsButton','idle',this.decreaseSFX);
+    sfxDown.update = function(){
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          game.maestro.play('click');
+          this.click();
+        }
+      }
+    }
+    sfxDown.width = 281;
+    sfxDown.height = 86;
+    sfxDown.draw = function(){};
+    this.drawables.push(sfxDown);
+    this.updateables.push(sfxDown);
+
+    let musicUp = new game.sceneManager.Button(309,148,'optionsButton','idle',this.increaseMusic);
+    musicUp.update = function(){
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          game.maestro.play('click');
+          this.click();
+        }
+      }
+    }
+    musicUp.width = 272;
+    musicUp.height = 130;
+    musicUp.draw = function(){};
+    this.drawables.push(musicUp);
+    this.updateables.push(musicUp);
+
+    let musicDown = new game.sceneManager.Button(319,328,'optionsButton','idle',this.decreaseMusic);
+    musicDown.update = function(){
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          game.maestro.play('click');
+          this.click();
+        }
+      }
+    }
+    musicDown.width = 258;
+    musicDown.height = 109;
+    musicDown.draw = function(){};
+    this.drawables.push(musicDown);
+    this.updateables.push(musicDown);
+
+    let back = new game.sceneManager.Button(990,600,'optionsButton','idle',this.goBack);
+    back.update = function(){
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          game.maestro.play('click');
+          this.click();
+        }
+      }
+    }
+    back.width = 346;
+    back.height = 155;
+    back.draw = function(){};
+    this.drawables.push(back);
+    this.updateables.push(back);
+
+  }
+
+  this.update=function(delta){
+    this.updateables.forEach(u=>u.update(delta));
+  }
+
+  this.draw = function(){
+    game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
+    this.drawables.forEach(d => d.draw());
+  }
 }
-
-
-
-
-
-
 
 let StartScreen = function(){
   this.drawables = [];
@@ -359,8 +487,9 @@ let StartScreen = function(){
 
 
   this.options = function(){
-    this.addScene(new OptionsScreen);
+    game.sceneManager.addScene(new OptionScreen);
   }
+
   this.startGame = function(){
     let seed = input.value();
     if(seed == ''){
@@ -382,12 +511,13 @@ let StartScreen = function(){
     game.player.load();
 
     let startButton = new game.sceneManager.Button(975,240,'startButton','idle',this.startGame);
-    let optionsButton = new game.sceneManager.Button(975,340,'optionsButton','idle',this.options);
-
     this.drawables.push(startButton);
-    this.drawables.push(optionsButton);
     this.updateables.push(startButton);
+
+    let optionsButton = new game.sceneManager.Button(975,340,'optionsButton','idle',this.options);
+    this.drawables.push(optionsButton);
     this.updateables.push(optionsButton);
+
   }
 
   this.update=function(delta){
