@@ -341,6 +341,7 @@ let StartScreen = function(){
         if(game.mouse.click){
           game.mouse.click= false;
           this.sprite.setAnim('click');
+          game.maestro.play('click');
           this.startGame();
         }else{
           this.sprite.setAnim('hover');

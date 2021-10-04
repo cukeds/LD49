@@ -28,7 +28,7 @@ let Maestro = function(){
     }
 
     if(vol){
-      sound.volume = this.vol;
+      sound.volume = vol;
     }else{
       sound.volume = this.sfxVolume;
     }
@@ -64,11 +64,11 @@ let Maestro = function(){
     }
   }
 
-  this.musicPause(){
+  this.musicPause = function(){
     this.curMusic.pause();
   }
 
-  this.musicResume(){
+  this.musicResume = function(){
     this.curMusic.play();
   }
 }

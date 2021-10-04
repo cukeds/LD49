@@ -5,6 +5,7 @@ let game = {
   gridHeight: 25,
   numWeapons: 10,
   artist: null,
+  maestro: null,
   sceneManager: null,
   player: null,
   actors: [],
@@ -18,6 +19,8 @@ let game = {
   gridDiv: null, // Division of the grid. Set up on line 30
   seed: "UhOhForgotToSetASeed",
   maxEnemies: 10,
+  sfxToLoad: ['click'],
+  musicToLoad: [],
   sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit','shooty', 'hitAnims','weaponExplosion','titleScreen','finalBoss'],
   imagesToLoad: ['inventoryBackdrop','levelBackdrop'],
   collisions: null,
@@ -26,6 +29,7 @@ let game = {
   setup: function(){
     this.artist = new Artist(this.width,this.height);
     this.artist.drawRect(0,0,this.wisdth,this.height,'#aaa');
+    this.maestro = new Maestro();
     this.mouse = new MouseController();
     this.controller = new Controller();
     this.gridDiv = 32;  // 32px gridUnits grid
@@ -48,22 +52,20 @@ let game = {
       this.artist.unpackSpriteJSON(sheet);
     })
 
-    // for(let i = 0; i < 2; i++){
-    //   this.actors.push(new Actor(
-    //       {x: randInt(this.width), y: randInt(this.height)},
-    //       {width:25,height:25},
-    //       null,
-    //       '#F00'
-    //     )
-    //   );
-    // }
+    this.sfxToLoad.forEach(sfx =>{
+      this.maestro.loadSound(sfx);
+    })
+
+    this.musicToLoad.forEach(music =>{
+      this.maestro.loadSound(music,true);
+    })
 
     this.load();
   },
 
   load: function(){
     //images, sounds, etc.
-    let loadables = [this.artist.sheets, this.artist.sheetData];
+    let loadables = [this.artist.sheets, this.artist.sheetData,this.maestro.sfx,this.maestro.music];
     let numThings = 0;
     let thingsLoaded = 0;
     let allLoaded = true;
