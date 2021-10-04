@@ -28,9 +28,7 @@ let WEAPONS = {
       numShots: 20,
       damage: 15,
       spriteSheet: 'weapons',
-      //TODO Sound Pistol Shot
-      shotSound:null,
-
+      shotSound: 'pistol',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -58,6 +56,7 @@ let WEAPONS = {
         this.particles.forEach(p=>p.draw());
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         this.particles.push(new Particle(
           {x:this.bulletPos.x,y:this.bulletPos.y},
           4,
@@ -73,7 +72,7 @@ let WEAPONS = {
       numShots: 10,
       damage: 4,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound: 'shotgun',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -100,6 +99,7 @@ let WEAPONS = {
         this.particles.forEach(p=>p.draw(pos));
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         for(let i = 0; i< 8; i++){
           this.particles.push(new Particle(
             {x:this.bulletPos.x,y:this.bulletPos.y},
@@ -118,7 +118,7 @@ let WEAPONS = {
       numShots: 10,
       damage: 1,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'wavegun',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -145,6 +145,7 @@ let WEAPONS = {
         this.particles.forEach(p=>p.draw(pos));
       },
       shoot: function(dir, player,room){
+        game.maestro.play(this.shotSound);
         this.particles.push(new Particle(
           {x:this.bulletPos.x,y:this.bulletPos.y},
           10,
@@ -160,7 +161,7 @@ let WEAPONS = {
       numShots: 30,
       damage: 10,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'zapgun',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -203,6 +204,7 @@ let WEAPONS = {
         });
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         this.particles.push(new Particle(
           {x:this.bulletPos.x,y:this.bulletPos.y},
           4,
@@ -219,7 +221,7 @@ let WEAPONS = {
       numShots: 7,
       damage: 9,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'axe',
       update: function(delta){
         this.sprite.update(delta);
         let an = this.sprite.getAnim('axeHit');
@@ -233,6 +235,7 @@ let WEAPONS = {
 
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         if(this.sprite.curAnim != 'axeHit'){
           this.sprite = new Sprite('hitAnims', 'axeHit');
           this.sprite.setAnim('axeHit',false);
@@ -261,7 +264,7 @@ let WEAPONS = {
       numShots: 9,
       damage: 6,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'laserSword',
       update: function(delta){
         this.sprite.update(delta);
         let an = this.sprite.getAnim('swordHit');
@@ -275,6 +278,7 @@ let WEAPONS = {
 
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         if(this.sprite.curAnim != 'swordHit'){
           this.sprite = new Sprite('hitAnims', 'swordHit');
           this.sprite.setAnim('swordHit',false);
@@ -304,7 +308,7 @@ let WEAPONS = {
       damage: 3,
       numShots: 60,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'minigun',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -332,6 +336,7 @@ let WEAPONS = {
         this.particles.forEach(p=>p.draw());
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         this.particles.push(new Particle(
           {x:this.bulletPos.x,y:this.bulletPos.y},
           2,
@@ -348,7 +353,7 @@ let WEAPONS = {
       damage: 6,
       numShots: 40,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'smg',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -376,6 +381,7 @@ let WEAPONS = {
         this.particles.forEach(p=>p.draw());
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         this.particles.push(new Particle(
           {x:this.bulletPos.x,y:this.bulletPos.y},
           2,
@@ -392,7 +398,7 @@ let WEAPONS = {
       damage: 5,
       numShots: 12,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'zapshotgun',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -449,6 +455,7 @@ let WEAPONS = {
           p.draw();});
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         let id = game.getId();
         for(let i = 0; i<8; i++){
           let part = new Particle(
@@ -470,7 +477,7 @@ let WEAPONS = {
       damage: 10,
       numShots: 5,
       spriteSheet: 'weapons',
-      shotSound:null,
+      shotSound:'bonegun',
       update: function(delta,room){
         if(game.player.exit){
           this.particles = [];
@@ -500,6 +507,7 @@ let WEAPONS = {
         });
       },
       shoot: function(dir, player, room){
+        game.maestro.play(this.shotSound);
         this.particles.push(new Particle(
           {x:this.bulletPos.x,y:this.bulletPos.y},
           4,

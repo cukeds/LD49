@@ -19,8 +19,7 @@ let game = {
   gridDiv: null, // Division of the grid. Set up on line 30
   seed: "UhOhForgotToSetASeed",
   maxEnemies: 10,
-  sfxToLoad: ['click'],
-  musicToLoad: [],
+  sfxToLoad: ['click','axe','bonegun','businessmanHit','finalBossHit','inventoryFull','laserSword','minigun','pistol','shootyHit','shotgun','smg','wavegun','weaponCreate','zapgun','zapshotgun'], musicToLoad: [],
   sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit','shooty', 'hitAnims','weaponExplosion','titleScreen','finalBoss'],
   imagesToLoad: ['inventoryBackdrop','levelBackdrop'],
   collisions: null,

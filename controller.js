@@ -30,6 +30,7 @@ let Controller = function(){
         this.action2 = true;
         break;
       case "Escape":
+      case "KeyE":
       case "KeyP":
         this.pause = true;
         break;
@@ -58,6 +59,7 @@ let Controller = function(){
         this.action2 = false;
         break;
       case "Escape":
+      case "KeyE":
       case "KeyP":
         this.pause = false;
         break;
