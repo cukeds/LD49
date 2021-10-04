@@ -56,7 +56,7 @@ let WEAPONS = {
       },
       shoot: function(dir, player, room){
         this.particles.push(new Particle(
-          {x:player.pos.x,y:player.pos.y},
+          {x:this.bulletPos.x,y:this.bulletPos.y},
           4,
           '#FF0',
           'line',
@@ -96,7 +96,7 @@ let WEAPONS = {
       shoot: function(dir, player, room){
         for(let i = 0; i< 8; i++){
           this.particles.push(new Particle(
-            {x:player.pos.x,y:player.pos.y},
+            {x:this.bulletPos.x,y:this.bulletPos.y},
             4,
             '#FF0',
             'shotgun',
@@ -178,8 +178,8 @@ let WEAPONS = {
           let nearbyPoints = [];
           for(let i = 0; i < 5; i++){
             nearbyPoints.push({
-              x: p.pos.x + randInt(45) - 22,
-              y: p.pos.y + randInt(45) - 22
+              x: p.bulletPos.x + randInt(45) - 22,
+              y: p.bulletPos.y + randInt(45) - 22
             })
           }
           nearbyPoints.push(p.pos);
@@ -193,7 +193,7 @@ let WEAPONS = {
       },
       shoot: function(dir, player, room){
         this.particles.push(new Particle(
-          {x:player.pos.x,y:player.pos.y},
+          {x:this.bulletPos.x,y:this.bulletPos.y},
           4,
           '#FF0',
           'line',
@@ -268,7 +268,7 @@ let WEAPONS = {
       },
       shoot: function(dir, player, room){
         this.particles.push(new Particle(
-          {x:player.pos.x,y:player.pos.y},
+          {x:this.bulletPos.x,y:this.bulletPos.y},
           2,
           '#FF0',
           'line',
@@ -309,7 +309,7 @@ let WEAPONS = {
       },
       shoot: function(dir, player, room){
         this.particles.push(new Particle(
-          {x:player.pos.x,y:player.pos.y},
+          {x:this.bulletPos.x,y:this.bulletPos.y},
           2,
           '#FF0',
           'shotgun',
@@ -367,8 +367,8 @@ let WEAPONS = {
           let nearbyPoints = [];
           for(let i = 0; i < 5; i++){
             nearbyPoints.push({
-              x: p.pos.x + randInt(45) - 22,
-              y: p.pos.y + randInt(45) - 22
+              x: p.bulletPos.x + randInt(45) - 22,
+              y: p.bulletPos.y + randInt(45) - 22
             })
           }
           nearbyPoints.push(p.pos);
@@ -382,8 +382,8 @@ let WEAPONS = {
       },
       shoot: function(dir, player, room){
         for(let i = 0; i<8; i++){
-          let part = new Particle(
-            {x:player.pos.x,y:player.pos.y},
+          this.particles.push(new Particle(
+            {x:this.bulletPos.x,y:this.bulletPos.y},
             4,
             '#FF0',
             'shotgun',
