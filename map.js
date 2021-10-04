@@ -324,8 +324,22 @@ let Room = function(){
       healthColor = 'yellow';
     }
     game.artist.writeText(`Health: ${game.player.health}`, 32, game.height- 96,24,healthColor);
-    
-     game.map.rooms.filter(r=> r.visited).forEach(r=>{
+
+    game.map.rooms.filter(r=> r.visited).forEach(r=>{
+      let pos = {x: r.loc.x, y: r.loc.y};
+      pos.x *= 25;
+      pos.y *= 25;
+
+      pos.x += game.width - (maxX + 3) * 25;
+      pos.y += (maxY - 3) * -25;
+      if(r.id == this.id){
+         game.artist.drawRect(pos.x, pos.y, 20, 20, '#AA9DA0');
+      }else{
+         game.artist.drawRect(pos.x, pos.y, 20, 20, '#86777A');
+      }
+   });
+   game.map.rooms.filter(r=> r.finalRoom).forEach(r=>{
+     if(r.visited){
        let pos = {x: r.loc.x, y: r.loc.y};
        pos.x *= 25;
        pos.y *= 25;
@@ -333,12 +347,14 @@ let Room = function(){
        pos.x += game.width - (maxX + 3) * 25;
        pos.y += (maxY - 3) * -25;
        if(r.id == this.id){
-         game.artist.drawRect(pos.x, pos.y, 20, 20, '#AA9DA0');
+          game.artist.drawRect(pos.x, pos.y, 20, 20, '#ee2654');
        }else{
-         game.artist.drawRect(pos.x, pos.y, 20, 20, '#86777A');
+          game.artist.drawRect(pos.x, pos.y, 20, 20, '#900e28');
        }
-     });
-  }
+     }
+   })
+
+ }
 
   this.attach = function(direction, newRoom, map){
     this.directions[direction] = newRoom;
