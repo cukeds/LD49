@@ -368,4 +368,52 @@ let StartScreen = function(){
 
 }
 
+
+let WinScreen = function(){
+  this.drawables = [];
+  this.updateables = [];
+
+  this.setup = function(){
+
+    let restartButton = new Actor({x:0,y:0},'startButton');
+    restartButton.pos.x = game.width/2;
+    restartButton.pos.y = 3*game.height/4;
+    restartButton.restartGame = function(){
+      game.sceneManager.pop();
+      game.sceneManager.addScene(new StartScreen());
+    }
+
+    restartButton.update = function(delta){
+      this.sprite.update(delta);
+      //check if mouse over button
+      if( game.mouse.pos.x < this.pos.x + this.width/2 &&
+          game.mouse.pos.x > this.pos.x -this.width/2 &&
+          game.mouse.pos.y < this.pos.y + this.height/2 &&
+          game.mouse.pos.y > this.pos.y - this.height/2){
+        if(game.mouse.click){
+          game.mouse.click= false;
+          this.sprite.setAnim('Clicked');
+          this.restartGame();
+        }else{
+          this.sprite.setAnim('Hover');
+        }
+      }else{
+        this.sprite.setAnim('Idle');
+      }
+    }
+    this.drawables.push(restartButton);
+    this.updateables.push(restartButton);
+  }
+
+  this.update=function(delta){
+    this.updateables.forEach(u=>u.update(delta));
+  }
+
+  this.draw = function(){
+    this.drawables.forEach(d => d.draw());
+  }
+
+
+
+}
 //TODO etc;

@@ -115,6 +115,11 @@ const OBSTACLES = {
     update: function(delta, room){
       let anim = this.sprite.curAnim;
       this.sprite.update(delta);
+
+      if(room.enemies[0].dead){
+        this.open = true;
+      }
+
       if(this.open){
         if(this.dir == 'up' || this.dir == 'down'){
           if(anim != 'finalDoorOpen') {this.sprite.setAnim('finalDoorOpen')}
@@ -127,11 +132,13 @@ const OBSTACLES = {
         }else{
           if(anim != 'finalDoorSide') {this.sprite.setAnim('finalDoorSide')}
         }
+
+      }
+      if(game.collisions.circleCollision(this, game.player, -10) && this.open){
+        game.sceneManager.pop();
+        game.sceneManager.addScene(new WinScreen());
       }
 
-      if(game.collisions.circleCollision(this, game.player, -10) && this.open){
-        game.player.exit = this.dir;
-      }
     },
 
   }
