@@ -1,0 +1,45 @@
+{ "frames": [
+   {
+    "filename": "restartButtonGO0.ase",
+    "frame": { "x": 0, "y": 0, "w": 320, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 128 },
+    "sourceSize": { "w": 320, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "restartButtonGO1.ase",
+    "frame": { "x": 320, "y": 0, "w": 320, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 128 },
+    "sourceSize": { "w": 320, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "restartButtonGO2.ase",
+    "frame": { "x": 0, "y": 128, "w": 320, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 128 },
+    "sourceSize": { "w": 320, "h": 128 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.29-x64",
+  "image": "restartButtonGO.png",
+  "format": "RGBA8888",
+  "size": { "w": 640, "h": 256 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
