@@ -463,6 +463,8 @@ let OptionScreen = function(){
   this.draw = function(){
     game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
     this.drawables.forEach(d => d.draw());
+    game.artist.writeText(Math.round(game.maestro.musicVolume * 100), 480,229,64,'#aa9da0')
+    game.artist.writeText(Math.round(game.maestro.sfxVolume * 100), 480,470,64,'#aa9da0')
   }
 }
 
