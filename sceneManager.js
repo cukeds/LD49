@@ -474,7 +474,7 @@ let StartScreen = function(){
   let input = this.seedInput = new CanvasInput({
     canvas: game.artist.canvas,
     x: 250,
-    y: 460,
+    y: 650,
     width: 300,
     fontFamily: 'Audiowide',
     fontSize: 45,
