@@ -116,7 +116,7 @@ const OBSTACLES = {
       let anim = this.sprite.curAnim;
       this.sprite.update(delta);
 
-      if(room.enemies[0].dead){
+      if(room.enemies.filter(e=> e.name == 'finalBoss' && e.dead).length == 1){
         this.open = true;
       }
 
