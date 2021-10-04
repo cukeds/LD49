@@ -35,6 +35,7 @@ let game = {
     this.sceneManager = new SceneManager();
     this.collisions = new Collision();
     this.parser = new Parser();
+    this.maestro = new Maestro();
 
 
     //Call Loadables
