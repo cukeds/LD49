@@ -10,15 +10,19 @@ let Controller = function(){
 
   window.addEventListener('keydown', function(e){
     switch(e.code){
+      case "ArrowUp":
       case "KeyW":
         this.up = true;
         break;
+      case "ArrowLeft":
       case "KeyA":
         this.left = true;
         break;
+      case "ArrowDown":
       case "KeyS":
         this.down = true;
         break;
+      case "ArrowRight":
       case "KeyD":
         this.right = true;
         break;
@@ -39,15 +43,19 @@ let Controller = function(){
 
   window.addEventListener('keyup', function(e){
     switch(e.code){
+      case "ArrowUp":
       case "KeyW":
         this.up = false;
         break;
+      case "ArrowLeft":
       case "KeyA":
         this.left = false;
         break;
+      case "ArrowDown":
       case "KeyS":
         this.down = false;
         break;
+      case "ArrowRight":
       case "KeyD":
         this.right = false;
         break;
