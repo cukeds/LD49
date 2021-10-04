@@ -462,7 +462,7 @@ let ENEMIES = {
         );
 
         if(this.dead){
-          this.die();
+          this.die(delta);
           return;
         }
 
