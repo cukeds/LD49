@@ -11,29 +11,41 @@ let Ray = function(pos){
   this.cast = function(target,point){
     if(target.length != undefined){
       let points = [];
+      let objsHit = [];
 
       target.forEach(t => {
         let hit = this.cast(t,point)
         if(hit != null){
           points.push(hit);
+          objsHit.push(t);
         }
       })
 
       if(points.length == 0){
         return null;
       }else if(points.length == 1){
-        return points[0];
+        //return target
+        return {
+          point: points[0],
+          obj: objsHit[0]
+        };
       }else{
         let record = Infinity;
         let shortestIntersect = null;
-        points.forEach(pt=>{
-          let dist = distance(this.pos,pt);
+        let shortestIndex = null;
+        for(let i = 0; i < points.length; i++){
+          let dist = distance(this.pos,points[i]);
           if(dist < record){
-            shortestIntersect = pt;
+            shortestIntersect = points[i];
+            shortestIndex = i;
             record = dist;
           }
-        })
-        return shortestIntersect;
+        }
+
+        return {
+          point: shortestIntersect,
+          obj: objsHit[shortestIndex]
+        };
       }
     }
     if(target.pos != undefined){
