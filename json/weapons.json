@@ -115,6 +115,15 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
+   },
+   {
+    "filename": "weapons13.ase",
+    "frame": { "x": 32, "y": 96, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
    }
  ],
  "meta": {
@@ -137,7 +146,8 @@
    { "name": "zapshotgun", "from": 9, "to": 9, "direction": "forward" },
    { "name": "bonegun", "from": 10, "to": 10, "direction": "forward" },
    { "name": "launcher", "from": 11, "to": 11, "direction": "forward" },
-   { "name": "rocket", "from": 12, "to": 12, "direction": "forward" }
+   { "name": "rocket", "from": 12, "to": 12, "direction": "forward" },
+   { "name": "bone", "from": 13, "to": 13, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }

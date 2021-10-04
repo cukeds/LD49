@@ -129,5 +129,19 @@ let PUPS = {
       this.speed.y = Math.min(2, this.speed.y);
 
     }
+  },
+  bone: function(dir){
+    this.dir = dir;
+    this.sprite = new Sprite('weapons','bone');
+    this.update = function(delta){
+      if(this.life >= this.maxLife && !this.dead){
+        this.dead = true;
+      }
+      this.life += delta;
+
+      this.pos = rotMatrix(this.startPos,this.dir,function(){
+        return {x: this.life/2,y: 0};
+      }.bind(this))
+    };
   }
 }

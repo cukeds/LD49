@@ -412,18 +412,44 @@ let WEAPONS = {
     },
     "bonegun" : {
       name: "bonegun",
-      cooldown: 10,
+      cooldown: 60,
+      damage: 10,
       numShots: 60,
       spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              if(!e.dead){
+                p.life = p.maxLife;
+                e.damage(randInt(this.damage));
+              }
 
+            }
+          })
+        });
+        this.removeDeadParticles();
       },
       draw: function(){
-
+        this.particles.forEach(p=>{
+          p.sprite.draw(p.pos,undefined,undefined,(p.pos.x+p.pos.y)/32);
+        });
       },
-      shoot: function(dir, player,room){
-
+      shoot: function(dir, player, room){
+        this.particles.push(new Particle(
+          {x:this.bulletPos.x,y:this.bulletPos.y},
+          4,
+          '#FF0',
+          'bone',
+          [dir]
+        ))
       },
 
     },
