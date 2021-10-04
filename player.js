@@ -129,9 +129,27 @@ let Player = function(pos, spriteName){
           //TODO Blow up gun when it is empty
 
           //move to dying weapons
+          this.dyingWeapons.push(this.curWeapon);
           //set curWeapon to null
+          this.curWeapon = null;
           //if altWeapon exists, switch weapons
+          if(this.altWeapon){
+            this.curWeapon = this.altWeapon;
+            this.altWeapon = null;
+          }
           //Give 4 random mats
+          for(let i = 0; i < 4; i++){
+            let rand = randInt(100);
+            if(rand <= 33){
+              this.mat.junk++;
+            }
+            else if(rand <= 66){
+              this.mat.crystal++;
+            }
+            else if(rand <= 100){
+              this.mat.essence++;
+            }
+          }
         }
       }
       // for(let i = 0; i < 8; i++){
@@ -151,28 +169,31 @@ let Player = function(pos, spriteName){
 
 
     // this.exit keeps track of the players exit
-    switch(this.exit){
-      case 'left':
-        game.sceneManager.addScene(game.sceneManager.pop().directions.left);
-        this.pos.x = game.width - 250;
-        this.exit = null;
-        break;
-      case 'right':
-        this.pos.x = 0 + 250;
-        game.sceneManager.addScene(game.sceneManager.pop().directions.right);
-        this.exit = null;
-        break;
-      case 'up':
-        this.pos.y = game.height - 250;
-        game.sceneManager.addScene(game.sceneManager.pop().directions.up);
-        this.exit = null;
-        break;
-      case 'down':
-        this.pos.y = 0 + 250;
-        game.sceneManager.addScene(game.sceneManager.pop().directions.down);
-        this.exit = null;
-        break;
+    if(this.exit != null){
+      switch(this.exit){
+        case 'left':
+          game.sceneManager.addScene(game.sceneManager.pop().directions.left);
+          this.pos.x = game.width - 250;
+          this.exit = null;
+          break;
+        case 'right':
+          this.pos.x = 0 + 250;
+          game.sceneManager.addScene(game.sceneManager.pop().directions.right);
+          this.exit = null;
+          break;
+        case 'up':
+          this.pos.y = game.height - 250;
+          game.sceneManager.addScene(game.sceneManager.pop().directions.up);
+          this.exit = null;
+          break;
+        case 'down':
+          this.pos.y = 0 + 250;
+          game.sceneManager.addScene(game.sceneManager.pop().directions.down);
+          this.exit = null;
+          break;
+      }
     }
+
 
 
 
