@@ -337,14 +337,54 @@ let WEAPONS = {
       numShots: 60,
       spriteSheet: 'weapons',
       shotSound:null,
-      update: function(delta){
+      update: function(delta,room){
+        this.particles.forEach(p => {
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.life = p.maxLife;
+            }
+          })
+          room.enemies.forEach(e=>{
+            if(game.collisions.circleCollision(e,p)){
+              if(!e.dead){
+                p.life = p.maxLife;
+                e.damage(randInt(this.damage));
+              }
 
+            }
+          })
+        });
+        this.removeDeadParticles();
       },
       draw: function(){
-
+        this.particles.forEach(p=>{
+          let nearbyPoints = [];
+          for(let i = 0; i < 5; i++){
+            nearbyPoints.push({
+              x: p.pos.x + randInt(45) - 22,
+              y: p.pos.y + randInt(45) - 22
+            })
+          }
+          nearbyPoints.push(p.pos);
+          for(let i = 0; i < 5; i++){
+            let p1 = nearbyPoints[randInt(nearbyPoints.length)];
+            let p2 = nearbyPoints[randInt(nearbyPoints.length)];
+            game.artist.drawLine(p1.x,p1.y,p2.x,p2.y,'#FF0');
+          }
+          p.draw();
+        });
       },
-      shoot: function(dir, player,room){
-
+      shoot: function(dir, player, room){
+        for(let i = 0; i<8; i++){
+          this.particles.push(new Particle(
+            {x:player.pos.x,y:player.pos.y},
+            4,
+            '#FF0',
+            'line',
+            [dir]
+          ))
+        }
       },
 
     },

@@ -207,6 +207,7 @@ let Player = function(pos, spriteName){
   this.draw = function(){
     if(this.curWeapon){
       this.curWeapon.draw();
+
     }
     if(this.altWeapon){
       this.altWeapon.draw();
@@ -267,6 +268,5 @@ let Player = function(pos, spriteName){
     //Materials Array will look like ['junk','crystal','essence'];
     //Sorting it so order doesn't matter
     materialsArr.sort();
-
   }
 }
