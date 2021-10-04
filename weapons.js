@@ -204,8 +204,9 @@ let WEAPONS = {
     },
     "axe" : {
       name: "axe",
-      cooldown: 10,
+      cooldown: 60,
       numShots: 60,
+      damage: 50,
       spriteSheet: 'weapons',
       shotSound:null,
       update: function(delta){
@@ -214,8 +215,20 @@ let WEAPONS = {
       draw: function(){
 
       },
-      shoot: function(dir, player,room){
-
+      shoot: function(dir, player, room){
+        this.sprite = new Sprite('hitAnims', 'axeHit');
+        let ray = new Ray(game.player.pos);
+        let hits = [];
+        for(let i = 0; i < 5; i++){
+          let hit = ray.cast([room.enemies], {x:Math.cos(dir - Math.PI/4 + i * Math.PI/8), y:Math.sin(dir - Math.PI/4 + i * Math.PI/8)});
+          if(hit){
+            if(distance(hit.obj.pos, game.player.pos) <= 48){
+              hits.push(hit.obj);
+            }
+          }
+        }
+        hits.forEach(hit => hit.damage(randInt(this.damage)))
+        this.sprite = new Sprite('weapons', 'axe');
       },
 
     },
