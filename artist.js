@@ -180,9 +180,11 @@ let Artist = function(screenWidth,screenHeight){
 
     if(image.ready == true){
       this.brush.translate(pos.x,pos.y);
-      this.brush.rotate(rot);
       if(rot >= Math.PI/2 || rot <= -Math.PI/2){
         this.brush.scale(-1, 1);
+        this.brush.rotate(Math.PI - rot);
+      }else{
+        this.brush.rotate(rot);
       }
       this.brush.translate(-pos.x,-pos.y);
       this.brush.drawImage(image,
