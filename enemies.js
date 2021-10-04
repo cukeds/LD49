@@ -249,7 +249,7 @@ let ENEMIES = {
       acc: 0.05,
       maxSpeed: 1.5,
       tag: undefined,
-      voice: "businessman",
+      dmgSnd: "businessmanDmg",
       behaviour: 'aggressive',
       update: function(delta,room){
         if(this.dead){
@@ -286,7 +286,7 @@ let ENEMIES = {
       acc: 0.05,
       maxSpeed: 1,
       tag: undefined,
-      voice: "shooty",
+      dmgSnd: "shootyDmg",
       behaviour: "aggressive",
       update: function(delta,room){
         if(!this.particles){
@@ -304,7 +304,7 @@ let ENEMIES = {
             }
           });
           if(game.collisions.circleCollision(game.player,p)){
-            if(!game.player.dead){
+            if(!game.player.dead && !p.dead){
               p.dead;
               p.life = p.maxLife;
               game.player.damage(randInt(this.dmgVal));
@@ -353,7 +353,7 @@ let ENEMIES = {
       acc: 0.05,
       maxSpeed: 2,
       tag: "man",
-      voice: "sniper",
+      dmgSnd: "sniper",
       behaviour: "hiding",
       update: function(delta,room){
         let dist = distance(game.player.pos, this.pos);
@@ -405,7 +405,7 @@ let ENEMIES = {
       acc: 0,
       maxSpeed: 0,
       tag: "man",
-      voice: "turret",
+      dmgSnd: "turret",
       behaviour: "idle",
       update: function(delta,room){
         this.speed.x = 0;
@@ -435,7 +435,7 @@ let ENEMIES = {
       maxSpeed: 0,
       tag: undefined,
       ready: true,
-      voice: "finalBoss",
+      dmgSnd: "finalBossDmg",
       behaviour: "idle",
       update: function(delta,room){
         this.speed.x = 0;
@@ -454,7 +454,7 @@ let ENEMIES = {
             }
           });
           if(game.collisions.circleCollision(game.player,p)){
-            if(!game.player.dead){
+            if(!game.player.dead && !p.dead){
               p.dead;
               p.life = p.maxLife;
               game.player.damage(randInt(this.dmgVal));

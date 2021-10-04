@@ -69,7 +69,7 @@ let WEAPONS = {
     "shotgun" : {
       name: "shotgun",
       cooldown: 60,
-      numShots: 10,
+      numShots: 12,
       damage: 4,
       spriteSheet: 'weapons',
       shotSound: 'shotgun',
@@ -106,7 +106,7 @@ let WEAPONS = {
             4,
             '#FF0',
             'shotgun',
-            [dir,20]
+            [dir,45]
           ))
         }
       },
@@ -115,8 +115,8 @@ let WEAPONS = {
     "wavegun" : {
       name: "wavegun",
       cooldown: 90,
-      numShots: 10,
-      damage: 1,
+      numShots: 7,
+      damage: 1.5,
       spriteSheet: 'weapons',
       shotSound:'wavegun',
       update: function(delta,room){
@@ -396,7 +396,7 @@ let WEAPONS = {
       name: "zapshotgun",
       cooldown: 45,
       damage: 5,
-      numShots: 12,
+      numShots: 8,
       spriteSheet: 'weapons',
       shotSound:'zapshotgun',
       update: function(delta,room){

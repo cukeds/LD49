@@ -17,6 +17,7 @@ let Player = function(pos, spriteName){
     this.altWeapon = null;
     this.health = 1000000;
     this.dead = false;
+    this.damageSounds = ['ow','ugh','ouch','oimy']
     this.particles = [];
     this.dyingWeapons = [];
     this.dir = 0;
@@ -64,6 +65,7 @@ let Player = function(pos, spriteName){
     if(game.controller.pause){
       game.controller.pause = false;
       game.sceneManager.addScene(new InventoryScreen());
+      return;
     }
     //Action1 is switch weapons
     if(game.controller.action1){
@@ -147,6 +149,7 @@ let Player = function(pos, spriteName){
             this.altWeapon = null;
           }
           //explode weapon
+          game.maestro.play('weaponExplode');
           room.particles.push(new Particle(
             this.pos,
             4,
@@ -181,15 +184,7 @@ let Player = function(pos, spriteName){
           }
         }
       }
-      // for(let i = 0; i < 8; i++){
-      //   let p = new Particle(
-      //     {x: this.pos.x, y: this.pos.y},
-      //     4,
-      //     {x: (randInt(11) - 5)/16,y: (randInt(11) - 5)/16},
-      //     '#00F',
-      //     'sin',[dir])//,Number(document.getElementById('debug0').value)]);//15]);
-      //   game.particles.push(p);
-      // }
+
     }
 
     if(this.shootCooldown > 0){
@@ -294,43 +289,21 @@ let Player = function(pos, spriteName){
     }else{
       this.sprite.draw(this.pos);
     }
-
-    //Specific Style Raycast
-    // game.actors.forEach(actor => {
-    //   let lines = RAY.rectToLines(actor);
-    //   lines.forEach(line => {
-    //     let pts = [];
-    //     pts.push(line.a);
-    //     pts.forEach(pt=>{
-    //       let p = this.ray.cast(game.actors,{x:pt.x,y:pt.y});
-    //       if(p != null){
-    //         game.artist.drawLine(this.pos.x, this.pos.y, p.x, p.y, '#000');
-    //       }
-    //     })
-    //   })
-    // });
-
-    // //Lamp Style Raycast
-    // for(let i = 0; i < 360; i+=3.6){
-    //   let x = this.pos.x + Math.cos(i*Math.PI/180);
-    //   let y = this.pos.y + Math.sin(i*Math.PI/180);
-    //   let pt = this.ray.cast(game.actors,{x:x,y:y});
-    //   if(pt != null){
-    //     game.artist.drawLine(this.pos.x, this.pos.y, pt.x, pt.y, '#000');
-    //   }
-    // }
   }
 
   this.damage = function(amount){
     if(this.dead || this.iFrames > 0){
       return;
     }
+    game.maestro.play(this.damageSounds[randInt(this.damageSounds.length)]);
     console.log(`taking ${amount} damage` );
     this.health -= amount;
     if(this.health <= 0){
       this.dead = true;
       this.sprite.setAnim('death', false);
     }
+
+
 
     for(let i = 0; i < amount; i++){
       game.getCurRoom().particles.push(new Particle(

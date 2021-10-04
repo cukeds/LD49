@@ -154,6 +154,7 @@ let InventoryScreen = function(){
       if(clickedThing.socketed){
         //Desocket the thing
         //Remove createWeapon clickability if needed
+        game.maestro.play('matRemove');
         let index = this.clickables.findIndex(t => {
           if(t){
             console.log(t.value);
@@ -214,7 +215,7 @@ let InventoryScreen = function(){
         }else{
           return;
         }
-        //TODO Play Squelch sound of socket being inserted here
+        game.maestro.play('matPlace');
         game.player.mat[clickedThing.value]--;
         socketSprite.value = clickedThing.value;
         socketSprite.id = game.getId();
@@ -264,7 +265,7 @@ let InventoryScreen = function(){
         }else{
           //TODO Play uh oh sound that tells player they can't craft a gun cause their inventory is full
         }
-        //TODO play Sploosh Sound here
+        game.maestro.play('weaponCreate');
 
       }
 
