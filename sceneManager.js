@@ -574,9 +574,6 @@ let WinScreen = function(){
     game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
     this.drawables.forEach(d => d.draw());
   }
-
-
-
 }
 
 
