@@ -110,11 +110,6 @@ let Player = function(pos, spriteName){
       return dyingTS - w.timestamp < 2000;
     })
 
-
-    if(game.controller.action2){
-      room.enemies.pop();
-    }
-
     this.particles.forEach(p=>p.update(delta));
     this.particles = this.particles.filter(p=>!p.dead);
     this.dir = Math.atan2(game.mouse.pos.y - this.pos.y,game.mouse.pos.x- this.pos.x);
