@@ -119,6 +119,7 @@ let InventoryScreen = function(){
     this.crystalSprite.startPos = {x:game.width/4, y: 2*game.height/3 - game.height/6};
     this.essenceSprite.pos = {x:game.width/4, y: 5*game.height/6};
     this.essenceSprite.startPos = {x:game.width/4, y: 5*game.height/6};
+    this.craftableWeapon = null;
 
     let trackerDraw = function(){
       game.artist.writeText(game.player.mat[this.value], this.pos.x,this.pos.y, 64,'white');
@@ -190,6 +191,7 @@ let InventoryScreen = function(){
       if(clickedThing.socketed){
         //Desocket the thing
         //Remove createWeapon clickability if needed
+        this.craftableWeapon = null;
         game.maestro.play('matRemove');
         let index = this.clickables.findIndex(t => {
           if(t){
@@ -279,13 +281,21 @@ let InventoryScreen = function(){
             height:64,
             value: 'createWeapon'
           })
+          let recipe = []
+          recipe.push()
+          recipe.push(this.sockets[0].value.substr(0,1),this.sockets[1].value.substr(0,1), this.sockets[2].value.substr(0,1));
+          recipe.sort();
+          recipe = recipe.join('');
+          let type = WEAPONS.recipes[recipe];
+          this.craftableWeapon = new Weapon(type);
+
         }
       }else{
         //clicked on the completed button
         if(clickedThing.value != 'createWeapon'){
           console.log('Phlip fucked up someThing when checking on what is clickable');
         }
-        let recipe = []
+        let recipe = [];
         recipe.push(this.sockets[0].value.substr(0,1),this.sockets[1].value.substr(0,1), this.sockets[2].value.substr(0,1));
         recipe.sort();
         recipe = recipe.join('');
@@ -315,7 +325,11 @@ let InventoryScreen = function(){
   this.draw = function(){
 
     game.artist.drawImage(game.artist.images['inventoryBackdrop'],0,0,game.width,game.height);
+
     this.drawables.forEach(d=> d.draw(d.pos));
+    if(this.craftableWeapon){
+      this.craftableWeapon.sprite.draw({x: 5 * game.width / 6, y: game.height / 2}, 128, 128);
+    }
     if(this.weap1){
       //Draw Weapon 1
     }
