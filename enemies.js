@@ -246,7 +246,7 @@ let ENEMIES = {
       weapon: "melee",
       maxCooldown: 60,
       cooldown: 0,
-      dmgVal: 10,
+      dmgVal: 5,
       range: 0,
       spriteSheet: "businessman",
       acc: 0.05,
@@ -274,7 +274,7 @@ let ENEMIES = {
         this.sprite.update(delta);
       },
       action: function(){
-        game.player.damage(randInt(this.dmgVal));
+        game.player.damage(randInt(this.dmgVal)+2);
       }
     },
     "shooty" : {
@@ -310,7 +310,7 @@ let ENEMIES = {
             if(!game.player.dead && !p.dead){
               p.dead;
               p.life = p.maxLife;
-              game.player.damage(randInt(this.dmgVal));
+              game.player.damage(randInt(this.dmgVal)+1);
             }
 
           }
