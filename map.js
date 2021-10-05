@@ -311,7 +311,7 @@ let Room = function(){
 
 
 
-     game.artist.writeText(`Stability: ${perc}%`, 32, game.height - 64, 24, 'white');
+     game.artist.writeText(`Stability: ${perc}%`, 32, game.height - 64, 24, color);
     }
     let healthColor = 'white';
     if(game.player.health < 10){
@@ -353,6 +353,17 @@ let Room = function(){
        }
      }
    })
+   let roomsToClear = 0;
+   game.map.rooms.forEach(r=>{
+     let x = r.enemies.filter(e=>{
+       return !e.dead;
+     })
+     if(x.length > 0){
+       roomsToClear++;
+     }
+   });
+   game.artist.drawRect(0,game.height - 28,8*32, 32,'black');
+   game.artist.writeText(`Rooms To Clear: ${roomsToClear}`, 32, game.height- 25,24,'white');
 
  }
 
