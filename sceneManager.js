@@ -348,17 +348,17 @@ let OptionScreen = function(){
     game.maestro.play('click');
   }
   this.increaseMusic = function(){
-    if(game.maestro.musicVolume <= .95){
-      game.maestro.musicVolume += .05;
+    if(game.maestro.curMusic.volume <= .95){
+      game.maestro.curMusic.volume += .05;
     }else{
-      game.maestro.musicVolume = 1;
+      game.maestro.curMusic.volume = 1;
     }
   }
   this.decreaseMusic = function(){
-    if(game.maestro.musicVolume >= .05){
-      game.maestro.musicVolume -= .05;
+    if(game.maestro.curMusic.volume >= .05){
+      game.maestro.curMusic.volume -= .05;
     }else{
-      game.maestro.musicVolume = 0;
+      game.maestro.curMusic.volume = 0;
     }
   }
   this.goBack = function(){
@@ -471,7 +471,7 @@ let OptionScreen = function(){
   this.draw = function(){
     game.artist.drawImage(game.artist.images[this.backdrop], 0, 0, game.width, game.height);
     this.drawables.forEach(d => d.draw());
-    game.artist.writeText(Math.round(game.maestro.musicVolume * 100), 480,229,64,'#aa9da0')
+    game.artist.writeText(Math.round(game.maestro.curMusic.volume * 100), 480,229,64,'#aa9da0')
     game.artist.writeText(Math.round(game.maestro.sfxVolume * 100), 480,470,64,'#aa9da0')
   }
 }
