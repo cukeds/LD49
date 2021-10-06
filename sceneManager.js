@@ -302,6 +302,7 @@ let InventoryScreen = function(){
 
         let type = WEAPONS.recipes[recipe];
         let weapon = new Weapon(type);
+        game.player.craftedWeapons.push(weapon);
         if(game.player.curWeapon == null){
           game.player.curWeapon = weapon;
           game.sceneManager.pop();
@@ -327,7 +328,14 @@ let InventoryScreen = function(){
     game.artist.drawImage(game.artist.images['inventoryBackdrop'],0,0,game.width,game.height);
 
     this.drawables.forEach(d=> d.draw(d.pos));
-    //game.artist.drawCircle(5 * game.width / 6 + 4, game.height / 2, 80, 'white');
+    if(game.player.craftedWeapons.length > 0){
+      for(let i = 4; i >= 0; i--){
+        if(game.player.craftedWeapons[game.player.craftedWeapons.length - i]){
+          game.artist.drawCircle(5 * game.width / 6 + 4, (i) * game.height / 5, 80, 'white');
+          game.player.craftedWeapons[game.player.craftedWeapons.length - i].sprite.draw({x: 5 * game.width / 6, y: (i) * game.height / 5}, 128, 128);
+        }
+      }
+    }
     if(this.craftableWeapon){
       this.craftableWeapon.sprite.draw({x: game.width/2 - 10, y: game.height / 2 + 25}, 64, 64);
     }

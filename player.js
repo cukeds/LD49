@@ -24,6 +24,7 @@ let Player = function(pos, spriteName){
     this.dyingWeapons = [];
     this.dir = 0;
     this.iFrames = 60;
+    this.craftedWeapons = [];
 
     //Weapon material trackers
     this.mat = {
