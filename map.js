@@ -172,6 +172,7 @@ let Room = function(){
   this.enemies = [];
   this.roomSize = {x: game.width, y: game.height};
   this.name = 'Starting Room';
+  this.adjRooms = null;
 
 
   this.directions = {
@@ -284,17 +285,9 @@ let Room = function(){
     if(game.player.altWeapon){
        game.player.altWeapon.sprite.draw({x: game.width - 64, y: game.height - 64}, 64, 64, -Math.PI/8);
      }
-    let maxX = 0;
-    let maxY = 0;
-    game.map.rooms.forEach(r=>{
-      if(r.loc.x > maxX){
-        maxX = r.loc.x;
-     }
-     if(r.loc.y < maxY){
-       maxY = r.loc.y;
-     }
-    });
 
+
+    // Stability
     if(game.player.curWeapon){
      let max = WEAPONS.templates[game.player.curWeapon.name].numShots;
      let color = 'white';
@@ -308,22 +301,34 @@ let Room = function(){
      }else if(perc < 80){
        color = 'yellow';
      }
-
-
-
      game.artist.writeText(`Stability: ${perc}%`, 32, game.height - 64, 24, color);
-    }
-    let healthColor = 'white';
-    if(game.player.health < 10){
-      healthColor = game.artist.randColor();
-    }else if(game.player.health < 20){
-      healthColor = 'red';
-    }else if(game.player.health < 50){
-      healthColor = 'orange';
-    }else if(game.player.health < 80){
-      healthColor = 'yellow';
-    }
-    game.artist.writeText(`Health: ${game.player.health}`, 32, game.height- 96,24,healthColor);
+   }
+
+
+   // Health
+   let healthColor = 'white';
+   if(game.player.health < 10){
+     healthColor = game.artist.randColor();
+   }else if(game.player.health < 20){
+     healthColor = 'red';
+   }else if(game.player.health < 50){
+     healthColor = 'orange';
+   }else if(game.player.health < 80){
+     healthColor = 'yellow';
+   }
+   game.artist.writeText(`Health: ${game.player.health}`, 32, game.height- 96,24,healthColor);
+
+   // Minimap Things
+   let maxX = 0;
+   let maxY = 0;
+   game.map.rooms.forEach(r=>{
+     if(r.loc.x > maxX){
+       maxX = r.loc.x;
+     }
+     if(r.loc.y < maxY){
+       maxY = r.loc.y;
+     }
+   });
 
     game.map.rooms.filter(r=> r.visited).forEach(r=>{
       let pos = {x: r.loc.x, y: r.loc.y};
@@ -332,12 +337,49 @@ let Room = function(){
 
       pos.x += game.width - (maxX + 3) * 25;
       pos.y += (maxY - 3) * -25;
+
+      let keys = Object.keys(r.directions);
+      keys.forEach(k=>{
+        if(r.directions[k] == null){
+          return;
+        }
+        let rot = 0;
+        if(Math.abs(r.loc.y - r.directions[k].loc.y) > 0){
+          rot = Math.PI/2;
+        }
+        let newPos = {x: pos.x, y: pos.y};
+        switch(k){
+          case 'up':
+          newPos.x += 10;
+            break;
+          case 'down':
+          newPos.x += 10;
+          newPos.y += 20;
+            break;
+          case 'left':
+          newPos.y += 10;
+            break;
+          case 'right':
+          newPos.y += 10;
+          newPos.x += 20;
+            break;
+        }
+        game.artist.drawRectRot(newPos.x, newPos.y, 5, 2, 'yellow', rot);
+      });
+
+
+
+
       if(r.id == this.id){
          game.artist.drawRect(pos.x, pos.y, 20, 20, '#AA9DA0');
       }else{
          game.artist.drawRect(pos.x, pos.y, 20, 20, '#86777A');
       }
+
+
    });
+
+
    game.map.rooms.filter(r=> r.finalRoom).forEach(r=>{
      if(r.visited){
        let pos = {x: r.loc.x, y: r.loc.y};
@@ -346,13 +388,19 @@ let Room = function(){
 
        pos.x += game.width - (maxX + 3) * 25;
        pos.y += (maxY - 3) * -25;
+
+
        if(r.id == this.id){
           game.artist.drawRect(pos.x, pos.y, 20, 20, '#ee2654');
-       }else{
+       }
+       else{
           game.artist.drawRect(pos.x, pos.y, 20, 20, '#900e28');
        }
+
      }
-   })
+   });
+
+
    let roomsToClear = 0;
    game.map.rooms.forEach(r=>{
      let x = r.enemies.filter(e=>{
@@ -398,7 +446,7 @@ let Room = function(){
     }
     newRoom.directions[oppDir] = this;
 
-    let adjRooms = map.rooms.filter(r => {
+    this.adjRooms = map.rooms.filter(r => {
       let xOffOne = r.loc.x == newRoom.loc.x + 1
        || r.loc.x == newRoom.loc.x - 1;
       let xSame = r.loc.x == newRoom.loc.x;
@@ -407,12 +455,12 @@ let Room = function(){
       let ySame = r.loc.y == newRoom.loc.y;
       return (xOffOne && ySame) || (yOffOne && xSame);
     })
-    // console.log(newRoom.loc);
-    if(adjRooms.length > 4){
+
+    if(this.adjRooms.length > 4){
       console.log("YOU FUCKED UP ATTACHING THINGS");
     }
 
-    adjRooms.forEach(r => {
+    this.adjRooms.forEach(r => {
       if(r.id == this.id){
         return;
       }

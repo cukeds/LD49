@@ -171,6 +171,18 @@ let Artist = function(screenWidth,screenHeight){
     this.brush.closePath();
   }
 
+  this.drawRectRot = function(x,y,width,height,color, rot){
+    this.brush.translate(x,y);
+    this.brush.rotate(rot);
+    this.brush.translate(-x,-y);
+    this.brush.beginPath();
+    this.brush.fillStyle = color;
+    this.brush.fillRect(x - width/2,y - height/2,width,height);
+    this.brush.closePath();
+    this.brush.setTransform(1,0,0,1,0,0);
+  }
+
+
   this.drawRotSpriteFromSheet = function(sheet, box, pos, width, height, rot){
     let image = this.sheets[sheet];
     if(this.sheets[sheet] == undefined){
