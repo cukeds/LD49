@@ -281,13 +281,6 @@ let InventoryScreen = function(){
             height:64,
             value: 'createWeapon'
           })
-          let recipe = []
-          recipe.push()
-          recipe.push(this.sockets[0].value.substr(0,1),this.sockets[1].value.substr(0,1), this.sockets[2].value.substr(0,1));
-          recipe.sort();
-          recipe = recipe.join('');
-          let type = WEAPONS.recipes[recipe];
-          this.craftableWeapon = new Weapon(type);
 
         }
       }else{
@@ -299,7 +292,7 @@ let InventoryScreen = function(){
         recipe.push(this.sockets[0].value.substr(0,1),this.sockets[1].value.substr(0,1), this.sockets[2].value.substr(0,1));
         recipe.sort();
         recipe = recipe.join('');
-
+        game.player.craftedRecipes.push(recipe);
         let type = WEAPONS.recipes[recipe];
         let weapon = new Weapon(type);
         game.player.craftedWeapons.push(weapon);
@@ -328,14 +321,33 @@ let InventoryScreen = function(){
     game.artist.drawImage(game.artist.images['inventoryBackdrop'],0,0,game.width,game.height);
 
     this.drawables.forEach(d=> d.draw(d.pos));
-    if(game.player.craftedWeapons.length > 0){
-      for(let i = 4; i >= 0; i--){
-        if(game.player.craftedWeapons[game.player.craftedWeapons.length - i]){
-          game.artist.drawCircle(5 * game.width / 6 + 4, (i) * game.height / 5, 80, 'white');
-          game.player.craftedWeapons[game.player.craftedWeapons.length - i].sprite.draw({x: 5 * game.width / 6, y: (i) * game.height / 5}, 128, 128);
+
+    let pos = {x: 5 * game.width / 7, y: 100};
+    Object.keys(WEAPONS.recipes).forEach(recipe=>{
+      pos.x = 7 * game.width / 9;
+      for(let i = 0; i < 3; i++){
+        switch(recipe[i]){
+          case 'e':
+            this.essenceSprite.draw(pos, 64, 64);
+            break;
+          case 'j':
+            this.junkSprite.draw(pos, 64, 64);
+            break;
+          case 'c':
+            this.crystalSprite.draw(pos, 64, 64);
+            break;
         }
+        pos.x += 64;
       }
-    }
+
+      for(let i = 0; i < game.player.craftedRecipes.length; i++){
+        if(game.player.craftedWeapons[i].name == WEAPONS.recipes[recipe]){
+          game.artist.drawCircle(pos.x, pos.y, 32, 'white')
+          game.player.craftedWeapons[i].sprite.draw(pos, 64, 64);
+        }
+      };
+      pos.y += 64;
+    });
     if(this.craftableWeapon){
       this.craftableWeapon.sprite.draw({x: game.width/2 - 10, y: game.height / 2 + 25}, 64, 64);
     }
