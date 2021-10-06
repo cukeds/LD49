@@ -327,9 +327,9 @@ let InventoryScreen = function(){
     game.artist.drawImage(game.artist.images['inventoryBackdrop'],0,0,game.width,game.height);
 
     this.drawables.forEach(d=> d.draw(d.pos));
-    game.artist.drawCircle(5 * game.width / 6 + 4, game.height / 2, 80, 'white');
+    //game.artist.drawCircle(5 * game.width / 6 + 4, game.height / 2, 80, 'white');
     if(this.craftableWeapon){
-      this.craftableWeapon.sprite.draw({x: 5 * game.width / 6, y: game.height / 2}, 128, 128);
+      this.craftableWeapon.sprite.draw({x: game.width/2 - 10, y: game.height / 2 + 25}, 64, 64);
     }
     if(this.weap1){
       //Draw Weapon 1
