@@ -280,10 +280,10 @@ let Room = function(){
     }
 
     game.artist.writeText(this.name, 32, 32, 18,'white');
-    game.artist.drawCircle(game.width - 64, game.height - 64, 32, 'white')
 
     if(game.player.altWeapon){
-       game.player.altWeapon.sprite.draw({x: game.width - 64, y: game.height - 64}, 64, 64, -Math.PI/8);
+      game.artist.drawCircle(game.width - 64, game.height - 64, 32, 'white')
+      game.player.altWeapon.sprite.draw({x: game.width - 64, y: game.height - 64}, 64, 64, -Math.PI/8);
      }
 
 
