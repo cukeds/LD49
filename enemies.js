@@ -399,28 +399,85 @@ let ENEMIES = {
 
     "turret" : {
       name: "turret",
-      health: 10,
+      health: 15,
       weapon: "machinegun",
       maxCooldown: 15,
       cooldown: 0,
-      range: 8,
-      spriteSheet: "tiles",
+      dmgVal: 1,
+      range: 12,
+      spriteSheet: "turret",
       acc: 0,
       maxSpeed: 0,
-      tag: "man",
-      dmgSnd: "turret",
+      tag: "idle",
+      dmgSnd: "shootyDmg",
       behaviour: "idle",
+      dir: "lr",
       update: function(delta,room){
         this.speed.x = 0;
         this.speed.y = 0;
-        let inRange = distance(game.player.pos,this.pos) <= this.range ;
-        if(inRange && this.cooldown <= 0){
-          this.cooldown = this.maxCooldown;
-          this.action();
+
+
+
+        if(!this.particles){
+          this.particles = [];
         }
+
+        this.particles = this.particles.filter(p=> !p.dead);
+
+        this.particles.forEach(p=>{
+          p.update(delta,room);
+          room.actors.forEach(a=>{
+            if(game.collisions.circleCollision(p,a)){
+              p.dead;
+              p.life = p.maxLife;
+            }
+          });
+          if(game.collisions.circleCollision(game.player,p)){
+            if(!game.player.dead && !p.dead){
+              p.dead;
+              p.life = p.maxLife;
+              game.player.damage(randInt(this.dmgVal)+1);
+            }
+
+          }
+        });
+
+        if(this.dead){
+          this.die(delta);
+          return;
+        }
+
+        if(this.cooldown <= 0){
+          this.action();
+          this.cooldown = this.maxCooldown;
+        }
+        this.cooldown -= delta/16;
+
+        //graphical
+        this.walkAnimationSet(15);
+        this.sprite.update(delta);
       },
       action: function(){
-        // Shoots the player
+
+        this.sprite.setAnim(rotate);
+        if(this.sprite.curFrame == this.sprite.getAnim('rotate').to){
+          if(this.dir == 'lr'){
+            this.dir = 'ud';
+            this.sprite.setAnim('shootingLR');
+          }else{
+            this.dir = 'lr';
+            this.sprite.setAnim('shootingUD');
+          }
+          for(let i = 0; i < 2; i++){
+            this.particles.push(new Particle(
+              this.pos,
+              8,
+              '#FEA',
+              'line',
+              [0 + Math.PI * i]
+            ));
+          }
+        }
         console.log('Bang bang player');
       },
     },
