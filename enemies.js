@@ -399,18 +399,17 @@ let ENEMIES = {
 
     "turret" : {
       name: "turret",
-      health: 15,
+      health: 50,
       weapon: "machinegun",
-      maxCooldown: 15,
+      maxCooldown: 80,
       cooldown: 0,
-      dmgVal: 1,
+      dmgVal: 5,
       range: 12,
       spriteSheet: "turret",
       acc: 0,
       maxSpeed: 0,
-      tag: "idle",
+      tag: "rotate",
       dmgSnd: "shootyDmg",
-      behaviour: "idle",
       dir: "lr",
       update: function(delta,room){
         this.speed.x = 0;
@@ -447,41 +446,70 @@ let ENEMIES = {
           return;
         }
 
-        if(this.cooldown <= 0){
-          this.action();
+        if(this.cooldown <= 0 || this.sprite.curFrame == this.sprite.getAnim('rotate').to){
           this.cooldown = this.maxCooldown;
+
+          if(this.dir == 'lr'){
+            this.dir = 'ud';
+            this.sprite.setAnim('chargingLR', false);
+            this.sprite.sheet.tags.rotate.direction = 'reverse';
+          }else{
+            this.dir = 'lr';
+            this.sprite.setAnim('charingUD', false);
+            this.sprite.sheet.tags.rotate.direction = 'forward';
+          }
+          let temp = this.sprite.sheet.tags.rotate.to;
+          this.sprite.sheet.tags.rotate.to = this.sprite.sheet.tags.rotate.from;
+          this.sprite.sheet.tags.rotate.from = this.sprite.sheet.tags.rotate.to;
         }
         this.cooldown -= delta/16;
 
+        if(this.sprite.curFrame == this.sprite.getAnim('chargingLR').to || this.sprite.curFrame == this.sprite.getAnim('charingUD').to){
+          this.action();
+          this.sprite.setAnim('rotate', false);
+        }
+
         //graphical
-        this.walkAnimationSet(15);
         this.sprite.update(delta);
       },
       action: function(){
 
-        this.sprite.setAnim(rotate);
-        if(this.sprite.curFrame == this.sprite.getAnim('rotate').to){
-          if(this.dir == 'lr'){
-            this.dir = 'ud';
-            this.sprite.setAnim('shootingLR');
-          }else{
-            this.dir = 'lr';
-            this.sprite.setAnim('shootingUD');
-          }
-          for(let i = 0; i < 2; i++){
-            this.particles.push(new Particle(
-              this.pos,
-              8,
-              '#FEA',
-              'line',
-              [0 + Math.PI * i]
-            ));
-          }
+        let offSet = Math.PI/2;
+        if(this.dir == 'ud'){
+          offSet = 0;
         }
-        console.log('Bang bang player');
+        for(let i = 0; i < 2; i++){
+          this.particles.push(new Particle(
+            this.pos,
+            8,
+            '#FEA',
+            'sin',
+            [offSet + Math.PI * i]
+          ));
+        }
       },
-    },
+      damage: function(amount){
+        if(this.dead){
+          return;
+        }
+        // game.maestro.play(this.hitSound);
+        this.health -= amount;
+        if(this.health <= 0){
+          this.dead = true;
+          this.sprite.setAnim('death',false);
+        }
 
+        for(let i = 0; i < amount; i++){
+          game.getCurRoom().particles.push(new Particle(
+            this.pos,
+            3,
+            'lightblue',
+            'blood',
+            [null]
+          ));
+      }
+    },
+  },
     "finalBoss" : {
       name: "finalBoss",
       health: 100,

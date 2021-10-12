@@ -586,7 +586,7 @@
   "frameTags": [
    { "name": "chargingLR", "from": 0, "to": 5, "direction": "forward" },
    { "name": "shootingLR", "from": 5, "to": 5, "direction": "forward" },
-   { "name": "charingUD", "from": 6, "to": 11, "direction": "forward" },
+   { "name": "chargingUD", "from": 6, "to": 11, "direction": "forward" },
    { "name": "shootingUD", "from": 11, "to": 11, "direction": "forward" },
    { "name": "rotate", "from": 12, "to": 14, "direction": "forward" },
    { "name": "death", "from": 15, "to": 63, "direction": "forward" }
