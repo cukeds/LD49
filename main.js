@@ -21,7 +21,7 @@ let game = {
   maxEnemies: 10,
   sfxToLoad: ['click','axe','bonegun','businessmanHit','finalBossHit','inventoryFull','laserSword','minigun','pistol','shootyHit','shotgun','smg','wavegun','weaponCreate','zapgun','zapshotgun','ow','ugh','ouch','oimy','matPlace','matRemove','weaponExplode', 'quips1', 'quips2', 'quips3', 'quips4', 'quips5', 'quips6', 'quips7', 'quips8', 'quips9', 'quips10', 'quips11', 'quips12','finalBossDeath','weaponDeathPlayerQuip','playerDeath'],
   musicToLoad: ['music'],
-  sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit','shooty', 'hitAnims','weaponExplosion','titleScreen','finalBoss', 'restartButtonGO','optionsButton'],
+  sheetsToLoad: ['startButton','testObstacles','emCee','tiles','mats','weapons','businessman', 'player','exit','shooty', 'hitAnims','weaponExplosion','titleScreen','finalBoss', 'restartButtonGO','optionsButton', 'turret'],
   imagesToLoad: ['inventoryBackdrop','levelBackdrop', 'titleScreen', 'gameOver', 'winScreen','optionsScreen', 'instructionsBackdrop'],
   collisions: null,
   parser: null,
