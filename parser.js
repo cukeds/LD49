@@ -37,6 +37,9 @@ let Parser = function(){
             case 7:
               enemies.push(new Enemy(pos, "shooty"));
               break;
+            case 8:
+              enemies.push(new Enemy(pos, "turret"));
+              break;
           }
         }else{
           actors.push(new Obstacle(pos,'tiles','Wall',dict[value]));
