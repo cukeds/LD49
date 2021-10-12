@@ -48,7 +48,7 @@ let PUPS = {
       // this.pos.y = 200
     };
   },
-  sin: function(dir,amplitude = 15,frequency = 3.5,speed){
+  sin: function(dir,amplitude = 15,frequency = 3.5, speed = 1){
     this.dir = dir;
     this.amplitude = amplitude;
     this.frequency = frequency;
